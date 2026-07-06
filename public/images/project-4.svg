@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#0f1a2e"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#c6f135" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#38e1c8" stop-opacity="0.08"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#g1)"/>
+  <rect width="800" height="600" fill="url(#g2)"/>
+  <path d="M200 380 Q300 300 400 340 Q500 380 600 280" fill="none" stroke="#c6f135" stroke-width="1" opacity="0.2"/>
+  <path d="M200 395 Q300 315 400 355 Q500 395 600 295" fill="none" stroke="#38e1c8" stroke-width="0.5" opacity="0.12"/>
+  <circle cx="400" cy="250" r="12" fill="#c6f135" opacity="0.15"/>
+  <circle cx="300" cy="280" r="8" fill="#38e1c8" opacity="0.1"/>
+  <circle cx="520" cy="220" r="10" fill="#c6f135" opacity="0.12"/>
+  <line x1="400" y1="250" x2="300" y2="280" stroke="rgba(198,241,53,0.08)" stroke-width="0.5"/>
+  <line x1="400" y1="250" x2="520" y2="220" stroke="rgba(56,225,200,0.08)" stroke-width="0.5"/>
+  <rect x="300" y="430" width="200" height="6" rx="3" fill="rgba(56,225,200,0.06)"/>
+  <text x="400" y="530" text-anchor="middle" fill="rgba(56,225,200,0.4)" font-family="Space Grotesk, sans-serif" font-size="14" letter-spacing="3" font-weight="600">PULSE HEALTH</text>
+</svg>

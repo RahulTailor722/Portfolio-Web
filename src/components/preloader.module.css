@@ -1,0 +1,49 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: calc(100vh + 300px);
+  pointer-events: none;
+}
+
+.textContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-weight: 700;
+  color: var(--fg);
+  z-index: 10001;
+  pointer-events: auto;
+  letter-spacing: 0.03em;
+  max-width: 90vw;
+}
+
+.charWrapper {
+  overflow: hidden;
+  display: inline-block;
+}
+
+.char {
+  display: inline-block;
+}
+
+.firstName {
+  color: var(--accent);
+}
+
+.lastName {
+  color: var(--fg);
+}

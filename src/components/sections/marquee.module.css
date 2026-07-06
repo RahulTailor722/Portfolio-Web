@@ -1,0 +1,40 @@
+.wrap {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 26px 0;
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+
+.track {
+  display: flex;
+  gap: 40px;
+  width: max-content;
+  animation: scroll 26s linear infinite;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 40px;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  white-space: nowrap;
+}
+
+.star {
+  color: var(--accent);
+  font-size: 0.7em;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}

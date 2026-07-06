@@ -1,0 +1,148 @@
+{
+  "stages": {
+    "develop": {
+      "plugins": [
+        {
+          "name": "@sigmacomputing/babel-plugin-lodash",
+          "options": {}
+        },
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+plugin-proposal-opti_660266df8dd985ba4d7fcfded9b050cc\\node_modules\\@babel\\plugin-proposal-optional-chaining\\lib\\index.js",
+          "options": {}
+        },
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+plugin-proposal-null_f23343b4182b1f7a4f7808f07cb09266\\node_modules\\@babel\\plugin-proposal-nullish-coalescing-operator\\lib\\index.js",
+          "options": {}
+        },
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+plugin-proposal-nume_a962a15ff3cee62ce63db6f1ea904d52\\node_modules\\@babel\\plugin-proposal-numeric-separator\\lib\\index.js",
+          "options": {}
+        }
+      ],
+      "presets": [
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+preset-typescript@7.29.7_@babel+core@7.29.7\\node_modules\\@babel\\preset-typescript\\lib\\index.js",
+          "options": {
+            "plugins": [],
+            "allExtensions": false,
+            "isTSX": false,
+            "jsxPragma": "React"
+          }
+        }
+      ],
+      "options": {
+        "cacheDirectory": true,
+        "sourceType": "unambiguous"
+      }
+    },
+    "develop-html": {
+      "plugins": [
+        {
+          "name": "@sigmacomputing/babel-plugin-lodash",
+          "options": {}
+        },
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+plugin-proposal-opti_660266df8dd985ba4d7fcfded9b050cc\\node_modules\\@babel\\plugin-proposal-optional-chaining\\lib\\index.js",
+          "options": {}
+        },
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+plugin-proposal-null_f23343b4182b1f7a4f7808f07cb09266\\node_modules\\@babel\\plugin-proposal-nullish-coalescing-operator\\lib\\index.js",
+          "options": {}
+        },
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+plugin-proposal-nume_a962a15ff3cee62ce63db6f1ea904d52\\node_modules\\@babel\\plugin-proposal-numeric-separator\\lib\\index.js",
+          "options": {}
+        }
+      ],
+      "presets": [
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+preset-typescript@7.29.7_@babel+core@7.29.7\\node_modules\\@babel\\preset-typescript\\lib\\index.js",
+          "options": {
+            "plugins": [],
+            "allExtensions": false,
+            "isTSX": false,
+            "jsxPragma": "React"
+          }
+        }
+      ],
+      "options": {
+        "cacheDirectory": true,
+        "sourceType": "unambiguous"
+      }
+    },
+    "build-html": {
+      "plugins": [
+        {
+          "name": "@sigmacomputing/babel-plugin-lodash",
+          "options": {}
+        },
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+plugin-proposal-opti_660266df8dd985ba4d7fcfded9b050cc\\node_modules\\@babel\\plugin-proposal-optional-chaining\\lib\\index.js",
+          "options": {}
+        },
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+plugin-proposal-null_f23343b4182b1f7a4f7808f07cb09266\\node_modules\\@babel\\plugin-proposal-nullish-coalescing-operator\\lib\\index.js",
+          "options": {}
+        },
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+plugin-proposal-nume_a962a15ff3cee62ce63db6f1ea904d52\\node_modules\\@babel\\plugin-proposal-numeric-separator\\lib\\index.js",
+          "options": {}
+        }
+      ],
+      "presets": [
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+preset-typescript@7.29.7_@babel+core@7.29.7\\node_modules\\@babel\\preset-typescript\\lib\\index.js",
+          "options": {
+            "plugins": [],
+            "allExtensions": false,
+            "isTSX": false,
+            "jsxPragma": "React"
+          }
+        }
+      ],
+      "options": {
+        "cacheDirectory": true,
+        "sourceType": "unambiguous"
+      }
+    },
+    "build-javascript": {
+      "plugins": [
+        {
+          "name": "@sigmacomputing/babel-plugin-lodash",
+          "options": {}
+        },
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+plugin-proposal-opti_660266df8dd985ba4d7fcfded9b050cc\\node_modules\\@babel\\plugin-proposal-optional-chaining\\lib\\index.js",
+          "options": {}
+        },
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+plugin-proposal-null_f23343b4182b1f7a4f7808f07cb09266\\node_modules\\@babel\\plugin-proposal-nullish-coalescing-operator\\lib\\index.js",
+          "options": {}
+        },
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+plugin-proposal-nume_a962a15ff3cee62ce63db6f1ea904d52\\node_modules\\@babel\\plugin-proposal-numeric-separator\\lib\\index.js",
+          "options": {}
+        }
+      ],
+      "presets": [
+        {
+          "name": "C:\\Learning\\rahul-tailor-website\\node_modules\\.pnpm\\@babel+preset-typescript@7.29.7_@babel+core@7.29.7\\node_modules\\@babel\\preset-typescript\\lib\\index.js",
+          "options": {
+            "plugins": [],
+            "allExtensions": false,
+            "isTSX": false,
+            "jsxPragma": "React"
+          }
+        }
+      ],
+      "options": {
+        "cacheDirectory": true,
+        "sourceType": "unambiguous"
+      }
+    }
+  },
+  "browserslist": [
+    ">0.25% and supports es6-module",
+    "not dead and supports es6-module"
+  ]
+}

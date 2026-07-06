@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c6f135" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#c6f135" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#g1)"/>
+  <rect width="800" height="600" fill="url(#g2)"/>
+  <circle cx="400" cy="250" r="80" fill="none" stroke="#c6f135" stroke-width="0.5" opacity="0.3"/>
+  <circle cx="400" cy="250" r="120" fill="none" stroke="#c6f135" stroke-width="0.5" opacity="0.15"/>
+  <circle cx="400" cy="250" r="40" fill="none" stroke="#c6f135" stroke-width="0.5" opacity="0.4"/>
+  <line x1="300" y1="250" x2="500" y2="250" stroke="#c6f135" stroke-width="0.5" opacity="0.2"/>
+  <line x1="400" y1="150" x2="400" y2="350" stroke="#c6f135" stroke-width="0.5" opacity="0.2"/>
+  <rect x="180" y="120" width="40" height="40" rx="4" fill="#c6f135" opacity="0.08"/>
+  <rect x="580" y="320" width="32" height="32" rx="4" fill="#c6f135" opacity="0.06"/>
+  <rect x="250" y="400" width="300" height="12" rx="6" fill="rgba(198,241,53,0.08)"/>
+  <rect x="300" y="430" width="200" height="8" rx="4" fill="rgba(198,241,53,0.05)"/>
+  <text x="400" y="530" text-anchor="middle" fill="rgba(198,241,53,0.6)" font-family="Space Grotesk, sans-serif" font-size="14" letter-spacing="3" font-weight="600">NOVA FINANCE</text>
+</svg>

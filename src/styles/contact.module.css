@@ -1,0 +1,140 @@
+.contactPage {
+  padding-bottom: 120px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 80px;
+  margin-top: 60px;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+}
+
+.formCard {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  padding: 48px;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 600px) {
+  .formCard {
+    padding: 32px 24px;
+  }
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.label {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--fg);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input,
+.textarea {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  color: var(--fg);
+  padding: 16px 20px;
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(198, 241, 53, 0.15);
+}
+
+.textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.submitBtn {
+  width: 100%;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+/* Sidebar Info styling */
+.infoSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.infoBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.infoBlock h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-2);
+}
+
+.infoLink {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--fg);
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+  word-break: break-all;
+}
+
+.infoLink:hover {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+.address {
+  font-size: 1.1rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.socialsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.socialItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.1rem;
+  color: var(--fg);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.socialItem:hover {
+  color: var(--accent);
+  transform: translateX(4px);
+}

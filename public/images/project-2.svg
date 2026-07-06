@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f0f1a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38e1c8" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#38e1c8" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#g1)"/>
+  <rect width="800" height="600" fill="url(#g2)"/>
+  <path d="M200 350 L400 200 L600 350" fill="none" stroke="#38e1c8" stroke-width="1" opacity="0.3"/>
+  <path d="M250 370 L400 250 L550 370" fill="none" stroke="#38e1c8" stroke-width="0.5" opacity="0.15"/>
+  <circle cx="400" cy="280" r="60" fill="none" stroke="#38e1c8" stroke-width="0.5" opacity="0.2"/>
+  <rect x="300" y="420" width="200" height="6" rx="3" fill="rgba(56,225,200,0.06)"/>
+  <rect x="340" y="445" width="120" height="4" rx="2" fill="rgba(56,225,200,0.04)"/>
+  <text x="400" y="530" text-anchor="middle" fill="rgba(56,225,200,0.5)" font-family="Space Grotesk, sans-serif" font-size="14" letter-spacing="3" font-weight="600">LUMEN STUDIO</text>
+</svg>

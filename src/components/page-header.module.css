@@ -1,0 +1,55 @@
+.header {
+  position: relative;
+  padding: clamp(9rem, 18vw, 14rem) 0 clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 45vw;
+  height: 45vw;
+  max-width: 640px;
+  max-height: 640px;
+  background: radial-gradient(circle, rgba(198, 241, 53, 0.18), transparent 65%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.78rem;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.title {
+  font-size: clamp(2.8rem, 10vw, 8rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  max-width: 14ch;
+}
+
+.subtitle {
+  margin-top: 1.75rem;
+  max-width: 52ch;
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  color: var(--muted);
+  line-height: 1.6;
+}

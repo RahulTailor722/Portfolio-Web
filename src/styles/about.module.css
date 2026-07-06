@@ -1,0 +1,333 @@
+.aboutPage {
+  padding-bottom: 120px;
+}
+
+.bioSection {
+  padding: 80px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.bioGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .bioGrid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.bioText h2 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1.2;
+  margin-bottom: 24px;
+  color: var(--fg);
+}
+
+.bioText p {
+  font-size: 1.1rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.statItem {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  padding: 32px;
+  border-radius: var(--radius);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.statItem:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+}
+
+.statVal {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+/* Skills section styling */
+.skillsSection {
+  padding: 100px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.skillsHeader {
+  margin-bottom: 40px;
+}
+
+.chipGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 48px;
+}
+
+.chip {
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg);
+  transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.chip:hover {
+  border-color: var(--accent);
+  background: rgba(198, 241, 53, 0.06);
+  color: var(--accent);
+}
+
+.skillsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 20px;
+}
+
+.skillCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 12px;
+  border-radius: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.skillCard:hover {
+  border-color: rgba(198, 241, 53, 0.3);
+  transform: translateY(-4px);
+}
+
+.ring {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ringSvg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ringBg {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 2.5;
+}
+
+.ringFill {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  transition: stroke-dasharray 1s ease;
+}
+
+.ringPct {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.skillName {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Methodology/Creative Process section styling */
+.processSection {
+  padding: 100px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.processHeader {
+  margin-bottom: 60px;
+}
+
+.processGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 32px;
+}
+
+.tiltCard {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  padding: 40px 32px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tiltCard:hover {
+  border-color: rgba(198, 241, 53, 0.4);
+  box-shadow: 0 15px 40px rgba(198, 241, 53, 0.08);
+}
+
+.cardIndex {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 24px;
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.cardDesc {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Timeline section styling */
+.experienceSection {
+  padding: 100px 0;
+}
+
+.timeline {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  position: relative;
+}
+
+.timelineItem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 24px;
+  padding: 28px;
+  border-radius: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  position: relative;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timelineItem:hover {
+  border-color: rgba(198, 241, 53, 0.25);
+  transform: translateX(6px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.timelineDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 6px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 0 4px rgba(198, 241, 53, 0.12);
+  flex-shrink: 0;
+}
+
+.timelineContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.timeHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.timeHeader h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--fg);
+  letter-spacing: -0.02em;
+}
+
+.company {
+  font-size: 0.9rem;
+  color: var(--accent-2);
+  font-weight: 500;
+}
+
+.period {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  background: rgba(198, 241, 53, 0.08);
+  padding: 4px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+.timeDesc {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 600px) {
+  .timelineItem {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 20px;
+  }
+  .timelineDot {
+    display: none;
+  }
+  .timeHeader {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .period {
+    margin-left: 0;
+    align-self: flex-start;
+  }
+}
