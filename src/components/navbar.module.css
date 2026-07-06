@@ -4,101 +4,116 @@
   left: 0;
   width: 100%;
   z-index: 9000;
-  transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
-  border-bottom: 1px solid transparent;
+  padding: 12px 0;
+  transition: background 0.4s ease, backdrop-filter 0.4s ease;
 }
 
 .scrolled {
   background: rgba(11, 11, 12, 0.72);
   backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line);
+}
+
+.menuOpen {
+  background: transparent;
+  backdrop-filter: none;
 }
 
 .inner {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 20px 24px;
+  padding: 8px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
+.logoWrap {
+  display: flex;
+  align-items: center;
+}
+
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 20px;
   letter-spacing: -0.02em;
 }
 
-.logo span {
-  color: var(--accent);
-}
-
-.desktopNav {
-  display: none;
-  gap: 8px;
-}
-
-.navLink {
-  position: relative;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--muted);
-  border-radius: 999px;
-  transition: color 0.3s ease, background 0.3s ease;
-}
-
-.navLink:hover {
-  color: var(--fg);
-}
-
-.active {
-  color: #0b0b0c;
-  background: var(--accent);
+.logo svg {
+  flex-shrink: 0;
 }
 
 .right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .cta {
   display: none;
-  padding: 11px 22px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
+  padding: 12px 24px;
+  background: var(--accent);
+  color: #0b0b0c;
+  border-radius: 26px;
   font-size: 14px;
   font-weight: 600;
-  transition: border-color 0.3s ease, color 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  transition: background 0.3s ease, transform 0.3s ease;
+  white-space: nowrap;
 }
 
 .cta:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  background: #d6ff55;
+}
+
+@media (min-width: 576px) {
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
 }
 
 .burger {
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(104px);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  gap: 5px;
-  z-index: 9500;
+  padding-right: 14px;
+  gap: 4px;
   position: relative;
+  z-index: 9500;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .burger span {
   display: block;
-  width: 18px;
   height: 2px;
-  background: var(--fg);
-  transition: transform 0.35s var(--ease), opacity 0.2s ease;
+  background: var(--accent);
+  border-radius: 10px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.burger span:first-child {
+  width: 11px;
+}
+
+.burger span:nth-child(2) {
+  width: 20px;
+}
+
+.burger span:last-child {
+  width: 11px;
 }
 
 .burgerOpen {
@@ -106,11 +121,18 @@
 }
 
 .burgerOpen span:first-child {
-  transform: translateY(3.5px) rotate(45deg);
+  width: 20px;
+  transform: translateY(3px) rotate(45deg);
+}
+
+.burgerOpen span:nth-child(2) {
+  opacity: 0;
+  width: 0;
 }
 
 .burgerOpen span:last-child {
-  transform: translateY(-3.5px) rotate(-45deg);
+  width: 20px;
+  transform: translateY(-3px) rotate(-45deg);
 }
 
 /* Overlay menu */
@@ -118,46 +140,82 @@
   position: fixed;
   inset: 0;
   z-index: 9200;
-  background: var(--bg-elevated);
-  background-image: radial-gradient(
-    circle at 80% 20%,
-    rgba(198, 241, 53, 0.08),
-    transparent 45%
-  );
+  background: var(--bg);
+  display: flex;
 }
 
 .overlayInner {
+  width: 100%;
   max-width: var(--maxw);
   margin: 0 auto;
   height: 100%;
-  padding: 120px 24px 40px;
+  padding: 24px 24px 48px;
   display: flex;
   flex-direction: column;
+}
+
+.overlayHeader {
+  display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding-bottom: 24px;
+}
+
+.overlayLogo {
+  display: flex;
+  align-items: center;
+}
+
+.closeBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.3s ease;
+}
+
+.closeBtn:hover {
+  color: var(--accent);
+}
+
+.closeIcon {
+  display: flex;
+  align-items: center;
 }
 
 .menuList {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  justify-content: center;
+  gap: 8px;
+  padding: 40px 0;
+}
+
+.menuItem {
+  overflow: hidden;
 }
 
 .menuLink {
   display: flex;
   align-items: baseline;
-  gap: 20px;
+  gap: 16px;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(2.4rem, 11vw, 6rem);
+  font-size: clamp(2rem, 8vw, 4.5rem);
   letter-spacing: -0.03em;
   line-height: 1.1;
   color: var(--fg);
-  transition: color 0.3s ease, padding-left 0.4s var(--ease);
+  transition: color 0.3s ease, padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .menuLink:hover {
   color: var(--accent);
-  padding-left: 18px;
+  padding-left: 16px;
 }
 
 .menuIndex {
@@ -172,55 +230,47 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding-top: 32px;
+  padding-top: 24px;
   border-top: 1px solid var(--line);
 }
 
-.overlayLabel {
+.footerInfo label {
+  display: block;
   font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-.overlayEmail {
+.footerInfo a {
   font-family: var(--font-display);
-  font-size: clamp(1.2rem, 4vw, 1.8rem);
+  font-size: 16px;
   color: var(--fg);
   transition: color 0.3s ease;
 }
 
-.overlayEmail:hover {
+.footerInfo a:hover {
   color: var(--accent);
 }
 
-.overlaySocials {
+.socialLinks {
   display: flex;
-  flex-wrap: wrap;
   gap: 20px;
 }
 
-.overlaySocials a {
+.socialLinks a {
   font-size: 14px;
+  font-weight: 500;
   color: var(--muted);
   transition: color 0.3s ease;
 }
 
-.overlaySocials a:hover {
+.socialLinks a:hover {
   color: var(--accent);
 }
 
 @media (min-width: 900px) {
-  .desktopNav {
-    display: flex;
-  }
-  .cta {
-    display: inline-flex;
-  }
-  .burger {
-    display: none;
-  }
   .overlayFooter {
     flex-direction: row;
     justify-content: space-between;

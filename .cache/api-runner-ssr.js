@@ -1,10 +1,10 @@
 var plugins = [{
       name: 'default-site-plugin',
-      plugin: require('C:/Learning/rahul-tailor-website/gatsby-ssr.js'),
+      plugin: require('C:/Learning/Portfolio-Web/gatsby-ssr.js'),
       options: {"plugins":[]},
     },{
       name: 'partytown',
-      plugin: require('C:/Learning/rahul-tailor-website/node_modules/.pnpm/gatsby@5.16.1_babel-eslint@_1d50f6f1935bd0116334912377234edf/node_modules/gatsby/dist/internal-plugins/partytown/gatsby-ssr.js'),
+      plugin: require('C:/Learning/Portfolio-Web/node_modules/.pnpm/gatsby@5.16.1_babel-eslint@_1d50f6f1935bd0116334912377234edf/node_modules/gatsby/dist/internal-plugins/partytown/gatsby-ssr.js'),
       options: {"plugins":[]},
     }]
 /* global plugins */
