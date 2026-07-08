@@ -185,4 +185,10 @@ const ContactPage = () => {
 
 export default ContactPage
 
-export const Head = () => <Seo title="Contact Rahul Tailor — Senior Frontend Developer" />
+export const Head = () => (
+  <Seo
+    title="Contact"
+    description="Get in touch with Rahul Tailor for new projects, freelance inquiries, or full-time opportunities."
+    pathname="/contact/"
+  />
+)

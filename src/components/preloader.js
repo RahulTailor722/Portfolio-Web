@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import * as styles from "./preloader.module.css"
 
-const Preloader = () => {
+const Preloader = ({ showText = true }) => {
   const [dimension, setDimension] = useState({ width: 0, height: 0 })
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Preloader = () => {
     },
     exit: {
       d: targetPath,
-      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.2 },
+      transition: { duration: 0.55, ease: [0.76, 0, 0.24, 1] },
     },
   }
 
@@ -34,22 +34,13 @@ const Preloader = () => {
     },
     animate: (i) => ({
       y: 0,
-      transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1], delay: 0.05 * i },
+      transition: { duration: 0.45, ease: [0.215, 0.61, 0.355, 1], delay: 0.03 * i },
     }),
     exit: (i) => ({
       y: -110,
-      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1], delay: 0.02 * i },
+      transition: { duration: 0.35, ease: [0.76, 0, 0.24, 1], delay: 0.012 * i },
     }),
   }
-
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const t = setTimeout(() => {
-      setLoading(false)
-    }, 2000)
-    return () => clearTimeout(t)
-  }, [])
 
   if (dimension.width === 0) return null
 
@@ -69,7 +60,7 @@ const Preloader = () => {
         />
       </svg>
 
-      {loading && (
+      {showText && (
         <div className={styles.textContainer}>
           {allLetters.map((char, i) => (
             <div key={i} className={styles.charWrapper}>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
+import { AnimatePresence } from "framer-motion"
 import Navbar from "./navbar"
 import Footer from "./footer"
 import Cursor from "./cursor"
@@ -18,7 +19,7 @@ const Layout = ({ children, location }) => {
     const t = setTimeout(() => {
       setLoading(false)
       window.sessionStorage.setItem("rt-preloaded", "1")
-    }, 2600)
+    }, 900)
     return () => clearTimeout(t)
   }, [])
 
@@ -31,7 +32,7 @@ const Layout = ({ children, location }) => {
     if (prevPath.current !== location.pathname) {
       prevPath.current = location.pathname
       setPageLoading(true)
-      const t = setTimeout(() => setPageLoading(false), 800)
+      const t = setTimeout(() => setPageLoading(false), 350)
       return () => clearTimeout(t)
     }
   }, [location?.pathname])
@@ -45,7 +46,11 @@ const Layout = ({ children, location }) => {
   return (
     <>
       <Cursor />
-      {showLoader && <Preloader key={pageLoading ? "page" : "initial"} />}
+      <AnimatePresence mode="wait">
+        {showLoader && (
+          <Preloader key={pageLoading ? "page" : "initial"} showText={!pageLoading} />
+        )}
+      </AnimatePresence>
       <Navbar />
       <main>{children}</main>
       <Footer />

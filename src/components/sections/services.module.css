@@ -106,6 +106,21 @@
   background: var(--bg-card);
 }
 
+.learnMore {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--accent);
+}
+
+.learnMore:hover {
+  color: var(--accent-2);
+}
+
 @media (max-width: 620px) {
   .bodyInner {
     padding-left: 4px;

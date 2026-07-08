@@ -1,4 +1,5 @@
 import React, { useRef } from "react"
+import { Link } from "gatsby"
 import { motion } from "framer-motion"
 
 import PageHeader from "../components/page-header"
@@ -7,24 +8,31 @@ import Seo from "../components/seo"
 import { projects } from "../data/site"
 import * as styles from "../styles/work.module.css"
 
+const MotionLink = motion(Link)
+
 const ProjectCard = ({ project, idx }) => {
   const cardRef = useRef(null)
   useTilt(cardRef, { max: 6 })
 
   return (
-    <motion.div
+    <MotionLink
+      to={`/work/${project.slug}/`}
       ref={cardRef}
       className={styles.projectCard}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      data-cursor="View<br/>Demo"
+      data-cursor="View<br/>Case Study"
     >
       <div className={styles.imageWrapper}>
         <img
           src={project.image}
           alt={project.title}
+          loading="lazy"
+          decoding="async"
+          width="1600"
+          height="1000"
           className={styles.projectImage}
         />
       </div>
@@ -43,7 +51,7 @@ const ProjectCard = ({ project, idx }) => {
           ))}
         </div>
       </div>
-    </motion.div>
+    </MotionLink>
   )
 }
 
@@ -69,4 +77,10 @@ const WorkPage = () => {
 
 export default WorkPage
 
-export const Head = () => <Seo title="Selected Work — Rahul Tailor" />
+export const Head = () => (
+  <Seo
+    title="Selected Work"
+    description="A showcase of real e-commerce, corporate, and careers websites built for performance, accessibility, and conversion."
+    pathname="/work/"
+  />
+)

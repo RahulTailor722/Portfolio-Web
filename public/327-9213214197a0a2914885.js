@@ -1,1 +1,0 @@
-(self.webpackChunkrahul_tailor_portfolio=self.webpackChunkrahul_tailor_portfolio||[]).push([[327],{8327:function(){}}]);

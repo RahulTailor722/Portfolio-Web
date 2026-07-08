@@ -1,7 +1,5 @@
 import React, { useEffect, useRef } from "react"
 import { Link } from "gatsby"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { ArrowUpRight } from "lucide-react"
 import { useTilt } from "../../hooks/use-tilt"
 import { projects } from "../../data/site"
@@ -13,7 +11,7 @@ const ProjectCard = ({ project, index }) => {
 
   return (
     <Link
-      to="/work/"
+      to={`/work/${project.slug}/`}
       ref={cardRef}
       className={`${styles.card} ${index % 2 === 1 ? styles.offset : ""}`}
       data-cursor="View<br/>Demo"
@@ -45,29 +43,43 @@ const FeaturedWork = () => {
 
   useEffect(() => {
     if (typeof window === "undefined") return
-    gsap.registerPlugin(ScrollTrigger)
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray(`.${styles.card}`).forEach((card) => {
-        const img = card.querySelector("img")
-        if (!img) return
-        gsap.fromTo(
-          img,
-          { scale: 1.18, yPercent: -6 },
-          {
-            scale: 1,
-            yPercent: 6,
-            ease: "none",
-            scrollTrigger: {
-              trigger: card,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: true,
-            },
-          }
-        )
-      })
-    }, rootRef)
-    return () => ctx.revert()
+    let ctx
+    let cancelled = false
+
+    // Loaded on demand: gsap + ScrollTrigger only drive a below-the-fold
+    // parallax detail, so they shouldn't sit in the critical initial bundle.
+    Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
+      ([{ gsap }, { ScrollTrigger }]) => {
+        if (cancelled) return
+        gsap.registerPlugin(ScrollTrigger)
+        ctx = gsap.context(() => {
+          gsap.utils.toArray(`.${styles.card}`).forEach((card) => {
+            const img = card.querySelector("img")
+            if (!img) return
+            gsap.fromTo(
+              img,
+              { scale: 1.18, yPercent: -6 },
+              {
+                scale: 1,
+                yPercent: 6,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top bottom",
+                  end: "bottom top",
+                  scrub: true,
+                },
+              }
+            )
+          })
+        }, rootRef)
+      }
+    )
+
+    return () => {
+      cancelled = true
+      ctx?.revert()
+    }
   }, [])
 
   return (
@@ -84,7 +96,7 @@ const FeaturedWork = () => {
         </div>
 
         <div className={styles.grid}>
-          {projects.map((project, i) => (
+          {projects.slice(0, 4).map((project, i) => (
             <ProjectCard key={project.slug} project={project} index={i} />
           ))}
         </div>

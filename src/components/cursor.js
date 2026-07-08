@@ -32,41 +32,31 @@ const Cursor = () => {
       raf = requestAnimationFrame(render)
     }
 
-    const enter = (e) => {
-      const el = e.currentTarget
-      if (el.hasAttribute("data-cursor") || el.closest("[data-cursor]")) {
-        return
-      }
+    // Delegated hover detection (single pair of listeners on document) instead of
+    // querying + attaching listeners to every link/button on an interval, which
+    // rescanned the whole DOM once a second regardless of whether it changed.
+    const over = (e) => {
+      const el = e.target.closest("a, button")
+      if (!el || el.closest("[data-cursor]")) return
       ball.classList.add("is-hover")
     }
 
-    const leave = () => {
+    const out = (e) => {
+      const el = e.target.closest("a, button")
+      if (!el) return
       ball.classList.remove("is-hover")
-    }
-
-    const attachHovers = () => {
-      document.querySelectorAll("a, button").forEach((el) => {
-        if (el.closest("[data-cursor]")) return
-        el.removeEventListener("mouseenter", enter)
-        el.removeEventListener("mouseleave", leave)
-        el.addEventListener("mouseenter", enter)
-        el.addEventListener("mouseleave", leave)
-      })
     }
 
     window.addEventListener("mousemove", onMove)
     render()
-    attachHovers()
-    const interval = setInterval(attachHovers, 1000)
+    document.addEventListener("mouseover", over)
+    document.addEventListener("mouseout", out)
 
     return () => {
       window.removeEventListener("mousemove", onMove)
       cancelAnimationFrame(raf)
-      clearInterval(interval)
-      document.querySelectorAll("a, button").forEach((el) => {
-        el.removeEventListener("mouseenter", enter)
-        el.removeEventListener("mouseleave", leave)
-      })
+      document.removeEventListener("mouseover", over)
+      document.removeEventListener("mouseout", out)
     }
   }, [])
 

@@ -200,4 +200,10 @@ const AboutPage = () => {
 
 export default AboutPage
 
-export const Head = () => <Seo title="About Rahul Tailor — Senior Frontend Developer" />
+export const Head = () => (
+  <Seo
+    title="About"
+    description="6+ years of experience as a Senior Frontend Developer merging design thinking, technical expertise, and custom motion to build premium digital products."
+    pathname="/about/"
+  />
+)

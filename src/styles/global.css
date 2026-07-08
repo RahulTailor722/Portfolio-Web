@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap");
+/* Fonts are loaded via preconnect + <link> tags injected in gatsby-ssr.js onRenderBody,
+   not @import here, since @import blocks CSS parsing behind an extra network round-trip. */
 
 /* ---------------------------------- Tokens --------------------------------- */
 :root {

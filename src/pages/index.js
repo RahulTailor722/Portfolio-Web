@@ -28,4 +28,4 @@ const IndexPage = () => {
 
 export default IndexPage
 
-export const Head = () => <Seo title="Rahul Tailor — Senior Frontend Developer" />
+export const Head = () => <Seo pathname="/" />

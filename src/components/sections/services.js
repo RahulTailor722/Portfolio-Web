@@ -1,6 +1,7 @@
 import React, { useState } from "react"
+import { Link } from "gatsby"
 import { AnimatePresence, motion } from "framer-motion"
-import { Plus } from "lucide-react"
+import { Plus, ArrowUpRight } from "lucide-react"
 import { Reveal } from "../reveal"
 import { services } from "../../data/site"
 import * as styles from "./services.module.css"
@@ -56,6 +57,13 @@ const Services = () => {
                             <span key={t}>{t}</span>
                           ))}
                         </div>
+                        <Link
+                          to={`/services/${service.slug}/`}
+                          className={styles.learnMore}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Learn more <ArrowUpRight size={16} />
+                        </Link>
                       </div>
                     </motion.div>
                   )}
