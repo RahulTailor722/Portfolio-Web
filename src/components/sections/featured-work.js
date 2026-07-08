@@ -13,7 +13,8 @@ const ProjectCard = ({ project, index }) => {
     <Link
       to={`/work/${project.slug}/`}
       ref={cardRef}
-      className={`${styles.card} ${index % 2 === 1 ? styles.offset : ""}`}
+      className={`${styles.card} ${index % 2 === 1 ? styles.offset : ""} tp_fade_anim`}
+      data-delay={`${0.15 + (index % 2) * 0.12}`}
       data-cursor="View<br/>Demo"
     >
       <div className={styles.imageWrap}>
@@ -87,10 +88,16 @@ const FeaturedWork = () => {
       <div className="container">
         <div className={styles.head}>
           <div>
-            <span className="eyebrow">Selected work</span>
-            <h2 className={`section-title ${styles.title}`}>Featured projects</h2>
+            <span className="eyebrow tp_fade_anim">Selected work</span>
+            <h2 className={`section-title ${styles.title} tp_title_anim`}>
+              Featured projects
+            </h2>
           </div>
-          <Link to="/work/" className="btn btn-ghost">
+          <Link
+            to="/work/"
+            className="btn btn-ghost tp_fade_anim"
+            data-fade-from="right"
+          >
             View all projects <ArrowUpRight size={18} />
           </Link>
         </div>

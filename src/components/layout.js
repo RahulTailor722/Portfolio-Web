@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react"
-import { AnimatePresence } from "framer-motion"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import Navbar from "./navbar"
 import Footer from "./footer"
 import Cursor from "./cursor"
 import Preloader from "./preloader"
+import GsapAnimations from "./gsap-animations"
 
 const Layout = ({ children, location }) => {
   const [loading, setLoading] = useState(true)
@@ -11,16 +11,18 @@ const Layout = ({ children, location }) => {
   const prevPath = useRef("")
 
   useEffect(() => {
-    const seen = window.sessionStorage.getItem("rt-preloaded")
-    if (seen) {
+    if (window.sessionStorage.getItem("rt-preloaded")) {
       setLoading(false)
-      return
     }
-    const t = setTimeout(() => {
-      setLoading(false)
-      window.sessionStorage.setItem("rt-preloaded", "1")
-    }, 900)
-    return () => clearTimeout(t)
+  }, [])
+
+  const handleInitialDone = useCallback(() => {
+    setLoading(false)
+    window.sessionStorage.setItem("rt-preloaded", "1")
+  }, [])
+
+  const handlePageDone = useCallback(() => {
+    setPageLoading(false)
   }, [])
 
   useEffect(() => {
@@ -32,8 +34,6 @@ const Layout = ({ children, location }) => {
     if (prevPath.current !== location.pathname) {
       prevPath.current = location.pathname
       setPageLoading(true)
-      const t = setTimeout(() => setPageLoading(false), 350)
-      return () => clearTimeout(t)
     }
   }, [location?.pathname])
 
@@ -41,16 +41,14 @@ const Layout = ({ children, location }) => {
     document.body.style.overflow = loading || pageLoading ? "hidden" : ""
   }, [loading, pageLoading])
 
-  const showLoader = loading || pageLoading
-
   return (
     <>
       <Cursor />
-      <AnimatePresence mode="wait">
-        {showLoader && (
-          <Preloader key={pageLoading ? "page" : "initial"} showText={!pageLoading} />
-        )}
-      </AnimatePresence>
+      <GsapAnimations pathname={location?.pathname} />
+      {loading && <Preloader showText onComplete={handleInitialDone} />}
+      {!loading && pageLoading && (
+        <Preloader key={location?.pathname} showText={false} onComplete={handlePageDone} />
+      )}
       <Navbar />
       <main>{children}</main>
       <Footer />

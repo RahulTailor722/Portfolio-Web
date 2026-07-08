@@ -12,9 +12,13 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: calc(100vh + 300px);
+  width: 100%;
+  height: calc(100% + 300px);
   pointer-events: none;
+}
+
+.path {
+  fill: #141416;
 }
 
 .textContainer {
@@ -24,11 +28,10 @@
   font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 4.5rem);
   font-weight: 700;
-  color: var(--fg);
-  z-index: 10001;
-  pointer-events: auto;
+  z-index: 2;
   letter-spacing: 0.03em;
   max-width: 90vw;
+  position: relative;
 }
 
 .charWrapper {
@@ -38,6 +41,9 @@
 
 .char {
   display: inline-block;
+  transform: translateY(110px);
+  opacity: 0;
+  will-change: transform, opacity;
 }
 
 .firstName {

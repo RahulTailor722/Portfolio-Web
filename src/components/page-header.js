@@ -1,5 +1,4 @@
 import React from "react"
-import { motion } from "framer-motion"
 import * as styles from "./page-header.module.css"
 
 const PageHeader = ({ eyebrow, title, subtitle }) => {
@@ -8,33 +7,18 @@ const PageHeader = ({ eyebrow, title, subtitle }) => {
       <div className={styles.blob} aria-hidden="true" />
       <div className="container">
         {eyebrow && (
-          <motion.p
-            className={styles.eyebrow}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <p className={`${styles.eyebrow} tp_fade_anim`} data-delay="0.1">
             <span className={styles.dot} />
             {eyebrow}
-          </motion.p>
+          </p>
         )}
-        <motion.h1
-          className={styles.title}
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <h1 className={`${styles.title} tp_title_anim`} data-delay="0.2">
           {title}
-        </motion.h1>
+        </h1>
         {subtitle && (
-          <motion.p
-            className={styles.subtitle}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.25 }}
-          >
+          <p className={`${styles.subtitle} tp_fade_anim`} data-delay="0.45">
             {subtitle}
-          </motion.p>
+          </p>
         )}
       </div>
     </header>

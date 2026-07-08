@@ -1,5 +1,4 @@
 import React from "react"
-import { Reveal } from "../reveal"
 import * as styles from "./design-process.module.css"
 
 const steps = [
@@ -50,20 +49,14 @@ const DesignProcess = () => {
     <section className={`section ${styles.section}`}>
       <div className="container">
         <div className={styles.header}>
-          <Reveal>
-            <span className="eyebrow">How I work</span>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <h2 className={`section-title ${styles.title}`}>
-              From idea to launch — a <span className="text-accent">proven process</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className={`lead ${styles.subtitle}`}>
-              A structured yet flexible workflow that moves from research and
-              strategy through to polished delivery.
-            </p>
-          </Reveal>
+          <span className="eyebrow tp_fade_anim">How I work</span>
+          <h2 className={`section-title ${styles.title} tp_title_anim`}>
+            From idea to launch — a <span className="text-accent">proven process</span>
+          </h2>
+          <p className={`lead ${styles.subtitle} tp_fade_anim`} data-delay="0.3">
+            A structured yet flexible workflow that moves from research and
+            strategy through to polished delivery.
+          </p>
         </div>
 
         <div className={styles.timeline}>
@@ -75,13 +68,15 @@ const DesignProcess = () => {
                 </div>
                 {i < steps.length - 1 && <div className={styles.stepLine} />}
               </div>
-              <Reveal delay={i * 0.08} y={24}>
-                <div className={styles.stepCard}>
-                  <div className={styles.stepIcon}>{step.icon}</div>
-                  <h3 className={styles.stepTitle}>{step.title}</h3>
-                  <p className={styles.stepDesc}>{step.desc}</p>
-                </div>
-              </Reveal>
+              <div
+                className={`${styles.stepCard} tp_fade_anim`}
+                data-delay={`${0.1 + i * 0.08}`}
+                data-fade-from={i % 2 === 0 ? "left" : "right"}
+              >
+                <div className={styles.stepIcon}>{step.icon}</div>
+                <h3 className={styles.stepTitle}>{step.title}</h3>
+                <p className={styles.stepDesc}>{step.desc}</p>
+              </div>
             </div>
           ))}
         </div>

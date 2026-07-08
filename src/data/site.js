@@ -1,13 +1,13 @@
 export const skills = [
-  { name: "HTML5", level: 100 },
-  { name: "CSS3", level: 100 },
-  { name: "JavaScript", level: 90 },
-  { name: "React JS", level: 85 },
-  { name: "Tailwind CSS", level: 100 },
-  { name: "Figma", level: 100 },
-  { name: "Git", level: 85 },
-  { name: "GSAP", level: 80 },
-  { name: "HubSpot", level: 85 },
+  { name: "HTML5", level: 100, icon: "/images/tech/html5.svg" },
+  { name: "CSS3", level: 100, icon: "/images/tech/css3.svg" },
+  { name: "JavaScript", level: 90, icon: "/images/tech/javascript.svg" },
+  { name: "React JS", level: 85, icon: "/images/tech/react.svg" },
+  { name: "Tailwind CSS", level: 100, icon: "/images/tech/tailwindcss.svg" },
+  { name: "Figma", level: 100, icon: "/images/tech/figma.svg" },
+  { name: "Git", level: 85, icon: "/images/tech/git.svg" },
+  { name: "GSAP", level: 80, icon: "/images/tech/greensock.svg" },
+  { name: "HubSpot", level: 85, icon: "/images/tech/hubspot.svg" },
 ]
 
 export const techStack = [

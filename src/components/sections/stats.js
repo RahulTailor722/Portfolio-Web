@@ -46,8 +46,12 @@ const Stats = () => {
     <section className={styles.section}>
       <div className="container">
         <div className={styles.grid}>
-          {stats.map((s) => (
-            <div key={s.label} className={styles.stat}>
+          {stats.map((s, i) => (
+            <div
+              key={s.label}
+              className={`${styles.stat} tp_fade_anim`}
+              data-delay={`${0.1 + i * 0.1}`}
+            >
               <p className={styles.value}>
                 <Counter value={s.value} suffix={s.suffix} />
               </p>

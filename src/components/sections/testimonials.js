@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { Reveal } from "../reveal"
 import { testimonials } from "../../data/site"
 import * as styles from "./testimonials.module.css"
 
@@ -35,15 +34,13 @@ const Testimonials = () => {
     <section className="section" id="testimonials">
       <div className="container">
         <div className={styles.head}>
-          <Reveal>
-            <span className="eyebrow">Kind words</span>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <h2 className={`section-title ${styles.title}`}>Testimonials</h2>
-          </Reveal>
+          <span className="eyebrow tp_fade_anim">Kind words</span>
+          <h2 className={`section-title ${styles.title} tp_title_anim`}>
+            Testimonials
+          </h2>
         </div>
 
-        <div className={styles.sliderOuter}>
+        <div className={`${styles.sliderOuter} tp_fade_anim`} data-delay="0.25">
           <button className={styles.arrow} onClick={prev} aria-label="Previous">
             <svg width="22" height="10" viewBox="0 0 25 10" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M6.325 0.0894619L0.28 4.36638C0.194 4.43518 0.1234 4.52914 0.0745 4.63977C0.0256 4.7504 0 4.87421 0 5C0 5.12579 0.0256 5.2496 0.0745 5.36023C0.1234 5.47086 0.194 5.56483 0.28 5.63362L6.325 9.91054C6.4428 9.98881 6.5785 10.0168 6.7108 9.9902C6.843 9.96357 6.9642 9.88378 7.0554 9.76343C7.1465 9.64308 7.2023 9.48901 7.2141 9.3255C7.2258 9.16199 7.1928 8.99835 7.1202 8.86038L5.367 5.73335L24.4012 5.73335C24.56 5.73335 24.7123 5.65609 24.8246 5.51856C24.9369 5.38103 25 5.1945 25 5C25 4.8055 24.9369 4.61897 24.8246 4.48144C24.7123 4.34391 24.56 4.26665 24.4012 4.26665L5.367 4.26665L7.1202 1.13963C7.1928 1.00165 7.2258 0.838009 7.2141 0.674501C7.2023 0.510993 7.1465 0.356918 7.0554 0.236567C6.9642 0.116215 6.843 0.0364334 6.7108 0.00979851C6.5785 -0.0168364 6.4428 0.0111909 6.325 0.0894619Z" fill="currentColor"/>

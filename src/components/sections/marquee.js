@@ -15,14 +15,18 @@ const items = [
 const Marquee = () => {
   const track = [...items, ...items]
   return (
-    <div className={styles.wrap} aria-hidden="true">
-      <div className={styles.track}>
-        {track.map((item, i) => (
-          <span key={i} className={styles.item}>
-            {item}
-            <span className={styles.star}>✦</span>
-          </span>
-        ))}
+    <div className={`${styles.wrap} moving-text`} aria-hidden="true">
+      {/* Outer div is nudged horizontally by scroll (GSAP scrub); the inner
+          track keeps the continuous CSS loop. */}
+      <div className="wrapper-text">
+        <div className={styles.track}>
+          {track.map((item, i) => (
+            <span key={i} className={styles.item}>
+              {item}
+              <span className={styles.star}>✦</span>
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   )

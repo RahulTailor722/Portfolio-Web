@@ -3,47 +3,53 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 120px 0 80px;
+  padding: 130px 0 90px;
   overflow: hidden;
+}
+
+/* ------------------------------- Backdrop -------------------------------- */
+.gridPattern {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse at 62% 42%, black 25%, transparent 72%);
+  mask-image: radial-gradient(ellipse at 62% 42%, black 25%, transparent 72%);
+  z-index: 0;
 }
 
 .orb {
   position: absolute;
-  top: -15%;
-  right: -5%;
-  width: min(50vw, 600px);
-  height: min(50vw, 600px);
-  background: radial-gradient(circle at 30% 30%, rgba(198, 241, 53, 0.35), rgba(56, 225, 200, 0.1) 55%, transparent 70%);
-  filter: blur(50px);
+  top: -18%;
+  right: -8%;
+  width: min(52vw, 640px);
+  height: min(52vw, 640px);
+  background: radial-gradient(circle at 30% 30%, rgba(56, 225, 200, 0.22), rgba(198, 241, 53, 0.08) 55%, transparent 70%);
+  filter: blur(60px);
   border-radius: 50%;
   z-index: 0;
 }
 
 .orb2 {
   position: absolute;
-  bottom: -10%;
-  left: -8%;
-  width: min(35vw, 450px);
-  height: min(35vw, 450px);
-  background: radial-gradient(circle at 70% 70%, rgba(56, 225, 200, 0.12), transparent 65%);
-  filter: blur(45px);
+  bottom: -12%;
+  left: -10%;
+  width: min(38vw, 480px);
+  height: min(38vw, 480px);
+  background: radial-gradient(circle at 70% 70%, rgba(198, 241, 53, 0.12), transparent 65%);
+  filter: blur(50px);
   border-radius: 50%;
   z-index: 0;
 }
 
-.container {
+/* -------------------------------- Layout --------------------------------- */
+.wrapper {
   position: relative;
   z-index: 2;
-  width: 100%;
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.wrapper {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 60px;
+  gap: 48px;
   align-items: center;
 }
 
@@ -81,11 +87,11 @@
 }
 
 .heading {
-  font-size: clamp(2rem, 5.5vw, 4.5rem);
-  line-height: 1.05;
+  font-size: clamp(2.1rem, 4.6vw, 4.2rem);
+  line-height: 1.06;
   letter-spacing: -0.03em;
-  margin-bottom: 20px;
-  max-width: 20ch;
+  margin-bottom: 22px;
+  max-width: 16ch;
 }
 
 .gradient {
@@ -97,8 +103,8 @@
 
 .desc {
   color: var(--muted);
-  font-size: clamp(1rem, 1.8vw, 1.2rem);
-  max-width: 52ch;
+  font-size: clamp(1rem, 1.8vw, 1.18rem);
+  max-width: 50ch;
   line-height: 1.7;
   margin-bottom: 36px;
 }
@@ -107,7 +113,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-bottom: 48px;
+  margin-bottom: 44px;
 }
 
 .btnPrimary {
@@ -150,7 +156,7 @@
 .stats {
   display: flex;
   gap: 40px;
-  padding-top: 32px;
+  padding-top: 30px;
   border-top: 1px solid var(--line);
 }
 
@@ -175,58 +181,50 @@
   letter-spacing: 0.08em;
 }
 
+/* --------------------- Visual: human + robot hands ----------------------- */
 .visual {
   order: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
+  min-height: 300px;
+  z-index: 1;
 }
 
-.profileWrap {
-  position: relative;
-  width: min(55vw, 280px);
-  aspect-ratio: 1;
-  border-radius: 50%;
+.botWrap {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.profileGlow {
-  position: absolute;
-  inset: -25%;
-  background: radial-gradient(circle at 50% 50%, rgba(198, 241, 53, 0.15), transparent 65%);
-  filter: blur(25px);
-  border-radius: 50%;
-}
-
-.profileBorder {
-  position: absolute;
-  inset: -6%;
-  border-radius: 50%;
-  border: 2px solid rgba(198, 241, 53, 0.2);
-  animation: spin 12s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.profileImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  position: relative;
   z-index: 2;
+  will-change: transform;
 }
 
-.techPill {
+.botSvg {
+  width: min(100%, 560px);
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 24px 60px rgba(0, 0, 0, 0.55));
+  will-change: transform;
+}
+
+.touchGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(220px, 30vw, 380px);
+  height: clamp(220px, 30vw, 380px);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 225, 200, 0.4), rgba(198, 241, 53, 0.12) 45%, transparent 70%);
+  filter: blur(34px);
+  z-index: 1;
+}
+
+.pill {
   position: absolute;
   padding: 8px 16px;
   border-radius: 999px;
-  background: var(--bg-elevated);
+  background: rgba(20, 20, 22, 0.75);
   border: 1px solid var(--line);
   font-size: 12px;
   font-weight: 600;
@@ -236,19 +234,71 @@
   white-space: nowrap;
 }
 
+/* ------------------------------ Scroll hint ------------------------------ */
+.scrollHint {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted-dark);
+  z-index: 2;
+}
+
+.scrollWheel {
+  width: 22px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  position: relative;
+}
+
+.scrollWheel::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  margin-left: -2px;
+  border-radius: 4px;
+  background: var(--accent);
+  animation: wheel 1.8s ease-in-out infinite;
+}
+
+@keyframes wheel {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+
+/* ------------------------------- Desktop --------------------------------- */
 @media (min-width: 820px) {
   .wrapper {
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 80px;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 40px;
   }
   .content {
     order: 1;
   }
   .visual {
     order: 2;
-    justify-content: flex-end;
+    min-height: 560px;
   }
-  .profileWrap {
-    width: min(26vw, 320px);
+}
+
+@media (max-width: 819px) {
+  .visual {
+    min-height: clamp(260px, 62vw, 420px);
+    margin-top: 20px;
+  }
+  .scrollHint {
+    display: none;
   }
 }

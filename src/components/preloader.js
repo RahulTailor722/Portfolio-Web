@@ -1,84 +1,95 @@
-import React, { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import React, { useEffect, useRef } from "react"
 import * as styles from "./preloader.module.css"
 
-const Preloader = ({ showText = true }) => {
-  const [dimension, setDimension] = useState({ width: 0, height: 0 })
+// SVG path states for the curtain reveal (same coordinates as the Aleric
+// template that powers the reference site).
+const PATH_FULL = "M0,1005S175,995,500,995s500,5,500,5V0H0Z"
+const PATH_CURVE = "M0 502S175 272 500 272s500 230 500 230V0H0Z"
+const PATH_FLAT = "M0 2S175 1 500 1s500 1 500 1V0H0Z"
+
+const FIRST_NAME = "RAHUL"
+const LAST_NAME = "TAILOR"
+
+const Preloader = ({ showText = true, onComplete }) => {
+  const rootRef = useRef(null)
+  const pathRef = useRef(null)
+  const onCompleteRef = useRef(onComplete)
+  onCompleteRef.current = onComplete
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setDimension({ width: window.innerWidth, height: window.innerHeight })
+    let tl
+    let cancelled = false
+
+    import("gsap").then(({ gsap }) => {
+      if (cancelled || !rootRef.current) return
+      const letters = rootRef.current.querySelectorAll(`.${styles.char}`)
+
+      tl = gsap.timeline({
+        onComplete: () => onCompleteRef.current?.(),
+      })
+
+      if (showText && letters.length) {
+        tl.to(letters, {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power3.out",
+          stagger: 0.045,
+        }).to(letters, {
+          delay: 0.4,
+          y: -110,
+          opacity: 0,
+          duration: 0.4,
+          ease: "power2.in",
+          stagger: 0.012,
+        })
+      }
+
+      tl.to(pathRef.current, {
+        duration: 0.5,
+        attr: { d: PATH_CURVE },
+        ease: "power2.in",
+      })
+        .to(pathRef.current, {
+          duration: 0.5,
+          attr: { d: PATH_FLAT },
+          ease: "power2.out",
+        })
+        .set(rootRef.current, { display: "none" })
+    })
+
+    return () => {
+      cancelled = true
+      tl?.kill()
     }
-  }, [])
-
-  const firstName = "RAHUL"
-  const lastName = "TAILOR"
-  const allLetters = [...firstName, " ", ...lastName]
-
-  const initialPath = `M0 0 L${dimension.width} 0 L${dimension.width} ${dimension.height} Q${dimension.width / 2} ${dimension.height + 300} 0 ${dimension.height} Z`
-  const targetPath = `M0 0 L${dimension.width} 0 L${dimension.width} 0 Q${dimension.width / 2} 0 0 0 Z`
-
-  const curve = {
-    initial: {
-      d: initialPath,
-    },
-    exit: {
-      d: targetPath,
-      transition: { duration: 0.55, ease: [0.76, 0, 0.24, 1] },
-    },
-  }
-
-  const textAnimation = {
-    initial: {
-      y: 110,
-    },
-    animate: (i) => ({
-      y: 0,
-      transition: { duration: 0.45, ease: [0.215, 0.61, 0.355, 1], delay: 0.03 * i },
-    }),
-    exit: (i) => ({
-      y: -110,
-      transition: { duration: 0.35, ease: [0.76, 0, 0.24, 1], delay: 0.012 * i },
-    }),
-  }
-
-  if (dimension.width === 0) return null
+  }, [showText])
 
   return (
-    <motion.div
-      className={styles.preloader}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-    >
-      <svg className={styles.svg}>
-        <motion.path
-          variants={curve}
-          initial="initial"
-          exit="exit"
-          fill="#141416"
-        />
+    <div ref={rootRef} className={styles.preloader} aria-hidden="true">
+      <svg
+        className={styles.svg}
+        viewBox="0 0 1000 1000"
+        preserveAspectRatio="none"
+      >
+        <path ref={pathRef} className={styles.path} d={PATH_FULL} />
       </svg>
 
       {showText && (
         <div className={styles.textContainer}>
-          {allLetters.map((char, i) => (
+          {[...FIRST_NAME, " ", ...LAST_NAME].map((char, i) => (
             <div key={i} className={styles.charWrapper}>
-              <motion.span
-                custom={i}
-                variants={textAnimation}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                className={`${styles.char} ${i < firstName.length ? styles.firstName : i > firstName.length ? styles.lastName : ""}`}
+              <span
+                className={`${styles.char} ${
+                  i < FIRST_NAME.length ? styles.firstName : styles.lastName
+                }`}
               >
-                {char === " " ? "\u00A0" : char}
-              </motion.span>
+                {char === " " ? " " : char}
+              </span>
             </div>
           ))}
         </div>
       )}
-    </motion.div>
+    </div>
   )
 }
 

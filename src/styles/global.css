@@ -177,6 +177,32 @@ h4 {
   transform: translateY(-3px);
 }
 
+/* ------------------- Template scroll-animation helpers ------------------- */
+/* Lines produced by SplitText inside .tp_text_invert get "inked in" left to
+   right as the user scrolls (backgroundPositionX 100% -> 0 via GSAP scrub). */
+.invert-line {
+  display: block;
+  background-image: linear-gradient(to right, var(--fg) 50%, rgba(244, 244, 239, 0.16) 51%);
+  background-size: 200% 100%;
+  background-position-x: 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.tp_title_anim {
+  transform-style: preserve-3d;
+}
+
+.tp_title_anim div {
+  transform-style: preserve-3d;
+}
+
+.anim-zoomin {
+  will-change: transform;
+}
+
 /* Magic cursor */
 #magic-cursor {
   position: absolute;
