@@ -33,6 +33,12 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  /* Clip horizontal bleed at the root. Lenis scrolls the native window/<html>,
+     so overflow-x on <body> alone doesn't stop off-screen elements (e.g. the
+     x-shifted .tp_fade_anim reveals) from causing horizontal scroll on mobile.
+     `clip` (not `hidden`) avoids creating a scroll container, so vertical
+     smooth scroll and position: sticky keep working. */
+  overflow-x: clip;
 }
 
 /* ---- Lenis smooth scroll ---- */
@@ -67,7 +73,7 @@ body {
   color: var(--fg);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 img {
