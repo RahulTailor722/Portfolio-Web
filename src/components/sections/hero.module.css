@@ -153,34 +153,6 @@
   transform: translateY(-3px);
 }
 
-.stats {
-  display: flex;
-  gap: 40px;
-  padding-top: 30px;
-  border-top: 1px solid var(--line);
-}
-
-.statItem {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.statValue {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--accent);
-  line-height: 1;
-}
-
-.statLabel {
-  font-size: 12px;
-  color: var(--muted-dark);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
 /* --------------------- Visual: human + robot hands ----------------------- */
 .visual {
   order: 1;

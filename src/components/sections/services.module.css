@@ -1,166 +1,203 @@
 .section {
   position: relative;
-  padding: clamp(72px, 12vw, 160px) 0 clamp(120px, 16vw, 200px);
+  padding: clamp(72px, 12vw, 150px) 0;
   background: var(--bg);
 }
 
-/* --------------------------------- Head ---------------------------------- */
-.head {
+/* --------------------------- 2-column layout ------------------------------ */
+.layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 28px;
-  margin-bottom: clamp(48px, 7vw, 90px);
+  gap: 44px;
 }
 
-.headLeft {
+@media (min-width: 992px) {
+  .layout {
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .sticky {
+    position: sticky;
+    top: 120px;
+    align-self: start;
+  }
+}
+
+/* ---- Left sticky column ---- */
+.sticky {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 26px;
 }
 
 .subtitle {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 500;
-  color: var(--accent);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
-.shapes {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-}
-
-.shape1,
-.shape2 {
-  display: block;
-  line-height: 0;
+.subtitleDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
 }
 
 .statement {
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3.2vw, 2.9rem);
+  font-size: clamp(1.6rem, 3.4vw, 2.5rem);
   font-weight: 400;
-  line-height: 1.24;
-  letter-spacing: -0.01em;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
   color: var(--fg);
   max-width: 22ch;
 }
 
-@media (min-width: 992px) {
-  .head {
-    grid-template-columns: 5fr 7fr;
-    align-items: start;
-  }
-}
-
-/* ----------------------- Pinned stacking panels --------------------------- */
-.pinArea {
-  position: relative;
-}
-
-.panel {
-  background: var(--bg);
+.stickyFoot {
+  padding-top: 22px;
   border-top: 1px solid var(--line);
-  padding: clamp(40px, 6vw, 72px) 0 clamp(48px, 7vw, 90px);
 }
 
-.panelRow {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 28px;
-  align-items: start;
-}
-
-.number {
+.count {
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 13px;
   font-weight: 500;
-  color: var(--muted);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding-top: 10px;
+  color: var(--muted-dark);
+}
+
+/* ---- Right scrolling column: type-driven rows ---- */
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: block;
+  position: relative;
+  padding: clamp(30px, 4vw, 46px) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.item:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.itemTop {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 28px);
+}
+
+.num {
+  flex: none;
+  align-self: flex-start;
+  font-family: var(--font-mono, monospace);
+  font-size: 14px;
+  color: var(--muted-dark);
+  letter-spacing: 0.06em;
+  transition: color 0.4s var(--ease);
 }
 
 .title {
-  margin: 0 0 26px;
-}
-
-.title a {
-  display: inline-block;
+  margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 6vw, 4.6rem);
+  font-size: clamp(1.9rem, 4.4vw, 3.2rem);
   font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
+  line-height: 1;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--fg);
-  transition: color 0.3s ease;
+  transition: color 0.45s var(--ease), transform 0.55s var(--ease);
 }
 
-.title a:hover {
+.arrow {
+  flex: none;
+  margin-left: auto;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  opacity: 0;
+  transform: translate(-14px, 14px) scale(0.85);
+  transition: opacity 0.45s var(--ease), transform 0.55s var(--ease),
+    background 0.35s var(--ease), border-color 0.35s var(--ease),
+    color 0.35s var(--ease);
+}
+
+.item:hover .title {
   color: var(--accent);
+  transform: translateX(16px);
+}
+
+.item:hover .num {
+  color: var(--accent-2);
+}
+
+.item:hover .arrow {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0b0b0c;
+}
+
+.itemBody {
+  margin-top: 18px;
+  padding-left: clamp(30px, 3.6vw, 44px);
 }
 
 .desc {
   color: var(--muted);
-  font-size: 18px;
-  line-height: 1.7;
-  max-width: 54ch;
-  margin-bottom: 34px;
+  font-size: 15.5px;
+  line-height: 1.68;
+  max-width: 58ch;
+  transition: color 0.4s var(--ease);
 }
 
-.tags {
+.item:hover .desc {
+  color: #c4c4be;
+}
+
+.meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-}
-
-.tags span {
-  padding: 9px 18px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-  transition: border-color 0.3s ease, color 0.3s ease;
-}
-
-.tags span:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.thumb {
-  justify-self: start;
-}
-
-.thumbInner {
-  width: min(100%, 320px);
-  aspect-ratio: 4 / 3;
-  border-radius: var(--radius);
-  border: 1px solid var(--line);
-  background:
-    radial-gradient(120% 120% at 20% 10%, rgba(198, 241, 53, 0.14), transparent 55%),
-    radial-gradient(120% 120% at 85% 90%, rgba(56, 225, 200, 0.12), transparent 55%),
-    var(--bg-card);
-  display: flex;
   align-items: center;
-  justify-content: center;
-  color: var(--accent);
+  gap: 6px 0;
+  margin-top: 16px;
 }
 
-@media (min-width: 992px) {
-  .panelRow {
-    grid-template-columns: 130px 1fr 340px;
-    gap: 40px;
-  }
-  .thumb {
-    justify-self: end;
-    width: 100%;
-  }
-  .thumbInner {
-    margin-left: auto;
+.meta span {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-dark);
+}
+
+.meta span + span::before {
+  content: "·";
+  margin: 0 12px;
+  color: var(--accent-2);
+}
+
+/* Touch devices never see the hover state — keep the arrow visible */
+@media (hover: none) {
+  .arrow {
+    opacity: 1;
+    transform: none;
   }
 }

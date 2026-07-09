@@ -17,10 +17,10 @@ const Hero = () => {
     let cancelled = false
     let removeMouse
 
-    // First visit: the preloader curtain lifts at ~2.4s, so the robot lands
-    // right as the page is revealed. Return visits skip the wait.
-    const firstVisit = !window.sessionStorage.getItem("rt-preloaded")
-    const baseDelay = firstVisit ? 2.1 : 0.35
+    // Hard load: the preloader curtain lifts at ~2.4s, so the robot lands
+    // right as the page is revealed. Client-side navigation skips the wait.
+    const hardLoad = !window.__rtPreloaded
+    const baseDelay = hardLoad ? 2.1 : 0.35
 
     import("gsap").then(({ gsap }) => {
       if (cancelled || !rootRef.current) return
@@ -173,20 +173,6 @@ const Hero = () => {
               </Link>
             </div>
 
-            <div className={`${styles.stats} tp_fade_anim`} data-delay="0.9">
-              <div className={styles.statItem}>
-                <span className={styles.statValue}>6+</span>
-                <span className={styles.statLabel}>Years Exp.</span>
-              </div>
-              <div className={styles.statItem}>
-                <span className={styles.statValue}>60+</span>
-                <span className={styles.statLabel}>Projects</span>
-              </div>
-              <div className={styles.statItem}>
-                <span className={styles.statValue}>30+</span>
-                <span className={styles.statLabel}>Clients</span>
-              </div>
-            </div>
           </div>
 
           <div className={styles.visual} aria-hidden="true">
@@ -297,6 +283,9 @@ const Hero = () => {
             </span>
             <span className={styles.pill} style={{ bottom: "10%", left: "6%" }}>
               GSAP
+            </span>
+            <span className={styles.pill} style={{ bottom: "2%", left: "40%" }}>
+              WordPress
             </span>
           </div>
         </div>

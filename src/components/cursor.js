@@ -36,12 +36,29 @@ const Cursor = () => {
     // querying + attaching listeners to every link/button on an interval, which
     // rescanned the whole DOM once a second regardless of whether it changed.
     const over = (e) => {
+      // Elements carrying data-cursor (e.g. project cards) expand the ball into a
+      // labelled bubble ("View Project") instead of the plain hover dot.
+      const viewEl = e.target.closest("[data-cursor]")
+      if (viewEl) {
+        view.innerHTML = viewEl.getAttribute("data-cursor")
+        ball.classList.add("is-view")
+        view.classList.add("is-visible")
+        return
+      }
       const el = e.target.closest("a, button")
-      if (!el || el.closest("[data-cursor]")) return
+      if (!el) return
       ball.classList.add("is-hover")
     }
 
     const out = (e) => {
+      const viewEl = e.target.closest("[data-cursor]")
+      if (viewEl) {
+        // Ignore moves onto the card's own children (prevents flicker).
+        if (e.relatedTarget && viewEl.contains(e.relatedTarget)) return
+        ball.classList.remove("is-view")
+        view.classList.remove("is-visible")
+        return
+      }
       const el = e.target.closest("a, button")
       if (!el) return
       ball.classList.remove("is-hover")

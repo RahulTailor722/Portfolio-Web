@@ -8,6 +8,7 @@ export const skills = [
   { name: "Git", level: 85, icon: "/images/tech/git.svg" },
   { name: "GSAP", level: 80, icon: "/images/tech/greensock.svg" },
   { name: "HubSpot", level: 85, icon: "/images/tech/hubspot.svg" },
+  { name: "WordPress", level: 80, icon: "/images/tech/wordpress.svg" },
 ]
 
 export const techStack = [
@@ -20,6 +21,7 @@ export const techStack = [
   "Git",
   "GSAP",
   "HubSpot",
+  "WordPress",
   "Next.js",
   "TypeScript",
   "Framer Motion",
@@ -89,6 +91,42 @@ export const services = [
 ]
 
 export const projects = [
+  {
+    slug: "guided-lxp",
+    title: "Guided LXP",
+    client: "Guided LXP",
+    category: "SaaS / Learning Platform",
+    industry: "EdTech / SaaS",
+    year: "2025",
+    liveUrl: "https://www.guidedlxp.com/",
+    image: "/images/projects/guided-lxp-cover.png",
+    imageSm: "/images/projects/guided-lxp-cover.png",
+    desc: "The marketing site for an all-in-one, white-label Learning Experience Platform that helps growing teams onboard, upskill, and retain talent without building from scratch.",
+    tags: ["SaaS", "UI/UX", "Landing Page", "Motion"],
+    overview:
+      "Guided LXP is a white-label learning platform sold to growing teams that want a branded training experience without engineering one in-house. The marketing site had to make an abstract SaaS product feel tangible and trustworthy — leading with a product dashboard preview, clear outcomes, and social proof rather than feature jargon.\n\nThe build is a conversion-focused single page: a bold centered hero with playful floating cursor cues, a four-column benefits grid, a client-logo marquee, a testimonials carousel, three-tier pricing, and an FAQ accordion — all funnelling toward a single \"Book a Demo\" action.",
+    approach: [
+      {
+        title: "Narrative & Layout",
+        desc: "Structured the page around outcomes (onboard faster, upskill smarter, retain talent) with a dashboard preview as the hero anchor to make the product concrete.",
+      },
+      {
+        title: "Interaction & Motion",
+        desc: "Added floating cursor tags around the hero and subtle scroll reveals to give an otherwise clean SaaS layout a sense of movement and interactivity.",
+      },
+      {
+        title: "Conversion Structure",
+        desc: "Designed the benefits grid, testimonials carousel, three-tier pricing, and FAQ to pre-answer objections and drive toward the single Book-a-Demo CTA.",
+      },
+    ],
+    challenge:
+      "Selling a white-label platform means the product itself is intentionally generic — the site had to create desire and trust through presentation, proof, and clarity rather than a distinctive product UI.",
+    outcome: [
+      "Conversion-focused single-page site anchored by a product dashboard preview",
+      "Playful floating-cursor hero and scroll motion layered over a clean SaaS layout",
+      "Benefits grid, testimonials, three-tier pricing, and FAQ funnelling to one primary CTA",
+    ],
+  },
   {
     slug: "arms-of-eve",
     title: "Arms of Eve",

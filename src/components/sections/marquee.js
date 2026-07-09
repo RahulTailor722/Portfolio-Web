@@ -7,6 +7,7 @@ const items = [
   "Next.js",
   "Motion Design",
   "HubSpot CMS",
+  "WordPress",
   "Design Systems",
   "TypeScript",
   "Performance",

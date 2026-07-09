@@ -55,24 +55,18 @@ const GsapAnimations = ({ pathname }) => {
             gsap.from(item, setting)
           })
 
-          // 2. Title line reveal (template #40)
+          // 2. Title line reveal — each line wipes up from below behind a mask
           gsap.utils.toArray(".tp_title_anim").forEach((el) => {
             const delay = parseFloat(el.getAttribute("data-delay") || 0.3)
-            const split = new SplitText(el, { type: "lines" })
-            gsap.set(el, { perspective: 400 })
-            gsap
-              .timeline({
-                scrollTrigger: { trigger: el, start: "top 85%" },
-              })
-              .from(split.lines, {
-                duration: 1,
-                delay,
-                opacity: 0,
-                rotationX: -80,
-                force3D: true,
-                transformOrigin: "top center -50",
-                stagger: 0.1,
-              })
+            const split = new SplitText(el, { type: "lines", mask: "lines" })
+            gsap.from(split.lines, {
+              duration: 1,
+              delay,
+              yPercent: 110,
+              ease: "power3.out",
+              stagger: 0.12,
+              scrollTrigger: { trigger: el, start: "top 85%" },
+            })
           })
 
           // 3. Text invert with scroll (template #26)
@@ -136,27 +130,7 @@ const GsapAnimations = ({ pathname }) => {
             )
           })
 
-          // 7. Stacked pinned service panels (template #25) — desktop only
-          const panels = gsap.utils.toArray(".tp-service-pp-panel")
-          if (panels.length) {
-            const mm = gsap.matchMedia()
-            mm.add("(min-width: 1199px)", () => {
-              panels.forEach((section, index) => {
-                ScrollTrigger.create({
-                  trigger: section,
-                  pin: section,
-                  scrub: 1,
-                  start: `top ${130 + index * 130}px`,
-                  end: "bottom 120%",
-                  endTrigger: ".tp-service-pp-pin",
-                  pinSpacing: false,
-                })
-              })
-            })
-            cleanupFns.push(() => mm.revert())
-          }
-
-          // 8. Bounce-in button (template #27)
+          // 7. Bounce-in button (template #27)
           gsap.utils.toArray(".tp-btn-bounce").forEach((btn) => {
             gsap.set(btn, { y: -70, opacity: 0 })
             gsap.to(btn, {

@@ -4,21 +4,19 @@ import Footer from "./footer"
 import Cursor from "./cursor"
 import Preloader from "./preloader"
 import GsapAnimations from "./gsap-animations"
+import SmoothScroll from "./smooth-scroll"
 
 const Layout = ({ children, location }) => {
+  // In-memory flag (not sessionStorage): resets on every hard reload so the
+  // curtain preloader always plays on load, but survives client-side
+  // navigation so internal page changes use the short transition instead.
   const [loading, setLoading] = useState(true)
   const [pageLoading, setPageLoading] = useState(false)
   const prevPath = useRef("")
 
-  useEffect(() => {
-    if (window.sessionStorage.getItem("rt-preloaded")) {
-      setLoading(false)
-    }
-  }, [])
-
   const handleInitialDone = useCallback(() => {
     setLoading(false)
-    window.sessionStorage.setItem("rt-preloaded", "1")
+    if (typeof window !== "undefined") window.__rtPreloaded = true
   }, [])
 
   const handlePageDone = useCallback(() => {
@@ -44,6 +42,7 @@ const Layout = ({ children, location }) => {
   return (
     <>
       <Cursor />
+      <SmoothScroll />
       <GsapAnimations pathname={location?.pathname} />
       {loading && <Preloader showText onComplete={handleInitialDone} />}
       {!loading && pageLoading && (

@@ -1,9 +1,8 @@
-import React, { useRef } from "react"
+import React from "react"
 import { Link } from "gatsby"
 import { motion } from "framer-motion"
 
 import PageHeader from "../components/page-header"
-import { useTilt } from "../hooks/use-tilt"
 import Seo from "../components/seo"
 import { projects } from "../data/site"
 import * as styles from "../styles/work.module.css"
@@ -11,18 +10,14 @@ import * as styles from "../styles/work.module.css"
 const MotionLink = motion(Link)
 
 const ProjectCard = ({ project, idx }) => {
-  const cardRef = useRef(null)
-  useTilt(cardRef, { max: 6 })
-
   return (
     <MotionLink
       to={`/work/${project.slug}/`}
-      ref={cardRef}
-      className={styles.projectCard}
+      className={`${styles.projectCard} ${idx % 2 === 1 ? styles.offset : ""}`}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.8, delay: (idx % 2) * 0.1, ease: [0.16, 1, 0.3, 1] }}
       data-cursor="View<br/>Case Study"
     >
       <div className={styles.imageWrapper}>
@@ -37,19 +32,11 @@ const ProjectCard = ({ project, idx }) => {
         />
       </div>
       <div className={styles.info}>
-        <div className={styles.meta}>
+        <div className={styles.metaText}>
+          <h3 className={styles.title}>{project.title}</h3>
           <span className={styles.category}>{project.category}</span>
-          <span className={styles.year}>{project.year}</span>
         </div>
-        <h3 className={styles.title}>{project.title}</h3>
-        <p className={styles.desc}>{project.desc}</p>
-        <div className={styles.tags}>
-          {project.tags.map((tag) => (
-            <span key={tag} className={styles.tag}>
-              {tag}
-            </span>
-          ))}
-        </div>
+        <span className={styles.year}>{project.year}</span>
       </div>
     </MotionLink>
   )

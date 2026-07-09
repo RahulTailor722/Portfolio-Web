@@ -44,20 +44,38 @@ const Counter = ({ value, suffix }) => {
 const Stats = () => {
   return (
     <section className={styles.section}>
+      <div className={styles.glow} aria-hidden="true" />
       <div className="container">
-        <div className={styles.grid}>
-          {stats.map((s, i) => (
-            <div
-              key={s.label}
-              className={`${styles.stat} tp_fade_anim`}
-              data-delay={`${0.1 + i * 0.1}`}
-            >
-              <p className={styles.value}>
-                <Counter value={s.value} suffix={s.suffix} />
-              </p>
-              <p className={styles.label}>{s.label}</p>
-            </div>
-          ))}
+        <div className={styles.layout}>
+          <div className={`${styles.intro} tp_fade_anim`}>
+            <span className="eyebrow tp_fade_anim">By the numbers</span>
+            <h2 className={styles.heading}>
+              Proof in the <span className={styles.accent}>details</span>
+            </h2>
+            <p className={styles.lead}>
+              Six years of shipping polished, high-performance interfaces —
+              measured in outcomes, not promises.
+            </p>
+          </div>
+
+          <div className={styles.grid}>
+            {stats.map((s, i) => (
+              <div
+                key={s.label}
+                className={`${styles.stat} tp_fade_anim`}
+                data-delay={`${0.1 + i * 0.1}`}
+              >
+                <span className={styles.index}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <p className={styles.value}>
+                  <Counter value={s.value} suffix={s.suffix} />
+                </p>
+                <p className={styles.label}>{s.label}</p>
+                <span className={styles.bar} aria-hidden="true" />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

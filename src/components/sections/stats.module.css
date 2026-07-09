@@ -1,38 +1,181 @@
 .section {
-  padding: clamp(56px, 8vw, 96px) 0;
+  position: relative;
+  padding: clamp(72px, 10vw, 128px) 0;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   background: var(--bg);
+  overflow: hidden;
 }
 
+/* Soft accent bloom behind the panel */
+.glow {
+  position: absolute;
+  top: 50%;
+  left: 78%;
+  width: 620px;
+  height: 620px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(198, 241, 53, 0.1) 0%,
+    rgba(56, 225, 200, 0.06) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  filter: blur(10px);
+}
+
+.layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(40px, 6vw, 72px);
+  align-items: center;
+}
+
+/* ---- Intro column ---- */
+.intro {
+  max-width: 440px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.eyebrowDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.heading {
+  margin-top: 22px;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.4vw, 3.1rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.lead {
+  margin-top: 20px;
+  max-width: 40ch;
+  color: var(--muted);
+  font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+  line-height: 1.65;
+}
+
+/* ---- Stat grid: one connected bordered panel ---- */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 40px 24px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--bg-card);
 }
 
 .stat {
-  text-align: center;
+  position: relative;
+  padding: clamp(28px, 4vw, 44px) clamp(24px, 3vw, 36px);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  transition: background 0.4s ease;
+}
+
+/* Kill the outer edges of the connected grid */
+.stat:nth-child(2n) {
+  border-right: none;
+}
+.stat:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
+
+.stat:hover {
+  background: var(--bg-elevated);
+}
+
+.index {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--muted-dark);
+  transition: color 0.4s ease;
+}
+
+.stat:hover .index {
+  color: var(--accent-2);
 }
 
 .value {
+  margin-top: 18px;
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 8vw, 5rem);
+  font-size: clamp(2.8rem, 6vw, 4.2rem);
   font-weight: 600;
-  letter-spacing: -0.03em;
-  color: var(--accent);
+  letter-spacing: -0.04em;
   line-height: 1;
+  color: var(--fg);
+  transition: color 0.4s ease;
+}
+
+.stat:hover .value {
+  color: var(--accent);
 }
 
 .label {
   margin-top: 12px;
   color: var(--muted);
   font-size: 14px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
-@media (min-width: 820px) {
+/* Accent bar that grows in on hover */
+.bar {
+  position: absolute;
+  left: clamp(24px, 3vw, 36px);
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.stat:hover .bar {
+  width: 44px;
+}
+
+@media (min-width: 980px) {
+  .layout {
+    grid-template-columns: 0.9fr 1.25fr;
+  }
+}
+
+@media (max-width: 460px) {
   .grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr;
+  }
+  .stat {
+    border-right: none;
+  }
+  .stat:nth-last-child(-n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+  .stat:last-child {
+    border-bottom: none;
   }
 }
