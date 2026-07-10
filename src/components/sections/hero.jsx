@@ -11,7 +11,6 @@ const Hero = () => {
 
   useEffect(() => {
     if (typeof window === "undefined") return
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
 
     let ctx
     let cancelled = false
@@ -129,7 +128,7 @@ const Hero = () => {
         window.addEventListener("mousemove", onMove, { passive: true })
         removeMouse = () => window.removeEventListener("mousemove", onMove)
       }, rootRef)
-    })
+    }).catch((err) => console.error("[hero] failed to load GSAP:", err))
 
     return () => {
       cancelled = true

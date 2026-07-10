@@ -4,137 +4,404 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 80px;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 24px;
+  align-items: stretch;
   margin-top: 60px;
 }
 
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr;
-    gap: 60px;
   }
 }
 
-.formCard {
+/* ------------------------------- Info column ------------------------------ */
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+/* Big clickable email card */
+.emailCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  flex: 1;
+  padding: 36px 32px;
+  border-radius: var(--radius);
   background: var(--bg-elevated);
   border: 1px solid var(--line);
-  padding: 48px;
+  overflow: hidden;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.emailCard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(420px circle at 85% 0%, rgba(198, 241, 53, 0.08), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.emailCard:hover {
+  border-color: rgba(198, 241, 53, 0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(198, 241, 53, 0.08);
+}
+
+.emailCard:hover::after {
+  opacity: 1;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-card);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.emailValue {
+  font-family: var(--font-display);
+  /* fluid size tuned so the full address stays on ONE line at every width:
+     tightest case is just above the 900px stack breakpoint, where the card
+     is narrowest relative to the viewport */
+  font-size: clamp(1rem, 2.2vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--fg);
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+@media (max-width: 360px) {
+  .emailValue {
+    font-size: 0.92rem;
+  }
+}
+
+.emailCard:hover .emailValue {
+  color: var(--accent);
+}
+
+.emailHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: auto;
+}
+
+.emailHint svg {
+  color: var(--accent-2);
+}
+
+.arrowCircle {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--fg);
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.5s var(--ease);
+}
+
+.emailCard:hover .arrowCircle {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0b0b0c;
+  transform: rotate(45deg);
+}
+
+/* Phone + location mini cards */
+.miniGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 480px) {
+  .miniGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.miniCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 24px;
+  border-radius: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.miniCard:hover {
+  border-color: rgba(198, 241, 53, 0.3);
+  transform: translateY(-4px);
+}
+
+.miniIcon {
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.miniLabel {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-dark);
+}
+
+.miniValue {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--fg);
+  line-height: 1.4;
+}
+
+.miniMeta {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* Socials */
+.socialsRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.socialBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  color: var(--muted);
+  transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease, transform 0.5s var(--ease);
+}
+
+.socialBtn:hover {
+  border-color: var(--accent);
+  background: rgba(198, 241, 53, 0.06);
+  color: var(--accent);
+  transform: translateY(-4px);
+}
+
+.socialsHint {
+  font-size: 0.85rem;
+  color: var(--muted-dark);
+  margin-left: 4px;
+}
+
+/* -------------------------------- Form card ------------------------------- */
+.formCard {
+  position: relative;
+  padding: clamp(32px, 4vw, 48px);
   border-radius: var(--radius);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.formCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(560px circle at 100% 100%, rgba(56, 225, 200, 0.05), transparent 60%);
+  pointer-events: none;
+}
+
+.formCard form,
+.success {
+  position: relative;
+  z-index: 1;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 }
 
 @media (max-width: 600px) {
-  .formCard {
-    padding: 32px 24px;
+  .formRow {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 28px;
+  gap: 10px;
+  margin-bottom: 26px;
 }
 
 .label {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
   font-family: var(--font-display);
-  font-size: 0.95rem;
+  font-size: 0.82rem;
   font-weight: 500;
-  color: var(--fg);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  color: var(--muted);
+  transition: color 0.3s ease;
+}
+
+.labelIndex {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+}
+
+.formGroup:focus-within .label {
+  color: var(--fg);
 }
 
 .input,
 .textarea {
-  background: var(--bg-card);
-  border: 1px solid var(--line);
+  width: 100%;
+  padding: 15px 18px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid transparent;
   color: var(--fg);
-  padding: 16px 20px;
-  border-radius: 12px;
   font-family: var(--font-body);
   font-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  width: 100%;
+  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--muted-dark);
+}
+
+/* keep Chrome's autofill from painting the fields white */
+.input:-webkit-autofill,
+.input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--bg-card) inset;
+  -webkit-text-fill-color: var(--fg);
+  caret-color: var(--fg);
+  transition: background-color 9999s ease-out;
+}
+
+.input:hover,
+.textarea:hover {
+  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.045);
 }
 
 .input:focus,
 .textarea:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 12px rgba(198, 241, 53, 0.15);
+  border-color: rgba(198, 241, 53, 0.5);
+  background: rgba(198, 241, 53, 0.04);
+  box-shadow: 0 0 0 4px rgba(198, 241, 53, 0.08);
 }
 
 .textarea {
-  min-height: 160px;
+  min-height: 140px;
   resize: vertical;
 }
 
-.submitBtn {
-  width: 100%;
-  justify-content: center;
-  margin-top: 12px;
-}
-
-/* Sidebar Info styling */
-.infoSidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-.infoBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.infoBlock h3 {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--accent-2);
-}
-
-.infoLink {
-  font-size: 1.4rem;
-  font-weight: 500;
-  color: var(--fg);
-  transition: color 0.3s ease, transform 0.3s ease;
-  display: inline-block;
-  word-break: break-all;
-}
-
-.infoLink:hover {
-  color: var(--accent);
-  transform: translateX(4px);
-}
-
-.address {
-  font-size: 1.1rem;
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-.socialsList {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.socialItem {
+.formFooter {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 1.1rem;
-  color: var(--fg);
-  transition: color 0.3s ease, transform 0.3s ease;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 6px;
 }
 
-.socialItem:hover {
+.formNote {
+  font-size: 0.85rem;
+  color: var(--muted-dark);
+}
+
+@media (max-width: 600px) {
+  .submitBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ------------------------------ Success state ----------------------------- */
+.success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 48px 0;
+}
+
+.successIcon {
   color: var(--accent);
-  transform: translateX(4px);
+}
+
+.successTitle {
+  font-size: 1.8rem;
+}
+
+.successText {
+  color: var(--muted);
+  max-width: 40ch;
+}
+
+.success button {
+  margin-top: 8px;
 }

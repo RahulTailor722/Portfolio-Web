@@ -8,7 +8,6 @@ import { useEffect } from "react"
 const SmoothScroll = () => {
   useEffect(() => {
     if (typeof window === "undefined") return
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
 
     let cancelled = false
     let lenis
@@ -36,7 +35,7 @@ const SmoothScroll = () => {
       tickerFn = (time) => lenis.raf(time * 1000)
       gsap.ticker.add(tickerFn)
       gsap.ticker.lagSmoothing(0)
-    })
+    }).catch((err) => console.error("[smooth-scroll] failed to load Lenis/GSAP:", err))
 
     return () => {
       cancelled = true

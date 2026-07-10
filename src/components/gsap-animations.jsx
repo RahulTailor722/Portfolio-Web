@@ -16,7 +16,6 @@ import { useEffect } from "react"
 const GsapAnimations = ({ pathname }) => {
   useEffect(() => {
     if (typeof window === "undefined") return
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
 
     let ctx
     let cancelled = false
@@ -149,15 +148,27 @@ const GsapAnimations = ({ pathname }) => {
         ScrollTrigger.refresh()
       }
 
-      // Wait for fonts so SplitText measures the final line breaks.
-      if (document.fonts?.ready) {
-        document.fonts.ready.then(run)
-      } else {
-        run()
-      }
+      // Astro renders the page body as a separate `client:load` island. Running
+      // SplitText (which restructures headings into line divs) or the fades
+      // (which inject inline styles) before React finishes hydrating that island
+      // corrupts hydration — React throws the server HTML away and every
+      // animation silently dies. So wait until the page has finished
+      // loading/hydrating, and for fonts (so SplitText measures the final line
+      // breaks), before touching the DOM.
+      const whenLoaded = new Promise((resolve) => {
+        if (document.readyState === "complete") {
+          // Already loaded (e.g. client-side navigation) — defer a frame past
+          // React's hydration commit before mutating the DOM.
+          requestAnimationFrame(() => requestAnimationFrame(resolve))
+        } else {
+          window.addEventListener("load", resolve, { once: true })
+        }
+      })
+
+      Promise.all([document.fonts?.ready, whenLoaded]).then(run)
 
       cleanupFns.push(() => ctx?.revert())
-    })
+    }).catch((err) => console.error("[gsap-animations] failed to load GSAP:", err))
 
     return () => {
       cancelled = true

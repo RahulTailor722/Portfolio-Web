@@ -56,6 +56,10 @@ const Preloader = ({ showText = true, onComplete }) => {
           ease: "power2.out",
         })
         .set(rootRef.current, { display: "none" })
+    }).catch((err) => {
+      // If GSAP can't load, don't trap the page behind the curtain — reveal it.
+      console.error("[preloader] failed to load GSAP:", err)
+      onCompleteRef.current?.()
     })
 
     return () => {
