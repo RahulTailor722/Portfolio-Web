@@ -17,7 +17,7 @@
 .title {
   font-size: clamp(2.4rem, 8vw, 6.5rem);
   font-weight: 800;
-  line-height: 0.98;
+  line-height: 1.08;
   letter-spacing: -0.03em;
   max-width: 16ch;
   margin: 0 auto 3rem;

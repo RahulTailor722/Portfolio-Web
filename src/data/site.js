@@ -65,10 +65,11 @@ export const services = [
     desc: "I transform designs into fast, responsive, and accessible digital products using modern frontend frameworks and best practices.",
     longDesc:
       "Design only matters if it ships fast and works everywhere. I build with componentized, semantic markup, keep bundles lean, and treat Core Web Vitals as a requirement rather than an afterthought — so the finished site feels as fast as it looks, on every device.",
-    tags: ["React JS", "Next JS", "Tailwind"],
+    tags: ["React JS", "Next JS", "Tailwind", "WordPress", "HubSpot"],
     deliverables: [
       "Responsive, accessible markup",
-      "Component-driven React/Gatsby/Next.js builds",
+      "Component-driven React/Next.js builds",
+      "HubSpot CMS & WordPress theme development",
       "Performance & Core Web Vitals tuning",
       "Cross-browser & cross-device QA",
     ],
@@ -79,10 +80,10 @@ export const services = [
     title: "Deployment",
     desc: "I ensure smooth deployment of applications with optimized performance, scalability, and seamless integration across environments.",
     longDesc:
-      "Launch day shouldn't be stressful. I set up the build pipeline, hosting, caching, and monitoring ahead of time, so shipping is a routine push rather than a fire drill — with a clear handover so the site stays easy to maintain long after launch.",
-    tags: ["Vercel", "Netlify", "CI/CD"],
+      "Launch day shouldn't be stressful. I set up the hosting, domains, caching, and monitoring ahead of time, so shipping is a routine push rather than a fire drill — with a clear handover so the site stays easy to maintain long after launch.",
+    tags: ["Vercel", "Netlify", "Hosting"],
     deliverables: [
-      "CI/CD pipeline setup",
+      "Production build & hosting setup",
       "Netlify/Vercel environment configuration",
       "Pre-launch performance & SEO audit",
       "Post-launch monitoring handover",

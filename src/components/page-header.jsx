@@ -1,10 +1,15 @@
 import React from "react"
 import styles from "./page-header.module.css"
 
-const PageHeader = ({ eyebrow, title, subtitle }) => {
+const PageHeader = ({ eyebrow, title, subtitle, watermark }) => {
   return (
     <header className={styles.header}>
       <div className={styles.blob} aria-hidden="true" />
+      {watermark && (
+        <span className={styles.watermark} aria-hidden="true">
+          {watermark}
+        </span>
+      )}
       <div className="container">
         {eyebrow && (
           <p className={`${styles.eyebrow} tp_fade_anim`} data-delay="0.1">

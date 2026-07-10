@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react"
 import Link from "./link"
-import { ArrowUpRight, ArrowLeft, ArrowRight } from "lucide-react"
+import { ArrowUpRight, ArrowLeft, ArrowRight, Check } from "lucide-react"
 
 import Reveal from "./reveal"
 import CTA from "./sections/cta"
@@ -151,51 +151,76 @@ const ProjectDetail = ({ project, prevProject, nextProject }) => {
         </div>
       </section>
 
+      {/* Process — editorial numbered rows, same language as the About page. */}
       <section className={`section ${styles.approachSection}`}>
         <div className="container">
-          <Reveal>
-            <span className="eyebrow">Process</span>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <h2 className={`section-title ${styles.sectionHeading}`}>
-              Approach &amp; process
-            </h2>
-          </Reveal>
+          <div className={styles.sectionHead}>
+            <div>
+              <span className="eyebrow tp_fade_anim">Process</span>
+              <h2 className="section-title tp_title_anim">
+                Approach &amp; <span className="text-accent">process</span>
+              </h2>
+            </div>
+            <p className={`${styles.sectionSub} tp_fade_anim`} data-fade-from="right">
+              How the project moved from first brief to shipped product.
+            </p>
+          </div>
 
-          <div className={styles.approachGrid}>
+          <div className={styles.approachList}>
             {project.approach.map((step, idx) => (
-              <Reveal key={step.title} delay={idx * 0.08} y={30}>
-                <div className={styles.approachCard}>
-                  <span className={styles.approachIndex}>0{idx + 1}</span>
-                  <h3 className={styles.approachTitle}>{step.title}</h3>
-                  <p className={styles.approachDesc}>{step.desc}</p>
-                </div>
-              </Reveal>
+              <div
+                key={step.title}
+                className={`${styles.approachRow} tp_fade_anim`}
+                data-delay={`${0.08 + idx * 0.08}`}
+              >
+                <span className={styles.approachIndex} aria-hidden="true">
+                  0{idx + 1}
+                </span>
+                <h3 className={styles.approachTitle}>{step.title}</h3>
+                <p className={styles.approachDesc}>{step.desc}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section">
+      {/* Challenge & outcome — statement card + check-marked results. */}
+      <section className={`section ${styles.solvedSection}`}>
         <div className="container">
-          <div className={styles.contentGrid}>
-            <Reveal className={styles.overviewCol}>
-              <span className="eyebrow">Challenge &amp; outcome</span>
-              <h2 className={`section-title ${styles.sectionHeading}`}>
-                What we solved
+          <div className={styles.sectionHead}>
+            <div>
+              <span className="eyebrow tp_fade_anim">Challenge &amp; outcome</span>
+              <h2 className="section-title tp_title_anim">
+                What we <span className="text-accent">solved</span>
               </h2>
-            </Reveal>
-            <div className={styles.overviewText}>
-              <Reveal>
-                <p>{project.challenge}</p>
-              </Reveal>
-              <Reveal delay={0.08}>
-                <ul className={styles.outcomeList}>
-                  {project.outcome.map((point, i) => (
-                    <li key={i}>{point}</li>
-                  ))}
-                </ul>
-              </Reveal>
+            </div>
+            <p className={`${styles.sectionSub} tp_fade_anim`} data-fade-from="right">
+              The core constraint behind the project — and what shipped in the
+              end.
+            </p>
+          </div>
+
+          <div className={styles.solvedGrid}>
+            <div className={`${styles.challengeCard} tp_fade_anim`}>
+              <span className={styles.solvedLabel}>The challenge</span>
+              <p className={styles.challengeText}>{project.challenge}</p>
+            </div>
+            <div className={styles.outcomeCol}>
+              <span className={styles.solvedLabel}>The outcome</span>
+              <ul className={styles.outcomeList}>
+                {project.outcome.map((point, i) => (
+                  <li
+                    key={i}
+                    className={`${styles.outcomeItem} tp_fade_anim`}
+                    data-delay={`${0.1 + i * 0.08}`}
+                  >
+                    <span className={styles.outcomeCheck}>
+                      <Check size={15} />
+                    </span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>

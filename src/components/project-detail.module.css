@@ -63,7 +63,7 @@
 
 .title {
   font-size: clamp(2.4rem, 8vw, 5.6rem);
-  line-height: 0.98;
+  line-height: 1.08;
   letter-spacing: -0.03em;
   max-width: 16ch;
   margin-bottom: 1.5rem;
@@ -210,82 +210,199 @@
   white-space: pre-line;
 }
 
-.outcomeList {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 0.5rem;
-  padding-left: 0;
+/* Shared split section header (same pattern as the About page). */
+.sectionHead {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: end;
+  margin-bottom: clamp(40px, 6vw, 64px);
 }
 
-.outcomeList li {
-  list-style: none;
-  position: relative;
-  padding-left: 28px;
-  color: var(--fg);
+.sectionSub {
+  color: var(--muted);
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 1.6;
+  max-width: 44ch;
+  justify-self: end;
+  text-align: right;
 }
 
-.outcomeList li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.5em;
-  width: 14px;
-  height: 1px;
-  background: var(--accent);
+@media (max-width: 900px) {
+  .sectionHead {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .sectionSub {
+    justify-self: start;
+    text-align: left;
+  }
 }
 
-/* Approach */
+/* Approach — editorial numbered rows */
 .approachSection {
   background: var(--bg-elevated);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
 
-.approachGrid {
+.approachList {
+  border-top: 1px solid var(--line);
+}
+
+.approachRow {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 2.5rem;
+  grid-template-columns: 90px minmax(0, 1fr) minmax(0, 1.3fr);
+  align-items: center;
+  gap: clamp(20px, 3vw, 48px);
+  padding: clamp(26px, 4vw, 40px) 12px;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.4s ease, padding-left 0.4s var(--ease);
 }
 
-@media (max-width: 900px) {
-  .approachGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.approachCard {
-  background: var(--bg-card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 32px 28px;
-  height: 100%;
-  transition: border-color 0.4s var(--ease), transform 0.4s var(--ease);
-}
-
-.approachCard:hover {
-  border-color: var(--accent);
-  transform: translateY(-6px);
+.approachRow:hover {
+  background: rgba(198, 241, 53, 0.03);
+  padding-left: 28px;
 }
 
 .approachIndex {
-  display: block;
-  font-family: var(--font-mono);
-  color: var(--accent);
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--muted-dark);
+  transition: -webkit-text-stroke-color 0.4s ease;
+}
+
+.approachRow:hover .approachIndex {
+  -webkit-text-stroke: 1px var(--accent);
 }
 
 .approachTitle {
-  font-size: 1.25rem;
-  margin-bottom: 0.75rem;
+  font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  transition: transform 0.4s var(--ease);
+}
+
+.approachRow:hover .approachTitle {
+  transform: translateX(6px);
 }
 
 .approachDesc {
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 900px) {
+  .approachRow {
+    grid-template-columns: 56px minmax(0, 1fr);
+    grid-template-areas:
+      "num title"
+      "num desc";
+    row-gap: 10px;
+    align-items: start;
+  }
+  .approachIndex {
+    grid-area: num;
+    margin-top: 4px;
+  }
+  .approachTitle {
+    grid-area: title;
+  }
+  .approachDesc {
+    grid-area: desc;
+  }
+  .approachRow:hover {
+    padding-left: 12px;
+  }
+}
+
+/* Challenge & outcome */
+.solvedSection {
+  position: relative;
+}
+
+.solvedGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .solvedGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.solvedLabel {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted-dark);
+  margin-bottom: 18px;
+}
+
+.challengeCard {
+  padding: clamp(28px, 4vw, 40px);
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.challengeText {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  line-height: 1.5;
+  color: var(--fg);
+  letter-spacing: -0.01em;
+}
+
+.outcomeCol {
+  min-width: 0;
+}
+
+.outcomeList {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  border-top: 1px solid var(--line);
+}
+
+.outcomeItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 4px;
+  border-bottom: 1px solid var(--line);
+  color: var(--fg);
+  font-size: 1rem;
   line-height: 1.6;
+  transition: background 0.3s ease, padding-left 0.3s var(--ease);
+}
+
+.outcomeItem:hover {
+  background: rgba(198, 241, 53, 0.03);
+  padding-left: 14px;
+}
+
+.outcomeCheck {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(198, 241, 53, 0.12);
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
 /* Prev/Next nav */

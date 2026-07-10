@@ -17,6 +17,22 @@
   pointer-events: none;
 }
 
+.watermark {
+  position: absolute;
+  top: clamp(2rem, 6vw, 4rem);
+  right: -2vw;
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 20vw, 18rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(244, 244, 239, 0.07);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -41,7 +57,7 @@
 .title {
   font-size: clamp(2.8rem, 10vw, 8rem);
   font-weight: 800;
-  line-height: 0.95;
+  line-height: 1.08;
   letter-spacing: -0.03em;
   text-transform: uppercase;
   max-width: 14ch;

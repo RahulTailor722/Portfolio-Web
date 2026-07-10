@@ -2,6 +2,107 @@
   padding-bottom: 120px;
 }
 
+/* ---------------------------------- Hero ---------------------------------- */
+.hero {
+  position: relative;
+  padding: clamp(9rem, 18vw, 14rem) 0 clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+}
+
+.heroGlow {
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 45vw;
+  height: 45vw;
+  max-width: 640px;
+  max-height: 640px;
+  background: radial-gradient(circle, rgba(198, 241, 53, 0.16), transparent 65%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.watermark {
+  position: absolute;
+  top: clamp(2rem, 6vw, 4rem);
+  right: -2vw;
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 20vw, 18rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(244, 244, 239, 0.07);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.heroTitle {
+  position: relative;
+  font-size: clamp(2.8rem, 9vw, 7.2rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.heroOutline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--fg);
+}
+
+.heroBottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+}
+
+.heroStatement {
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  line-height: 1.55;
+  max-width: 46ch;
+}
+
+.projCount {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 700px) {
+  .heroBottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
 .projectGrid {
   display: grid;
   grid-template-columns: 1fr;

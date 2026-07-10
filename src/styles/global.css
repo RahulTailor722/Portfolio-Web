@@ -103,12 +103,14 @@ ul {
   color: #000;
 }
 
+/* Keep heading line-height >= 1.1: SplitText's line masks (tp_title_anim)
+   clip to the line box, so tighter values cut off descenders (g, j, p, y). */
 h1,
 h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  line-height: 1.02;
+  line-height: 1.12;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
@@ -150,7 +152,7 @@ h4 {
 
 .display {
   font-size: clamp(2.4rem, 8vw, 6.4rem);
-  line-height: 0.98;
+  line-height: 1.08;
   letter-spacing: -0.03em;
 }
 

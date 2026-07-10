@@ -32,6 +32,7 @@ const ContactPage = () => {
         eyebrow="Get in touch"
         title="Let's build something"
         subtitle="Feel free to reach out for new projects, inquiries, or just to say hello."
+        watermark="CONTACT"
       />
 
       <div className="container">

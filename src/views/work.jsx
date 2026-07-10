@@ -2,7 +2,6 @@ import React from "react"
 import Link from "../components/link"
 import { motion } from "framer-motion"
 
-import PageHeader from "../components/page-header"
 import { projects } from "../data/site"
 import styles from "../styles/work.module.css"
 
@@ -44,11 +43,35 @@ const ProjectCard = ({ project, idx }) => {
 const WorkPage = () => {
   return (
     <div className={styles.workPage}>
-        <PageHeader
-          eyebrow="My Portfolio"
-          title="Selected Work"
-          subtitle="A showcase of web applications, design systems, and custom CMS themes crafted for performance and detail."
-        />
+        {/* Watermark hero — same concept as the About page. */}
+        <section className={styles.hero}>
+          <div className={styles.heroGlow} aria-hidden="true" />
+          <span className={styles.watermark} aria-hidden="true">
+            WORK
+          </span>
+          <div className="container">
+            <p className={`${styles.eyebrow} tp_fade_anim`} data-delay="0.1">
+              <span className={styles.dot} />
+              My Portfolio
+            </p>
+            <h1 className={`${styles.heroTitle} tp_title_anim`} data-delay="0.2">
+              Selected <span className={styles.heroOutline}>work.</span>
+            </h1>
+            <div className={styles.heroBottom}>
+              <p className={`${styles.heroStatement} tp_text_invert`}>
+                A showcase of web applications, design systems, and custom CMS
+                themes crafted for performance and detail.
+              </p>
+              <span
+                className={`${styles.projCount} tp_fade_anim`}
+                data-fade-from="right"
+                data-delay="0.4"
+              >
+                ({String(projects.length).padStart(2, "0")} projects)
+              </span>
+            </div>
+          </div>
+        </section>
 
         <div className="container">
           <div className={styles.projectGrid}>

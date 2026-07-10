@@ -2,7 +2,6 @@ import React from "react"
 import Link from "./link"
 import { ArrowUpRight, Check } from "lucide-react"
 
-import Reveal from "./reveal"
 import CTA from "./sections/cta"
 import { projects } from "../data/site"
 import styles from "./service-detail.module.css"
@@ -14,63 +13,81 @@ const ServiceDetail = ({ service, prevService, nextService }) => {
 
   return (
     <article className={styles.page}>
+      {/* Watermark hero — the service number as a giant outlined numeral. */}
       <header className={styles.hero}>
         <div className={styles.blob} aria-hidden="true" />
+        <span className={styles.watermark} aria-hidden="true">
+          {service.id}
+        </span>
         <div className="container">
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+          <nav
+            className={`${styles.breadcrumb} tp_fade_anim`}
+            data-delay="0.05"
+            aria-label="Breadcrumb"
+          >
             <Link to="/">Home</Link>
             <span>/</span>
             <span className={styles.breadcrumbCurrent}>{service.title}</span>
           </nav>
 
-          <Reveal>
-            <span className={styles.eyebrow}>
-              <span className={styles.dot} />
-              Service {service.id}
-            </span>
-          </Reveal>
+          <span className={`${styles.eyebrow} tp_fade_anim`} data-delay="0.1">
+            <span className={styles.dot} />
+            Service {service.id}
+          </span>
 
-          <Reveal delay={0.08}>
-            <h1 className={styles.title}>{service.title}</h1>
-          </Reveal>
+          <h1 className={`${styles.title} tp_title_anim`} data-delay="0.2">
+            {service.title}
+          </h1>
 
-          <Reveal delay={0.16}>
-            <p className={styles.desc}>{service.longDesc}</p>
-          </Reveal>
+          <div className={styles.heroBottom}>
+            <p className={`${styles.desc} tp_text_invert`}>{service.longDesc}</p>
 
-          <Reveal delay={0.22}>
             <div className={styles.tags}>
-              {service.tags.map((tag) => (
-                <span key={tag} className={styles.tag}>
+              {service.tags.map((tag, i) => (
+                <span
+                  key={tag}
+                  className={`${styles.tag} tp_fade_anim`}
+                  data-fade-from="right"
+                  data-delay={`${0.35 + i * 0.08}`}
+                >
                   {tag}
                 </span>
               ))}
             </div>
-          </Reveal>
+          </div>
         </div>
       </header>
 
-      <section className="section">
+      <section className={`section ${styles.deliverSection}`}>
         <div className="container">
-          <div className={styles.contentGrid}>
-            <Reveal className={styles.col}>
-              <span className="eyebrow">What's included</span>
-              <h2 className={`section-title ${styles.sectionHeading}`}>
-                Deliverables
+          <div className={styles.sectionHead}>
+            <div>
+              <span className="eyebrow tp_fade_anim">What&apos;s included</span>
+              <h2 className="section-title tp_title_anim">
+                Deliver<span className="text-accent">ables</span>
               </h2>
-            </Reveal>
-            <div className={styles.deliverables}>
-              {service.deliverables.map((item, i) => (
-                <Reveal key={item} delay={i * 0.06}>
-                  <div className={styles.deliverableItem}>
-                    <span className={styles.checkIcon}>
-                      <Check size={16} />
-                    </span>
-                    <span>{item}</span>
-                  </div>
-                </Reveal>
-              ))}
             </div>
+            <p className={`${styles.sectionSub} tp_fade_anim`} data-fade-from="right">
+              Everything you can expect in hand by the time this engagement
+              wraps up.
+            </p>
+          </div>
+          <div className={styles.deliverGrid}>
+            {service.deliverables.map((item, i) => (
+              <div
+                key={item}
+                className={`${styles.deliverableItem} tp_fade_anim`}
+                data-delay={`${0.08 + i * 0.08}`}
+              >
+                <span className={styles.deliverableNum} aria-hidden="true">
+                  0{i + 1}
+                </span>
+                <span className={styles.deliverableText}>{item}</span>
+                <span className={styles.checkIcon}>
+                  <Check size={16} />
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -78,40 +95,48 @@ const ServiceDetail = ({ service, prevService, nextService }) => {
       {relatedProjects.length > 0 && (
         <section className={`section ${styles.relatedSection}`}>
           <div className="container">
-            <Reveal>
-              <span className="eyebrow">In practice</span>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h2 className={`section-title ${styles.sectionHeading}`}>
-                Related work
-              </h2>
-            </Reveal>
+            <div className={styles.sectionHead}>
+              <div>
+                <span className="eyebrow tp_fade_anim">In practice</span>
+                <h2 className="section-title tp_title_anim">
+                  Related <span className="text-accent">work</span>
+                </h2>
+              </div>
+              <p className={`${styles.sectionSub} tp_fade_anim`} data-fade-from="right">
+                Projects where this service shaped the final product.
+              </p>
+            </div>
 
             <div className={styles.relatedGrid}>
               {relatedProjects.map((project, i) => (
-                <Reveal key={project.slug} delay={i * 0.08} y={30}>
-                  <Link
-                    to={`/work/${project.slug}/`}
-                    className={styles.relatedCard}
-                    data-cursor="View<br/>Case Study"
-                  >
-                    <div className={styles.relatedImageWrap}>
-                      <img
-                        src={project.imageSm || project.image}
-                        alt={project.title}
-                        loading="lazy"
-                        decoding="async"
-                        width="800"
-                        height="500"
-                        className={styles.relatedImage}
-                      />
-                    </div>
-                    <div className={styles.relatedMeta}>
+                <Link
+                  key={project.slug}
+                  to={`/work/${project.slug}/`}
+                  className={`${styles.relatedCard} tp_fade_anim`}
+                  data-delay={`${0.08 + i * 0.08}`}
+                  data-cursor="View<br/>Case Study"
+                >
+                  <div className={styles.relatedImageWrap}>
+                    <img
+                      src={project.imageSm || project.image}
+                      alt={project.title}
+                      loading="lazy"
+                      decoding="async"
+                      width="800"
+                      height="500"
+                      className={styles.relatedImage}
+                    />
+                  </div>
+                  <div className={styles.relatedMeta}>
+                    <div>
                       <h3>{project.title}</h3>
                       <p>{project.category}</p>
                     </div>
-                  </Link>
-                </Reveal>
+                    <span className={styles.relatedArrow} aria-hidden="true">
+                      <ArrowUpRight size={18} />
+                    </span>
+                  </div>
+                </Link>
               ))}
             </div>
           </div>
