@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react"
+import { Link } from "gatsby"
 import { stats } from "../../data/site"
 import * as styles from "./stats.module.css"
 
-const Counter = ({ value, suffix }) => {
+const Counter = ({ value }) => {
   const [display, setDisplay] = useState(0)
   const ref = useRef(null)
   const started = useRef(false)
@@ -33,12 +34,7 @@ const Counter = ({ value, suffix }) => {
     return () => observer.disconnect()
   }, [value])
 
-  return (
-    <span ref={ref}>
-      {display}
-      {suffix}
-    </span>
-  )
+  return <span ref={ref}>{display}</span>
 }
 
 const Stats = () => {
@@ -56,6 +52,12 @@ const Stats = () => {
               Six years of shipping polished, high-performance interfaces —
               measured in outcomes, not promises.
             </p>
+            <Link to="/work/" className={styles.introLink}>
+              Explore the work
+              <span className={styles.introArrow} aria-hidden="true">
+                &#8594;
+              </span>
+            </Link>
           </div>
 
           <div className={styles.grid}>
@@ -64,12 +66,11 @@ const Stats = () => {
                 key={s.label}
                 className={`${styles.stat} tp_fade_anim`}
                 data-delay={`${0.1 + i * 0.1}`}
+                data-num={String(i + 1).padStart(2, "0")}
               >
-                <span className={styles.index}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
                 <p className={styles.value}>
-                  <Counter value={s.value} suffix={s.suffix} />
+                  <Counter value={s.value} />
+                  {s.suffix && <span className={styles.suffix}>{s.suffix}</span>}
                 </p>
                 <p className={styles.label}>{s.label}</p>
                 <span className={styles.bar} aria-hidden="true" />

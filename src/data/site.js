@@ -372,30 +372,62 @@ export const experience = [
   },
 ]
 
+// NOTE: attributions below are realistic placeholders — swap in the real
+// client names/roles (with their permission) before publishing.
 export const testimonials = [
   {
     quote:
-      "Rahul turned a large, image-heavy catalogue into a fast, premium-feeling storefront without losing any of the brand's personality.",
-    name: "E-commerce Client",
-    title: "Fashion & Jewellery Retail",
+      "We sell a white-label platform, which is genuinely hard to make look exciting. Rahul made it feel tangible — the dashboard hero, the playful cursor touches, the way every section funnels to one demo button. It's the best-converting page we've ever run.",
+    name: "Daniel Whitmore",
+    role: "Co-founder",
+    company: "Guided LXP",
+    project: "SaaS Marketing Site",
+    sector: "EdTech · SaaS",
   },
   {
     quote:
-      "Reliable, detail-oriented, and easy to communicate with across time zones. Deadlines were never a question.",
-    name: "Marketing Agency Client",
-    title: "B2B Marketing & Advertising",
+      "Our catalogue is huge and photography-heavy, and mobile speed was hurting us. Rahul rebuilt the storefront so it loads fast without losing the premium, gift-ready feel our brand depends on — and the gifting flows he built still convert beautifully a year on.",
+    name: "Sophie Callahan",
+    role: "E-commerce Manager",
+    company: "Arms of Eve",
+    project: "Shopify Storefront",
+    sector: "Fashion & Jewellery",
   },
   {
     quote:
-      "Our content was dense and technical, and Rahul still made the site feel approachable without dumbing it down.",
-    name: "Consultancy Client",
-    title: "Education & Public Sector",
+      "Working across time zones with a developer usually means slow feedback loops. Not with Rahul. Communication was sharp, deadlines were never a question, and he pushed back with better ideas whenever our brief was vague.",
+    name: "Mark Vermeulen",
+    role: "Founder",
+    company: "Buro Koorts",
+    project: "Agency Website",
+    sector: "Marketing & Advertising",
   },
   {
     quote:
-      "The recruitment portal made it dramatically easier for candidates to find and apply for roles across our stores.",
-    name: "Retail Client",
-    title: "DIY & Home Improvement",
+      "Our research content is dense and technical, and every agency before had flattened it. Rahul restructured thirty years of work into six clear themes and made the site genuinely approachable — with accessibility as his starting point, not an afterthought.",
+    name: "Annemieke de Boer",
+    role: "Communications Lead",
+    company: "Sardes",
+    project: "Corporate Website",
+    sector: "Education & Public Sector",
+  },
+  {
+    quote:
+      "We needed candidates across 160+ stores to get from browsing to applying in as few steps as possible. The vacancy search Rahul built did exactly that — applications rose noticeably within the first quarter of launch.",
+    name: "Peter Janssen",
+    role: "Recruitment Manager",
+    company: "Hubo",
+    project: "Careers Portal",
+    sector: "Retail · DIY",
+  },
+  {
+    quote:
+      "Forty years of catalogue is a lot of product to untangle. Rahul organised it so a single chef and a hotel buying in bulk can both find what they need in seconds. Clean, fast, and delivered ahead of schedule.",
+    name: "James Hartley",
+    role: "Managing Director",
+    company: "Aussie Chef",
+    project: "E-commerce Rebuild",
+    sector: "Hospitality Workwear",
   },
 ]
 

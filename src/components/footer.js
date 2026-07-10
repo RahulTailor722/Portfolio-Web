@@ -1,7 +1,13 @@
 import React from "react"
 import { Link } from "gatsby"
-import { ArrowUpRight, Mail, MapPin, Linkedin, Github, Twitter } from "lucide-react"
+import { ArrowUp, ArrowUpRight, Mail, MapPin, Phone, Linkedin, Github, Twitter } from "lucide-react"
 import * as styles from "./footer.module.css"
+
+const scrollTop = () => {
+  if (typeof window !== "undefined") {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+}
 
 const Footer = () => {
   const year = new Date().getFullYear()
@@ -17,6 +23,10 @@ const Footer = () => {
               Senior Frontend Developer crafting fast, accessible and
               memorable digital experiences.
             </p>
+            <span className={styles.status}>
+              <span className={styles.statusDot} aria-hidden="true" />
+              Available for new projects
+            </span>
             <div className={styles.social}>
               <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn">
                 <Linkedin size={18} />
@@ -52,7 +62,7 @@ const Footer = () => {
               <Mail size={14} /> rahultailor722@gmail.com
             </a>
             <a href="tel:+916352340795" className={styles.contactLink}>
-              <ArrowUpRight size={14} /> +91 6352340795
+              <Phone size={14} /> +91 6352340795
             </a>
             <span className={styles.contactLink}>
               <MapPin size={14} /> Ahmedabad, India
@@ -63,9 +73,16 @@ const Footer = () => {
           </div>
         </div>
 
+        <p className={styles.watermark} aria-hidden="true">
+          RAHUL TAILOR
+        </p>
+
         <div className={styles.bottom}>
           <span>© {year} Rahul Tailor. All rights reserved.</span>
-          <span>Designed &amp; built with care.</span>
+          <span className={styles.bottomMeta}>Ahmedabad, India · IST (UTC+5:30)</span>
+          <button className={styles.toTop} onClick={scrollTop} aria-label="Back to top">
+            Back to top <ArrowUp size={14} />
+          </button>
         </div>
       </div>
     </footer>

@@ -79,14 +79,62 @@
   line-height: 1.65;
 }
 
+/* ---- Intro link ---- */
+.introLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 26px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.introArrow {
+  display: inline-block;
+  transition: transform 0.45s var(--ease);
+}
+
+.introLink:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.introLink:hover .introArrow {
+  transform: translateX(6px);
+}
+
 /* ---- Stat grid: one connected bordered panel ---- */
 .grid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   border: 1px solid var(--line);
   border-radius: 20px;
   overflow: hidden;
   background: var(--bg-card);
+  box-shadow: 0 40px 90px -50px rgba(0, 0, 0, 0.65);
+}
+
+/* Faint light spill across the top of the panel */
+.grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    620px 220px at 18% 0%,
+    rgba(198, 241, 53, 0.055),
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 1;
 }
 
 .stat {
@@ -95,6 +143,28 @@
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   transition: background 0.4s ease;
+}
+
+/* Oversized outlined index watermark */
+.stat::before {
+  content: attr(data-num);
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 6.4vw, 4.8rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(154, 154, 148, 0.18);
+  pointer-events: none;
+  transition: -webkit-text-stroke-color 0.4s ease, transform 0.55s var(--ease);
+}
+
+.stat:hover::before {
+  -webkit-text-stroke-color: rgba(198, 241, 53, 0.4);
+  transform: translateY(-5px);
 }
 
 /* Kill the outer edges of the connected grid */
@@ -109,23 +179,12 @@
   background: var(--bg-elevated);
 }
 
-.index {
-  font-family: var(--font-display);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: var(--muted-dark);
-  transition: color 0.4s ease;
-}
-
-.stat:hover .index {
-  color: var(--accent-2);
-}
-
 .value {
-  margin-top: 18px;
+  position: relative;
+  z-index: 2;
+  margin-top: 10px;
   font-family: var(--font-display);
-  font-size: clamp(2.8rem, 6vw, 4.2rem);
+  font-size: clamp(3rem, 6.6vw, 4.6rem);
   font-weight: 600;
   letter-spacing: -0.04em;
   line-height: 1;
@@ -133,15 +192,27 @@
   transition: color 0.4s ease;
 }
 
+.suffix {
+  color: var(--accent);
+  margin-left: 3px;
+}
+
 .stat:hover .value {
   color: var(--accent);
 }
 
 .label {
-  margin-top: 12px;
+  position: relative;
+  z-index: 2;
+  margin-top: 14px;
   color: var(--muted);
   font-size: 14px;
   letter-spacing: 0.01em;
+  transition: color 0.4s ease;
+}
+
+.stat:hover .label {
+  color: #c4c4be;
 }
 
 /* Accent bar that grows in on hover */

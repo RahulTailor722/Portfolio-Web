@@ -82,18 +82,16 @@
 
 .coverWrap {
   width: 100%;
-  aspect-ratio: 16 / 10;
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--line);
   background: var(--bg-card);
 }
 
+/* Natural aspect ratio — the full screenshot stays visible, never cropped */
 .coverImg {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
+  height: auto;
   display: block;
 }
 

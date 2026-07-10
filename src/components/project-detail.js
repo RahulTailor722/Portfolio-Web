@@ -14,31 +14,20 @@ const ProjectDetail = ({ project, prevProject, nextProject }) => {
     let ctx
     let cancelled = false
 
-    Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
-      ([{ gsap }, { ScrollTrigger }]) => {
-        if (cancelled) return
-        gsap.registerPlugin(ScrollTrigger)
-        ctx = gsap.context(() => {
-          const img = coverRef.current
-          if (!img) return
-          gsap.fromTo(
-            img,
-            { scale: 1.12, yPercent: -4 },
-            {
-              scale: 1,
-              yPercent: 4,
-              ease: "none",
-              scrollTrigger: {
-                trigger: img,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true,
-              },
-            }
-          )
-        })
-      }
-    )
+    // One-time zoom-settle entrance: the image starts slightly scaled up and
+    // eases to scale 1, so nothing stays cropped once the animation finishes.
+    import("gsap").then(({ gsap }) => {
+      if (cancelled) return
+      ctx = gsap.context(() => {
+        const img = coverRef.current
+        if (!img) return
+        gsap.fromTo(
+          img,
+          { scale: 1.08 },
+          { scale: 1, duration: 1.4, delay: 0.15, ease: "power3.out" }
+        )
+      })
+    })
 
     return () => {
       cancelled = true

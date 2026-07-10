@@ -36,6 +36,45 @@
   line-height: 1.7;
 }
 
+/* Availability badge with pulsing dot */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  padding: 8px 16px;
+  border: 1px solid rgba(198, 241, 53, 0.25);
+  border-radius: 999px;
+  background: rgba(198, 241, 53, 0.05);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.statusDot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: statusPulse 2.2s ease-out infinite;
+}
+
+@keyframes statusPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(198, 241, 53, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 9px rgba(198, 241, 53, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(198, 241, 53, 0);
+  }
+}
+
 .social {
   display: flex;
   gap: 12px;
@@ -127,14 +166,60 @@
   background: #d6ff55;
 }
 
+/* Giant outlined wordmark, fading out toward the bottom bar */
+.watermark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 10.5vw, 8.6rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  text-align: center;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(244, 244, 239, 0.12);
+  user-select: none;
+  pointer-events: none;
+  margin: 4px 0 26px;
+  -webkit-mask-image: linear-gradient(to bottom, black 25%, transparent 96%);
+  mask-image: linear-gradient(to bottom, black 25%, transparent 96%);
+}
+
 .bottom {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 12px;
   padding-top: 24px;
   border-top: 1px solid var(--line);
   font-size: 13px;
   color: var(--muted-dark);
+}
+
+.bottomMeta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.toTop {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.toTop svg {
+  transition: transform 0.35s var(--ease);
+}
+
+.toTop:hover {
+  color: var(--accent);
+}
+
+.toTop:hover svg {
+  transform: translateY(-3px);
 }
 
 @media (min-width: 720px) {
@@ -144,6 +229,7 @@
   }
   .bottom {
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
   }
 }
