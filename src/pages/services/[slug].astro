@@ -1,0 +1,33 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import ServiceDetail from "../../components/service-detail.jsx"
+import { services } from "../../data/site"
+
+// One static page per service — same URLs the Gatsby build generated
+// (/services/user-research/, /services/ui-ux-design/, ...).
+export function getStaticPaths() {
+  return services.map((service, idx) => ({
+    params: { slug: service.slug },
+    props: {
+      service,
+      prevService: services[(idx - 1 + services.length) % services.length],
+      nextService: services[(idx + 1) % services.length],
+    },
+  }))
+}
+
+const { service, prevService, nextService } = Astro.props
+---
+
+<Layout
+  title={`${service.title} Services`}
+  description={service.longDesc}
+  pathname={`/services/${service.slug}/`}
+>
+  <ServiceDetail
+    client:load
+    service={service}
+    prevService={prevService}
+    nextService={nextService}
+  />
+</Layout>

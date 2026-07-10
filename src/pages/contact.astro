@@ -1,0 +1,12 @@
+---
+import Layout from "../layouts/Layout.astro"
+import ContactView from "../views/contact.jsx"
+---
+
+<Layout
+  title="Contact"
+  description="Get in touch with Rahul Tailor for new projects, freelance inquiries, or full-time opportunities."
+  pathname="/contact/"
+>
+  <ContactView client:load />
+</Layout>

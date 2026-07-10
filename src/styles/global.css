@@ -1,4 +1,4 @@
-/* Fonts are loaded via preconnect + <link> tags injected in gatsby-ssr.js onRenderBody,
+/* Fonts are loaded via preconnect + <link> tags injected in the <head> of src/layouts/Layout.astro,
    not @import here, since @import blocks CSS parsing behind an extra network round-trip. */
 
 /* ---------------------------------- Tokens --------------------------------- */

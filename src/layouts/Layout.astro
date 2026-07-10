@@ -1,0 +1,112 @@
+---
+import { ClientRouter } from "astro:transitions"
+import Cursor from "../components/cursor.jsx"
+import SmoothScroll from "../components/smooth-scroll.jsx"
+import GsapAnimations from "../components/gsap-animations.jsx"
+import PreloaderGate from "../components/preloader-gate.jsx"
+import Navbar from "../components/navbar.jsx"
+import Footer from "../components/footer.jsx"
+import "../styles/global.css"
+
+// SEO defaults ported 1:1 from the old Gatsby src/components/seo.js
+const SITE_URL = "https://rahultailor.dev"
+const DEFAULT_TITLE = "Rahul Tailor — Senior Frontend Developer"
+const DEFAULT_DESC =
+  "Rahul Tailor is a Senior Frontend Developer with 6+ years of experience crafting fast, accessible, and delightful digital products."
+const DEFAULT_IMAGE = `${SITE_URL}/images/og-default.jpg`
+
+const {
+  title,
+  description,
+  image,
+  pathname = "/",
+  type = "website",
+  structuredData,
+} = Astro.props
+
+const fullTitle = title ? `${title} — Rahul Tailor` : DEFAULT_TITLE
+const desc = description || DEFAULT_DESC
+const ogImage = image ? `${SITE_URL}${image}` : DEFAULT_IMAGE
+const ogImageWidth = image ? "1600" : "1200"
+const ogImageHeight = image ? "1000" : "630"
+const canonical = `${SITE_URL}${pathname}`
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Rahul Tailor",
+  jobTitle: "Senior Frontend Developer",
+  url: SITE_URL,
+  sameAs: ["https://www.linkedin.com/in/rahultailor/", "https://github.com/rahultailor"],
+}
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Rahul Tailor",
+  url: SITE_URL,
+}
+
+const extraSchemas = structuredData
+  ? Array.isArray(structuredData)
+    ? structuredData
+    : [structuredData]
+  : []
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0b0c" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content={ogImageWidth} />
+    <meta property="og:image:height" content={ogImageHeight} />
+    <meta property="og:site_name" content="Rahul Tailor" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={desc} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    {extraSchemas.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+
+    <!-- SPA-style navigation: keeps the in-memory preloader flag alive so
+         internal links play the short curtain, exactly like the Gatsby build. -->
+    <ClientRouter />
+  </head>
+  <body>
+    <Cursor client:load />
+    <SmoothScroll client:load />
+    <GsapAnimations client:load pathname={pathname} />
+    <PreloaderGate client:load />
+    <Navbar client:load />
+    <main><slot /></main>
+    <Footer client:load />
+  </body>
+</html>

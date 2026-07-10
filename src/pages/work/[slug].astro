@@ -1,0 +1,44 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import ProjectDetail from "../../components/project-detail.jsx"
+import { projects } from "../../data/site"
+import { buildProjectSchema, buildBreadcrumbSchema } from "../../utils/project-schema"
+
+// One static page per project — same URLs the Gatsby build generated
+// (/work/guided-lxp/, /work/arms-of-eve/, ...).
+export function getStaticPaths() {
+  return projects.map((project, idx) => ({
+    params: { slug: project.slug },
+    props: {
+      project,
+      prevProject: projects[(idx - 1 + projects.length) % projects.length],
+      nextProject: projects[(idx + 1) % projects.length],
+    },
+  }))
+}
+
+const { project, prevProject, nextProject } = Astro.props
+---
+
+<Layout
+  title={`${project.title} — Case Study`}
+  description={project.desc}
+  image={project.image}
+  pathname={`/work/${project.slug}/`}
+  type="article"
+  structuredData={[
+    buildProjectSchema(project),
+    buildBreadcrumbSchema([
+      { name: "Home", path: "/" },
+      { name: "Work", path: "/work/" },
+      { name: project.title, path: `/work/${project.slug}/` },
+    ]),
+  ]}
+>
+  <ProjectDetail
+    client:load
+    project={project}
+    prevProject={prevProject}
+    nextProject={nextProject}
+  />
+</Layout>
