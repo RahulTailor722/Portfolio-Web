@@ -103,8 +103,8 @@ export const projects = [
     industry: "EdTech / SaaS",
     year: "2025",
     liveUrl: "https://www.guidedlxp.com/",
-    image: "/images/projects/guided-lxp-cover.png",
-    imageSm: "/images/projects/guided-lxp-cover.png",
+    image: "/images/projects/guided-lxp-cover-1600.webp",
+    imageSm: "/images/projects/guided-lxp-cover-800.webp",
     desc: "The marketing site for an all-in-one, white-label Learning Experience Platform that helps growing teams onboard, upskill, and retain talent without building from scratch.",
     tags: ["SaaS", "UI/UX", "Landing Page", "Motion"],
     overview:
