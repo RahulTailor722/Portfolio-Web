@@ -6,6 +6,7 @@ import GsapAnimations from "../components/gsap-animations.jsx"
 import PreloaderGate from "../components/preloader-gate.jsx"
 import Navbar from "../components/navbar.jsx"
 import Footer from "../components/footer.jsx"
+import ScrollToTop from "../components/scroll-to-top.jsx"
 import "../styles/global.css"
 
 // SEO defaults ported 1:1 from the old Gatsby src/components/seo.js
@@ -37,7 +38,7 @@ const personSchema = {
   name: "Rahul Tailor",
   jobTitle: "Senior Frontend Developer",
   url: SITE_URL,
-  sameAs: ["https://www.linkedin.com/in/rahultailor/", "https://github.com/rahultailor"],
+  sameAs: ["https://www.linkedin.com/in/rahul-tailor-0a7940283/"],
 }
 
 const websiteSchema = {
@@ -108,5 +109,6 @@ const extraSchemas = structuredData
     <Navbar client:load />
     <main><slot /></main>
     <Footer client:load />
+    <ScrollToTop client:load />
   </body>
 </html>

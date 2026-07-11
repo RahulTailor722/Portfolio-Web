@@ -1,14 +1,12 @@
 import React, { useState } from "react"
 import { motion } from "framer-motion"
-import { ArrowUpRight, Mail, MapPin, Phone, CheckCircle2, Linkedin, Github, Twitter } from "lucide-react"
+import { ArrowUpRight, Mail, MapPin, Phone, CheckCircle2, Linkedin } from "lucide-react"
 
 import PageHeader from "../components/page-header"
 import styles from "../styles/contact.module.css"
 
 const socials = [
-  { label: "LinkedIn", href: "https://linkedin.com", icon: Linkedin },
-  { label: "GitHub", href: "https://github.com", icon: Github },
-  { label: "Twitter", href: "https://twitter.com", icon: Twitter },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/rahul-tailor-0a7940283/", icon: Linkedin },
 ]
 
 const ContactPage = () => {

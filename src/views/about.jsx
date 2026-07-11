@@ -294,7 +294,7 @@ const AboutPage = () => {
           <div className={styles.expList}>
             {experience.map((exp, i) => (
               <div
-                key={exp.role}
+                key={`${exp.company}-${exp.role}`}
                 className={`${styles.expRow} tp_fade_anim`}
                 data-delay={`${0.08 + i * 0.08}`}
               >

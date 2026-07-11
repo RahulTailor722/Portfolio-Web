@@ -31,7 +31,13 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* No CSS smooth scrolling: Lenis owns scroll easing. With the ClientRouter,
+     a `smooth` value here also animates the scroll reset after every page
+     swap, so new pages visibly glide up from the previous scroll position
+     instead of opening at the top (the lenis-smooth override below doesn't
+     cover the swap itself — JS-added html classes are wiped during it and
+     only restored once the Lenis island remounts). */
+  scroll-behavior: auto;
   -webkit-text-size-adjust: 100%;
   /* Clip horizontal bleed at the root. Lenis scrolls the native window/<html>,
      so overflow-x on <body> alone doesn't stop off-screen elements (e.g. the

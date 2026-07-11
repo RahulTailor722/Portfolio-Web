@@ -137,20 +137,12 @@ const Navbar = () => {
                   <label>Let's Connect</label>
                   <div className={styles.socialLinks}>
                     <a
-                      href="https://www.linkedin.com/in/rahultailor/"
+                      href="https://www.linkedin.com/in/rahul-tailor-0a7940283/"
                       target="_blank"
                       rel="noreferrer"
                       title="LinkedIn"
                     >
                       LinkedIn
-                    </a>
-                    <a
-                      href="https://github.com/rahultailor"
-                      target="_blank"
-                      rel="noreferrer"
-                      title="GitHub"
-                    >
-                      GitHub
                     </a>
                   </div>
                 </div>

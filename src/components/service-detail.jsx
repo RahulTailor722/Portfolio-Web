@@ -3,14 +3,9 @@ import Link from "./link"
 import { ArrowUpRight, Check } from "lucide-react"
 
 import CTA from "./sections/cta"
-import { projects } from "../data/site"
 import styles from "./service-detail.module.css"
 
 const ServiceDetail = ({ service, prevService, nextService }) => {
-  const relatedProjects = projects
-    .filter((p) => p.tags.some((t) => service.tags.includes(t)))
-    .slice(0, 3)
-
   return (
     <article className={styles.page}>
       {/* Watermark hero — the service number as a giant outlined numeral. */}
@@ -91,57 +86,6 @@ const ServiceDetail = ({ service, prevService, nextService }) => {
           </div>
         </div>
       </section>
-
-      {relatedProjects.length > 0 && (
-        <section className={`section ${styles.relatedSection}`}>
-          <div className="container">
-            <div className={styles.sectionHead}>
-              <div>
-                <span className="eyebrow tp_fade_anim">In practice</span>
-                <h2 className="section-title tp_title_anim">
-                  Related <span className="text-accent">work</span>
-                </h2>
-              </div>
-              <p className={`${styles.sectionSub} tp_fade_anim`} data-fade-from="right">
-                Projects where this service shaped the final product.
-              </p>
-            </div>
-
-            <div className={styles.relatedGrid}>
-              {relatedProjects.map((project, i) => (
-                <Link
-                  key={project.slug}
-                  to={`/work/${project.slug}/`}
-                  className={`${styles.relatedCard} tp_fade_anim`}
-                  data-delay={`${0.08 + i * 0.08}`}
-                  data-cursor="View<br/>Case Study"
-                >
-                  <div className={styles.relatedImageWrap}>
-                    <img
-                      src={project.imageSm || project.image}
-                      alt={project.title}
-                      loading="lazy"
-                      decoding="async"
-                      width="800"
-                      height="500"
-                      className={styles.relatedImage}
-                    />
-                  </div>
-                  <div className={styles.relatedMeta}>
-                    <div>
-                      <h3>{project.title}</h3>
-                      <p>{project.category}</p>
-                    </div>
-                    <span className={styles.relatedArrow} aria-hidden="true">
-                      <ArrowUpRight size={18} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       <nav className={styles.serviceNav} aria-label="Other services">
         <Link to={`/services/${prevService.slug}/`} className={styles.navPrev}>

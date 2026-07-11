@@ -1,40 +1,56 @@
 .wrap {
+  overflow: hidden;
+  padding: clamp(24px, 4vw, 48px) 0;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  padding: 26px 0;
-  overflow: hidden;
-  background: var(--bg-elevated);
-}
-
-.track {
-  display: flex;
-  gap: 40px;
-  width: max-content;
-  animation: scroll 26s linear infinite;
-}
-
-.item {
-  display: inline-flex;
-  align-items: center;
-  gap: 40px;
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 3vw, 2.4rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--fg);
   white-space: nowrap;
 }
 
-.star {
-  color: var(--accent);
-  font-size: 0.7em;
+.track {
+  display: inline-flex;
+  align-items: center;
+  /* Same px/s speed as the about-page marquee: its 28s covers a ~2000px
+     half-track of 5 short words; this half-track (18 long phrases) is ~5x
+     wider, so the duration scales up to keep the identical crawl. */
+  animation: marquee-scroll 145s linear infinite;
+  will-change: transform;
 }
 
-@keyframes scroll {
+@keyframes marquee-scroll {
   from {
     transform: translateX(0);
   }
   to {
     transform: translateX(-50%);
   }
+}
+
+.solid,
+.outline {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding-right: 28px;
+}
+
+.solid {
+  color: var(--fg);
+}
+
+.outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--muted-dark);
+}
+
+.star {
+  font-size: 0.4em;
+  color: var(--accent);
+  margin-left: 28px;
+  -webkit-text-stroke: 0;
+  -webkit-text-fill-color: var(--accent);
 }

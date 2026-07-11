@@ -7,6 +7,7 @@ export const skills = [
   { name: "Figma", level: 100, icon: "/images/tech/figma.svg" },
   { name: "Git", level: 85, icon: "/images/tech/git.svg" },
   { name: "GSAP", level: 80, icon: "/images/tech/greensock.svg" },
+  { name: "Webflow", level: 90, icon: "/images/tech/webflow.svg" },
   { name: "HubSpot", level: 85, icon: "/images/tech/hubspot.svg" },
   { name: "WordPress", level: 80, icon: "/images/tech/wordpress.svg" },
 ]
@@ -20,6 +21,7 @@ export const techStack = [
   "Figma",
   "Git",
   "GSAP",
+  "Webflow",
   "HubSpot",
   "WordPress",
   "Next.js",
@@ -65,10 +67,11 @@ export const services = [
     desc: "I transform designs into fast, responsive, and accessible digital products using modern frontend frameworks and best practices.",
     longDesc:
       "Design only matters if it ships fast and works everywhere. I build with componentized, semantic markup, keep bundles lean, and treat Core Web Vitals as a requirement rather than an afterthought — so the finished site feels as fast as it looks, on every device.",
-    tags: ["React JS", "Next JS", "Tailwind", "WordPress", "HubSpot"],
+    tags: ["React JS", "Next JS", "Tailwind", "Webflow", "WordPress", "HubSpot"],
     deliverables: [
       "Responsive, accessible markup",
       "Component-driven React/Next.js builds",
+      "Webflow design & development",
       "HubSpot CMS & WordPress theme development",
       "Performance & Core Web Vitals tuning",
       "Cross-browser & cross-device QA",
@@ -348,28 +351,28 @@ export const projects = [
 
 export const experience = [
   {
-    role: "Senior Frontend Developer",
-    company: "Pixelforge Studio",
-    period: "2022 — Present",
-    desc: "Leading frontend for flagship client products, building design systems and mentoring a team of 5 developers.",
-  },
-  {
     role: "Frontend Developer",
-    company: "Brightwave Digital",
-    period: "2020 — 2022",
-    desc: "Delivered high-performance marketing sites and web apps with React, Next.js and HubSpot CMS.",
+    company: "Techuz InfoWeb Pvt. Ltd",
+    period: "Jul 2023 — Jun 2025",
+    desc: "Webflow design and front-end development — built responsive, animation-rich marketing sites and web experiences for global clients.",
   },
   {
-    role: "UI Developer",
-    company: "Nimbus Labs",
-    period: "2019 — 2020",
-    desc: "Translated Figma designs into responsive, accessible interfaces and reusable component libraries.",
+    role: "Web Designer",
+    company: "Tridhya Tech Limited",
+    period: "Jun 2022 — Jun 2023",
+    desc: "Designed and developed pixel-perfect, responsive interfaces for client projects across e-commerce, corporate, and SaaS websites.",
   },
   {
-    role: "Junior Web Developer",
-    company: "Freelance",
-    period: "2018 — 2019",
-    desc: "Built websites for local businesses and startups while sharpening core web fundamentals.",
+    role: "Web Designer",
+    company: "LogicRays Technologies Pvt. Ltd.",
+    period: "Oct 2021 — Jun 2022",
+    desc: "Translated Figma and PSD designs into clean, semantic, cross-browser markup and reusable UI components.",
+  },
+  {
+    role: "Web Designer",
+    company: "Avyak Infoways",
+    period: "Jul 2020 — Aug 2021",
+    desc: "Started my professional journey building responsive websites and landing pages while sharpening core web fundamentals.",
   },
 ]
 

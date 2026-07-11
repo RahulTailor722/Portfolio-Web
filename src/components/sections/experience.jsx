@@ -35,7 +35,7 @@ const Experience = () => {
           <Reveal delay={0.1}>
             <p className="lead">
               A snapshot of the teams and companies I&apos;ve grown with — from
-              freelance beginnings to leading frontend at product studios.
+              web design beginnings to Webflow and modern frontend development.
             </p>
           </Reveal>
         </div>

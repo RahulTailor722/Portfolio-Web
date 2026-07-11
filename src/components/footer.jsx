@@ -1,13 +1,7 @@
 import React from "react"
 import Link from "./link"
-import { ArrowUp, ArrowUpRight, Mail, MapPin, Phone, Linkedin, Github, Twitter } from "lucide-react"
+import { ArrowUpRight, Mail, MapPin, Phone, Linkedin } from "lucide-react"
 import styles from "./footer.module.css"
-
-const scrollTop = () => {
-  if (typeof window !== "undefined") {
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }
-}
 
 const Footer = () => {
   const year = new Date().getFullYear()
@@ -28,14 +22,8 @@ const Footer = () => {
               Available for new projects
             </span>
             <div className={styles.social}>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/in/rahul-tailor-0a7940283/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
                 <Linkedin size={18} />
-              </a>
-              <a href="https://github.com" target="_blank" rel="noreferrer" aria-label="GitHub">
-                <Github size={18} />
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noreferrer" aria-label="Twitter">
-                <Twitter size={18} />
               </a>
             </div>
           </div>
@@ -80,9 +68,6 @@ const Footer = () => {
         <div className={styles.bottom}>
           <span>© {year} Rahul Tailor. All rights reserved.</span>
           <span className={styles.bottomMeta}>Ahmedabad, India · IST (UTC+5:30)</span>
-          <button className={styles.toTop} onClick={scrollTop} aria-label="Back to top">
-            Back to top <ArrowUp size={14} />
-          </button>
         </div>
       </div>
     </footer>
