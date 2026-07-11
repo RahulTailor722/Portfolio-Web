@@ -71,6 +71,8 @@ const ProjectDetail = ({ project, prevProject, nextProject }) => {
             <img
               ref={coverRef}
               src={project.image}
+              srcSet={`${project.imageSm} 800w, ${project.image} 1600w`}
+              sizes="(max-width: 900px) 100vw, 1100px"
               alt={`${project.title} website preview`}
               width="1600"
               height="1000"

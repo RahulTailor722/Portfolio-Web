@@ -9,7 +9,9 @@
   --line: #26262b;
   --fg: #f4f4ef;
   --muted: #9a9a94;
-  --muted-dark: #6c6c68;
+  /* Dim label/meta text. Kept just above the 4.5:1 WCAG AA threshold on the
+     darkest surfaces (--bg / --bg-card) — do not darken past ~#828280. */
+  --muted-dark: #878783;
   --accent: #c6f135;
   --accent-dim: #a7cf27;
   --accent-2: #38e1c8;
@@ -19,6 +21,20 @@
   --font-display: "Space Grotesk", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --font-mono: "Space Mono", ui-monospace, monospace;
+}
+
+/* Visually-hidden but screen-reader / audit accessible. Gives icon-only links
+   real text content (Astro's audit requires content, not just aria-label). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ----------------------------------- Reset --------------------------------- */

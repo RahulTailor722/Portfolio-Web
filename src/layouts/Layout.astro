@@ -7,6 +7,21 @@ import PreloaderGate from "../components/preloader-gate.jsx"
 import Navbar from "../components/navbar.jsx"
 import Footer from "../components/footer.jsx"
 import ScrollToTop from "../components/scroll-to-top.jsx"
+
+// Self-hosted fonts (latin subset only) — replaces the render-blocking
+// Google Fonts <link>. Bundled + hashed by Astro, served from /_astro with a
+// 1-year immutable cache. Family names ("Inter", "Space Grotesk", "Space
+// Mono") match the --font-* tokens in global.css, so nothing else changes.
+import "@fontsource/space-grotesk/latin-400.css"
+import "@fontsource/space-grotesk/latin-500.css"
+import "@fontsource/space-grotesk/latin-600.css"
+import "@fontsource/space-grotesk/latin-700.css"
+import "@fontsource/inter/latin-400.css"
+import "@fontsource/inter/latin-500.css"
+import "@fontsource/inter/latin-600.css"
+import "@fontsource/inter/latin-700.css"
+import "@fontsource/space-mono/latin-400.css"
+import "@fontsource/space-mono/latin-700.css"
 import "../styles/global.css"
 
 // SEO defaults ported 1:1 from the old Gatsby src/components/seo.js
@@ -83,13 +98,6 @@ const extraSchemas = structuredData
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
-    />
 
     <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />

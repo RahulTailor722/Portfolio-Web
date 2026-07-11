@@ -155,13 +155,19 @@ const GsapAnimations = ({ pathname }) => {
       // animation silently dies. So wait until the page has finished
       // loading/hydrating, and for fonts (so SplitText measures the final line
       // breaks), before touching the DOM.
+      // React 18 hydrates concurrently (Astro wraps island hydration in
+      // startTransition), so both the `load` event *and* a client-nav can land
+      // before the HomeView island's hydration commit. In every case, defer two
+      // animation frames past the trigger so SplitText/fades never restructure
+      // un-hydrated DOM (which makes React throw away the server HTML — errors
+      // #418/#423/#425 — and silently kills every animation).
+      const afterCommit = (resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve))
       const whenLoaded = new Promise((resolve) => {
         if (document.readyState === "complete") {
-          // Already loaded (e.g. client-side navigation) — defer a frame past
-          // React's hydration commit before mutating the DOM.
-          requestAnimationFrame(() => requestAnimationFrame(resolve))
+          afterCommit(resolve)
         } else {
-          window.addEventListener("load", resolve, { once: true })
+          window.addEventListener("load", () => afterCommit(resolve), { once: true })
         }
       })
 

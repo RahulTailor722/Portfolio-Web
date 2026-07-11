@@ -22,8 +22,9 @@ const Footer = () => {
               Available for new projects
             </span>
             <div className={styles.social}>
-              <a href="https://www.linkedin.com/in/rahul-tailor-0a7940283/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-                <Linkedin size={18} />
+              <a href="https://www.linkedin.com/in/rahul-tailor-0a7940283/" target="_blank" rel="noreferrer">
+                <Linkedin size={18} aria-hidden="true" />
+                <span className="sr-only">LinkedIn</span>
               </a>
             </div>
           </div>

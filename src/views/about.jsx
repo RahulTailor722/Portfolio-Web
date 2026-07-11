@@ -47,7 +47,7 @@ const CountUp = ({ value }) => {
 const SkillItem = ({ skill, delay }) => (
   <div className={`${styles.skillWrap} tp_fade_anim`} data-delay={delay}>
     <span className={styles.skillIcon}>
-      <img src={skill.icon} alt={skill.name} loading="lazy" width="40" height="40" />
+      <img src={skill.icon} alt="" loading="lazy" width="40" height="40" />
     </span>
     <div className={styles.skillContent}>
       <span className={styles.skillName}>{skill.name}</span>

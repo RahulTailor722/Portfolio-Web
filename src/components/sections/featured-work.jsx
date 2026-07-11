@@ -13,7 +13,16 @@ const ProjectCard = ({ project, index }) => {
       data-cursor="View<br/>Project"
     >
       <div className={styles.imageWrap}>
-        <img src={project.image} alt={project.title} loading="lazy" />
+        <img
+          src={project.image}
+          srcSet={`${project.imageSm} 800w, ${project.image} 1600w`}
+          sizes="(max-width: 768px) 90vw, 45vw"
+          alt=""
+          loading="lazy"
+          decoding="async"
+          width="1600"
+          height="1000"
+        />
       </div>
       <div className={styles.cardMeta}>
         <div className={styles.metaText}>

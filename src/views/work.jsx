@@ -21,7 +21,9 @@ const ProjectCard = ({ project, idx }) => {
       <div className={styles.imageWrapper}>
         <img
           src={project.image}
-          alt={project.title}
+          srcSet={`${project.imageSm} 800w, ${project.image} 1600w`}
+          sizes="(max-width: 768px) 90vw, 45vw"
+          alt=""
           loading="lazy"
           decoding="async"
           width="1600"
