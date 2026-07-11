@@ -26,3 +26,9 @@ yarn-debug.log*
 yarn-error.log*
 # Leftover Gatsby cache (locked by the old dev server; delete once it is stopped)
 .cache/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
