@@ -1,4 +1,4 @@
-const SITE_URL = "https://rahultailor.dev"
+const SITE_URL = "https://rahultailor.com"
 
 export const buildProjectSchema = (project) => ({
   "@context": "https://schema.org",

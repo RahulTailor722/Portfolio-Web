@@ -24,8 +24,15 @@ import "@fontsource/space-mono/latin-400.css"
 import "@fontsource/space-mono/latin-700.css"
 import "../styles/global.css"
 
+// Preload the three faces used above the fold (h1/eyebrow/body) so they're
+// fetched in parallel with the CSS instead of after it — the font swap then
+// lands before first paint, killing the hero CLS the old chain caused.
+import sgrotesk600Url from "@fontsource/space-grotesk/files/space-grotesk-latin-600-normal.woff2?url"
+import sgrotesk500Url from "@fontsource/space-grotesk/files/space-grotesk-latin-500-normal.woff2?url"
+import inter400Url from "@fontsource/inter/files/inter-latin-400-normal.woff2?url"
+
 // SEO defaults ported 1:1 from the old Gatsby src/components/seo.js
-const SITE_URL = "https://rahultailor.dev"
+const SITE_URL = "https://rahultailor.com"
 const DEFAULT_TITLE = "Rahul Tailor — Senior Frontend Developer"
 const DEFAULT_DESC =
   "Rahul Tailor is a Senior Frontend Developer with 6+ years of experience crafting fast, accessible, and delightful digital products."
@@ -93,6 +100,10 @@ const extraSchemas = structuredData
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={desc} />
     <meta name="twitter:image" content={ogImage} />
+
+    <link rel="preload" href={sgrotesk600Url} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={sgrotesk500Url} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={inter400Url} as="font" type="font/woff2" crossorigin />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />

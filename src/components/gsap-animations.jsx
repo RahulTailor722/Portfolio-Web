@@ -41,7 +41,11 @@ const GsapAnimations = ({ pathname }) => {
             const delay = parseFloat(item.getAttribute("data-delay") || 0.15)
             const ease = item.getAttribute("data-ease") || "power2.out"
             const setting = {
-              opacity: 0,
+              // autoAlpha (opacity + visibility:hidden), not bare opacity:
+              // hidden-until-scrolled text with opacity:0 is still "rendered"
+              // to WAVE/Lighthouse, which alpha-blend it into the background
+              // and flag every fade item as a contrast failure.
+              autoAlpha: 0,
               ease,
               duration,
               delay,
@@ -131,7 +135,7 @@ const GsapAnimations = ({ pathname }) => {
 
           // 7. Bounce-in button (template #27)
           gsap.utils.toArray(".tp-btn-bounce").forEach((btn) => {
-            gsap.set(btn, { y: -70, opacity: 0 })
+            gsap.set(btn, { y: -70, autoAlpha: 0 })
             gsap.to(btn, {
               scrollTrigger: {
                 trigger: btn.closest(".tp-btn-trigger") || btn,
@@ -140,7 +144,7 @@ const GsapAnimations = ({ pathname }) => {
               duration: 1,
               ease: "bounce.out",
               y: 0,
-              opacity: 1,
+              autoAlpha: 1,
             })
           })
         })

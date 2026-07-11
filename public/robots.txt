@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://rahultailor.dev/sitemap-index.xml
-Host: https://rahultailor.dev
+Sitemap: https://rahultailor.com/sitemap-index.xml
+Host: https://rahultailor.com

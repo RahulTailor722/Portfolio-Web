@@ -4,6 +4,6 @@ import sitemap from "@astrojs/sitemap"
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://rahultailor.dev",
+  site: "https://rahultailor.com",
   integrations: [react(), sitemap()],
 })
