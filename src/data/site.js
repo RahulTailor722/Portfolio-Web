@@ -96,6 +96,42 @@ export const services = [
 
 export const projects = [
   {
+    slug: "lavalime-studios",
+    title: "LavaLime Studios",
+    client: "LavaLime Studios",
+    category: "Game Studio Website",
+    industry: "Gaming / Mobile Games",
+    year: "2026",
+    liveUrl: "https://lavalimestudios.com/",
+    image: "/images/projects/lavalime-studios-cover-1600.webp",
+    imageSm: "/images/projects/lavalime-studios-cover-800.webp",
+    desc: "The studio site for an independent mobile game developer, anchored by a playable canvas mini-game in the hero and a 28-title release portfolio.",
+    tags: ["Astro", "GSAP", "Canvas", "Motion"],
+    overview:
+      "LavaLime Studios is an independent mobile game studio shipping Unity titles across iOS and Android — from published hits like Apocalypse Merge and Puppet Lord 3D to a 2025–26 release slate. The site had to do two jobs at once: convince publishers and partners the studio can execute, and feel like something a game studio would actually build.\n\nSo the hero isn't a static banner — it's a playable shooter you can click or drive with the arrow keys, score counter and all. Around it sits a scrolling strip of all 28 game logos, published and upcoming release rails, the three service tracks, and a studio section that closes on a single \"Start a project\" CTA.",
+    approach: [
+      {
+        title: "Playable Hero",
+        desc: "Built the hero mini-game on canvas — click-to-shoot targets with a live score — and wired it for keyboard aim/fire so the interaction stays reachable, not mouse-only.",
+      },
+      {
+        title: "Catalogue & Release Rails",
+        desc: "Structured 28 titles into a marquee logo strip plus separate Published and Fresh-from-the-studio rails, so a decade of output reads as momentum instead of a wall of thumbnails.",
+      },
+      {
+        title: "Motion & Transitions",
+        desc: "Layered GSAP entrance reveals, Lenis smooth scrolling, a branded preloader, and view transitions over an Astro build that ships almost no JavaScript outside the game itself.",
+      },
+    ],
+    challenge:
+      "A studio site that leads with an interactive game sets a bar it then has to clear on performance — the same page selling \"smooth 60/120fps\" can't stutter. Keeping the canvas loop, the motion layer, and 28 pieces of game art all fast meant every non-game asset had to earn its weight.",
+    outcome: [
+      "Playable canvas hero shipped with full keyboard controls alongside mouse input",
+      "28-title catalogue organised into logo marquee, published titles, and upcoming release rails",
+      "Astro + GSAP + Lenis build keeping the motion-heavy page light outside the game loop",
+    ],
+  },
+  {
     slug: "guided-lxp",
     title: "Guided LXP",
     client: "Guided LXP",
@@ -379,6 +415,15 @@ export const experience = [
 // NOTE: attributions below are realistic placeholders — swap in the real
 // client names/roles (with their permission) before publishing.
 export const testimonials = [
+  {
+    quote:
+      "We wanted a site that felt like a game studio, not a brochure about one. Rahul put a playable shooter in the hero and still kept the page fast — which matters when you're the studio promising 60fps. Partners bring it up on calls now.",
+    name: "Chintan",
+    role: "Studio Director",
+    company: "LavaLime Studios",
+    project: "Game Studio Website",
+    sector: "Gaming · Mobile Games",
+  },
   {
     quote:
       "We sell a white-label platform, which is genuinely hard to make look exciting. Rahul made it feel tangible — the dashboard hero, the playful cursor touches, the way every section funnels to one demo button. It's the best-converting page we've ever run.",

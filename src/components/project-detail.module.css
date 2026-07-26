@@ -9,15 +9,18 @@
   overflow: hidden;
 }
 
+/* Sized and inset to finish inside the hero. This hero is the shortest on the
+   site (~486px), so the old 640px circle hung 57px past the bottom and the
+   overflow clip sliced its falloff into a hard horizontal edge. */
 .blob {
   position: absolute;
-  top: -20%;
-  right: -10%;
-  width: 45vw;
-  height: 45vw;
-  max-width: 640px;
-  max-height: 640px;
-  background: radial-gradient(circle, rgba(198, 241, 53, 0.16), transparent 65%);
+  top: 20px;
+  right: 20px;
+  width: 40vw;
+  height: 40vw;
+  max-width: 440px;
+  max-height: 440px;
+  background: radial-gradient(circle, rgba(198, 241, 53, 0.19), transparent 65%);
   filter: blur(20px);
   pointer-events: none;
 }
@@ -86,6 +89,12 @@
   overflow: hidden;
   border: 1px solid var(--line);
   background: var(--bg-card);
+  /* Near-black screenshots (LavaLime) sit at roughly the page background, so a
+     single 1px line isn't enough edge to read as a framed card. The outer ring
+     plus soft lift separates dark covers; on light covers it's a hairline. */
+  box-shadow:
+    0 0 0 1px rgba(244, 244, 239, 0.06),
+    0 40px 80px -50px rgba(0, 0, 0, 0.9);
 }
 
 /* Natural aspect ratio — the full screenshot stays visible, never cropped */
