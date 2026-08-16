@@ -391,9 +391,31 @@
   pointer-events: none;
 }
 
+/* Overlap note under the location card — the first thing an overseas client
+   wants answered before they enquire. */
+.availability {
+  margin-top: 18px;
+  padding-left: 14px;
+  border-left: 2px solid var(--accent);
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 46ch;
+}
+
+/* Cloudflare Turnstile widget slot. The iframe sizes itself; this just gives
+   it breathing room and lets it shrink on narrow screens. */
+.captcha {
+  margin-top: 20px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Disabled covers both "sending" and "captcha not solved yet", so not-allowed
+   reads correctly in either state. */
 .submitBtn:disabled {
   opacity: 0.6;
-  cursor: wait;
+  cursor: not-allowed;
 }
 
 @media (max-width: 600px) {

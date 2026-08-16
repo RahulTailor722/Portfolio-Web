@@ -1,0 +1,236 @@
+.servicesPage {
+  padding-bottom: 120px;
+}
+
+/* ---------------------------------- Hero ----------------------------------
+   Mirrors the Work index hero so the two hub pages read as a matched pair. */
+.hero {
+  position: relative;
+  padding: clamp(9rem, 18vw, 14rem) 0 clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+}
+
+.heroGlow {
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 45vw;
+  height: 45vw;
+  max-width: 640px;
+  max-height: 640px;
+  background: radial-gradient(circle, rgba(198, 241, 53, 0.16), transparent 65%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.watermark {
+  position: absolute;
+  top: clamp(2rem, 6vw, 4rem);
+  right: -2vw;
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 15vw, 13rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(244, 244, 239, 0.07);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+/* line-height stays >= 1.08 — SplitText line masks clip descenders below that. */
+.heroTitle {
+  position: relative;
+  font-size: clamp(2.8rem, 9vw, 7.2rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.heroOutline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--fg);
+}
+
+.heroBottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+}
+
+.heroStatement {
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  line-height: 1.55;
+  max-width: 48ch;
+}
+
+.svcCount {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 700px) {
+  .heroBottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+/* ------------------------------- Index rows -------------------------------
+   Same row treatment as the homepage services section, so a visitor arriving
+   from either entry point sees one consistent list pattern. */
+.list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.item {
+  display: block;
+  position: relative;
+  padding: clamp(30px, 4vw, 46px) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.item:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.itemTop {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 28px);
+}
+
+.num {
+  flex: none;
+  align-self: flex-start;
+  font-family: var(--font-mono, monospace);
+  font-size: 14px;
+  color: var(--muted-dark);
+  letter-spacing: 0.06em;
+  transition: color 0.4s var(--ease);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4.4vw, 3.2rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--fg);
+  transition: color 0.45s var(--ease), transform 0.55s var(--ease);
+}
+
+.arrow {
+  flex: none;
+  margin-left: auto;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  opacity: 0;
+  transform: translate(-14px, 14px) scale(0.85);
+  transition: opacity 0.45s var(--ease), transform 0.55s var(--ease),
+    background 0.35s var(--ease), border-color 0.35s var(--ease),
+    color 0.35s var(--ease);
+}
+
+.item:hover .title {
+  color: var(--accent);
+  transform: translateX(16px);
+}
+
+.item:hover .num {
+  color: var(--accent-2);
+}
+
+.item:hover .arrow {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0b0b0c;
+}
+
+.itemBody {
+  margin-top: 18px;
+  padding-left: clamp(30px, 3.6vw, 44px);
+}
+
+.desc {
+  color: var(--muted);
+  font-size: 15.5px;
+  line-height: 1.68;
+  max-width: 58ch;
+  transition: color 0.4s var(--ease);
+}
+
+.item:hover .desc {
+  color: #c4c4be;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 0;
+  margin-top: 16px;
+}
+
+.meta span {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-dark);
+}
+
+.meta span + span::before {
+  content: "·";
+  margin: 0 12px;
+  color: var(--accent-2);
+}
+
+/* Touch devices never see the hover state — keep the arrow visible */
+@media (hover: none) {
+  .arrow {
+    opacity: 1;
+    transform: none;
+  }
+}

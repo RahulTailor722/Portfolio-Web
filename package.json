@@ -7,7 +7,8 @@
     "develop": "astro dev --host 0.0.0.0 --port 3000",
     "build": "astro build",
     "serve": "astro preview",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "images": "node scripts/optimize-images.js"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.0",

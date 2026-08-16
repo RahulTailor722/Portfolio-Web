@@ -138,6 +138,17 @@
   font-weight: 600;
 }
 
+/* "Services" doubles as a link to the /services/ hub, so it has to out-rank
+   the generic `.linkCol a` rule that would otherwise size it like a child link. */
+.linkCol a.colTitle {
+  color: var(--fg);
+  font-size: 11px;
+}
+
+.linkCol a.colTitle:hover {
+  color: var(--accent);
+}
+
 .contactCol {
   display: flex;
   flex-direction: column;

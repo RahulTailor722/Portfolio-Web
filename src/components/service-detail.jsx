@@ -22,6 +22,8 @@ const ServiceDetail = ({ service, prevService, nextService }) => {
           >
             <Link to="/">Home</Link>
             <span>/</span>
+            <Link to="/services/">Services</Link>
+            <span>/</span>
             <span className={styles.breadcrumbCurrent}>{service.title}</span>
           </nav>
 

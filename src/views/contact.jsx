@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowUpRight,
@@ -20,10 +20,27 @@ const socials = [
   },
 ];
 
-// Web3Forms access keys are public by design (they only route mail to the
-// email they were created for), but living in .env keeps them swappable
-// per environment. Get one at https://web3forms.com — it's free.
+// Web3Forms access keys are public by design — they only route mail to the
+// address they were registered for, and they end up in the client bundle
+// either way, so an env var would hide nothing. Get one free at
+// https://web3forms.com. See TURNSTILE_SITE_KEY below for the abuse guard.
 const WEB3FORMS_KEY = "e85be933-d8fd-4581-ac11-06b05e93b4e9";
+
+// Cloudflare Turnstile site key. The access key above is readable by anyone
+// who opens the JS bundle, so on its own nothing stops a scripted POST
+// straight to api.web3forms.com from flooding the inbox. Turnstile is what
+// actually closes that: once it's switched on in the Web3Forms dashboard,
+// submissions without a valid token are rejected server-side.
+//
+// Two steps, in this order:
+//   1. Paste the Turnstile site key below and deploy.
+//   2. Then enable Turnstile in the Web3Forms dashboard.
+// Doing 2 before 1 rejects every real submission. While this is empty the
+// widget is skipped entirely and the form behaves exactly as before.
+const TURNSTILE_SITE_KEY = "";
+
+const TURNSTILE_SRC =
+  "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
 
 const ContactPage = () => {
   const [formState, setFormState] = useState({
@@ -34,6 +51,69 @@ const ContactPage = () => {
   });
   const [status, setStatus] = useState("idle"); // idle | sending | success | error
   const [errorMsg, setErrorMsg] = useState("");
+  // With no site key configured there is no challenge to wait on.
+  const [captchaReady, setCaptchaReady] = useState(!TURNSTILE_SITE_KEY);
+  const captchaRef = useRef(null);
+  const widgetIdRef = useRef(null);
+
+  // The success screen replaces the form, so the widget has to be torn down and
+  // rebuilt rather than rendered once.
+  const showForm = status !== "success";
+
+  // Load Turnstile lazily and render it explicitly — the island can remount on
+  // a ClientRouter navigation, and auto-render would miss the second mount.
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY || !showForm) return;
+
+    let cancelled = false;
+
+    const teardown = () => {
+      if (widgetIdRef.current === null) return;
+      try {
+        window.turnstile?.remove(widgetIdRef.current);
+      } catch {
+        // Widget already detached with the form subtree — nothing to clean up.
+      }
+      widgetIdRef.current = null;
+      setCaptchaReady(false);
+    };
+
+    const render = () => {
+      if (cancelled || widgetIdRef.current !== null) return;
+      if (!window.turnstile || !captchaRef.current) return;
+      widgetIdRef.current = window.turnstile.render(captchaRef.current, {
+        sitekey: TURNSTILE_SITE_KEY,
+        theme: "dark",
+        callback: () => setCaptchaReady(true),
+        "expired-callback": () => setCaptchaReady(false),
+        "error-callback": () => setCaptchaReady(false),
+      });
+    };
+
+    if (window.turnstile) {
+      render();
+      return () => {
+        cancelled = true;
+        teardown();
+      };
+    }
+
+    let script = document.querySelector(`script[src="${TURNSTILE_SRC}"]`);
+    if (!script) {
+      script = document.createElement("script");
+      script.src = TURNSTILE_SRC;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+    script.addEventListener("load", render);
+
+    return () => {
+      cancelled = true;
+      script.removeEventListener("load", render);
+      teardown();
+    };
+  }, [showForm]);
 
   const handleChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
@@ -43,6 +123,11 @@ const ContactPage = () => {
     e.preventDefault();
     if (!WEB3FORMS_KEY) {
       setErrorMsg("The form isn't configured yet — missing access key.");
+      setStatus("error");
+      return;
+    }
+    if (!captchaReady) {
+      setErrorMsg("Please complete the verification check first.");
       setStatus("error");
       return;
     }
@@ -74,6 +159,12 @@ const ContactPage = () => {
           : err.message,
       );
       setStatus("error");
+      // Turnstile tokens are single-use, so the form needs a fresh one before
+      // the visitor can retry.
+      if (widgetIdRef.current !== null) {
+        window.turnstile?.reset(widgetIdRef.current);
+        setCaptchaReady(false);
+      }
     }
   };
 
@@ -138,6 +229,12 @@ const ContactPage = () => {
               </div>
             </div>
 
+            <p className={styles.availability}>
+              Time zones aren&apos;t an issue. I keep flexible hours and work
+              across the European and North American day — pick a time that
+              suits you and I&apos;ll be there.
+            </p>
+
             <div className={styles.socialsRow}>
               {socials.map(({ label, href, icon: Icon }) => (
                 <a
@@ -161,7 +258,7 @@ const ContactPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           >
-            {status === "success" ? (
+            {!showForm ? (
               <div className={styles.success}>
                 <CheckCircle2
                   size={48}
@@ -256,11 +353,17 @@ const ContactPage = () => {
                   />
                 </div>
 
+                {/* Turnstile injects its cf-turnstile-response input here, so
+                    it must live inside the form for FormData to pick it up. */}
+                {TURNSTILE_SITE_KEY && (
+                  <div className={styles.captcha} ref={captchaRef} />
+                )}
+
                 <div className={styles.formFooter}>
                   <button
                     type="submit"
                     className={`btn btn-primary ${styles.submitBtn}`}
-                    disabled={status === "sending"}
+                    disabled={status === "sending" || !captchaReady}
                   >
                     {status === "sending" ? "Sending…" : "Send Message"}{" "}
                     <ArrowUpRight size={18} />

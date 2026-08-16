@@ -17,7 +17,7 @@ const ProjectCard = ({ project, index }) => {
           src={project.image}
           srcSet={`${project.imageSm} 800w, ${project.image} 1600w`}
           sizes="(max-width: 768px) 90vw, 45vw"
-          alt=""
+          alt={`${project.title} — ${project.category}`}
           loading="lazy"
           decoding="async"
           width="1600"

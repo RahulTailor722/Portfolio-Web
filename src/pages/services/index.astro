@@ -1,0 +1,21 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import ServicesView from "../../views/services.jsx"
+import { services } from "../../data/site"
+import { buildServiceListSchema, buildBreadcrumbSchema } from "../../utils/schema"
+---
+
+<Layout
+  title="Services"
+  description="Frontend development, UI/UX design, user research, and deployment services for product teams in Canada, the United States, and Europe."
+  pathname="/services/"
+  structuredData={[
+    buildServiceListSchema(services),
+    buildBreadcrumbSchema([
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services/" },
+    ]),
+  ]}
+>
+  <ServicesView client:load />
+</Layout>

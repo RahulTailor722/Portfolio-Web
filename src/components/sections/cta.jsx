@@ -13,7 +13,7 @@ const CTA = () => {
           {" together."}
         </h2>
         <div className="tp-btn-bounce">
-          <Link to="/contact" className={`${styles.button} magnetic`} data-cursor="hover">
+          <Link to="/contact/" className={`${styles.button} magnetic`} data-cursor="hover">
             Start a Conversation
             <span className={styles.arrow} aria-hidden="true">
               &#8594;

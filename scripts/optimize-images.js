@@ -3,17 +3,25 @@
  * WebP covers, and generates the favicon/manifest icon set from the brand
  * mark SVG. Re-run manually whenever source images change.
  *
- * Usage: node scripts/optimize-images.js
+ * Usage: pnpm add -D sharp   (once — pnpm does not hoist Astro's copy)
+ *        npm run images
+ *
+ * Project covers are skipped unless RAW_SHOTS_DIR points at the raw
+ * screenshots; the favicon set and OG image always regenerate.
  */
 const fs = require("fs")
 const path = require("path")
 const sharp = require("sharp")
 
 const RAW_DIR = process.env.RAW_SHOTS_DIR
-const STATIC_DIR = path.join(__dirname, "..", "static")
+// Astro serves static assets from public/ (this was static/ under Gatsby).
+const STATIC_DIR = path.join(__dirname, "..", "public")
 const PROJECTS_OUT = path.join(STATIC_DIR, "images", "projects")
 
+// Keep in sync with the `projects` export in src/data/site.js.
 const PROJECT_SLUGS = [
+  "lavalime-studios",
+  "guided-lxp",
   "arms-of-eve",
   "aussie-chef",
   "sardes",
@@ -56,7 +64,7 @@ async function buildProjectCovers() {
 async function buildFavicons() {
   const svgPath = path.join(STATIC_DIR, "favicon.svg")
   if (!fs.existsSync(svgPath)) {
-    console.warn("  ! static/favicon.svg not found, skipping favicon set")
+    console.warn("  ! public/favicon.svg not found, skipping favicon set")
     return
   }
   const svgBuffer = fs.readFileSync(svgPath)
@@ -101,15 +109,22 @@ async function buildOgImage() {
           <stop offset="0" stop-color="#141416"/>
           <stop offset="1" stop-color="#0b0b0c"/>
         </linearGradient>
+        <!-- Soft falloff. A flat 8%-opacity circle rendered as a muddy olive
+             smudge that read as an artifact rather than a design element. -->
+        <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stop-color="#c6f135" stop-opacity="0.20"/>
+          <stop offset="0.55" stop-color="#c6f135" stop-opacity="0.07"/>
+          <stop offset="1" stop-color="#c6f135" stop-opacity="0"/>
+        </radialGradient>
       </defs>
       <rect width="1200" height="630" fill="url(#bg)"/>
       <rect x="0" y="0" width="1200" height="630" fill="none" stroke="#26262b" stroke-width="2"/>
-      <circle cx="1080" cy="90" r="140" fill="#c6f135" opacity="0.08"/>
+      <circle cx="1060" cy="110" r="230" fill="url(#glow)"/>
       <text x="90" y="300" font-family="'Space Grotesk', Arial, sans-serif" font-size="88" font-weight="700" fill="#f4f4ef">Rahul Tailor</text>
       <rect x="92" y="330" width="64" height="6" rx="3" fill="#c6f135"/>
       <text x="90" y="400" font-family="'Inter', Arial, sans-serif" font-size="34" fill="#9a9a94">Senior Frontend Developer</text>
       <text x="90" y="450" font-family="'Inter', Arial, sans-serif" font-size="26" fill="#6c6c68">Frontend engineering, UI/UX &amp; motion design</text>
-      <text x="90" y="560" font-family="'Space Mono', monospace" font-size="22" fill="#c6f135">rahultailor.dev</text>
+      <text x="90" y="560" font-family="'Space Mono', monospace" font-size="22" fill="#c6f135">rahultailor.com</text>
     </svg>
   `
 

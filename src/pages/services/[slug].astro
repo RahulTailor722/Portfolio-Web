@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro"
 import ServiceDetail from "../../components/service-detail.jsx"
 import { services } from "../../data/site"
+import { buildServiceSchema, buildBreadcrumbSchema } from "../../utils/schema"
 
 // One static page per service — same URLs the Gatsby build generated
 // (/services/user-research/, /services/ui-ux-design/, ...).
@@ -23,6 +24,14 @@ const { service, prevService, nextService } = Astro.props
   title={`${service.title} Services`}
   description={service.longDesc}
   pathname={`/services/${service.slug}/`}
+  structuredData={[
+    buildServiceSchema(service),
+    buildBreadcrumbSchema([
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services/" },
+      { name: service.title, path: `/services/${service.slug}/` },
+    ]),
+  ]}
 >
   <ServiceDetail
     client:load

@@ -38,7 +38,9 @@ const Footer = () => {
           </div>
 
           <div className={styles.linkCol}>
-            <p className={styles.colTitle}>Services</p>
+            <Link to="/services/" className={styles.colTitle}>
+              Services
+            </Link>
             <Link to="/services/user-research/">User Research</Link>
             <Link to="/services/ui-ux-design/">UI/UX Design</Link>
             <Link to="/services/frontend-development/">Frontend Dev</Link>

@@ -155,7 +155,7 @@ const AboutPage = () => {
               Crafting experiences that{" "}
               <span className="text-accent">drive engagement</span>
             </h2>
-            <Link to="/contact" className={styles.storyLink} data-cursor="hover">
+            <Link to="/contact/" className={styles.storyLink} data-cursor="hover">
               Let&apos;s work together
               <span className={styles.storyArrow} aria-hidden="true">
                 &#8594;

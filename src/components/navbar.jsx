@@ -5,6 +5,7 @@ import styles from "./navbar.module.css"
 const links = [
   { label: "Home", to: "/" },
   { label: "About Me", to: "/about/" },
+  { label: "Services", to: "/services/" },
   { label: "Work", to: "/work/" },
   { label: "Contact Me", to: "/contact/" },
 ]

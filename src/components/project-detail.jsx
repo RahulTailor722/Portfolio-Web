@@ -100,13 +100,21 @@ const ProjectDetail = ({ project, prevProject, nextProject }) => {
                 <span className={styles.metaValue}>{project.industry}</span>
               </div>
             </Reveal>
-            <Reveal y={20} delay={0.1}>
+            {project.market && (
+              <Reveal y={20} delay={0.1}>
+                <div className={styles.metaItem}>
+                  <span className={styles.metaLabel}>Market</span>
+                  <span className={styles.metaValue}>{project.market}</span>
+                </div>
+              </Reveal>
+            )}
+            <Reveal y={20} delay={0.15}>
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>Year</span>
                 <span className={styles.metaValue}>{project.year}</span>
               </div>
             </Reveal>
-            <Reveal y={20} delay={0.15}>
+            <Reveal y={20} delay={0.2}>
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>Live Site</span>
                 <a
