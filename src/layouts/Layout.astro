@@ -7,7 +7,7 @@ import PreloaderGate from "../components/preloader-gate.jsx"
 import Navbar from "../components/navbar.jsx"
 import Footer from "../components/footer.jsx"
 import ScrollToTop from "../components/scroll-to-top.jsx"
-import { AREA_SERVED } from "../utils/schema"
+import { PERSON } from "../utils/schema"
 
 // Self-hosted fonts (latin subset only) — replaces the render-blocking
 // Google Fonts <link>. Bundled + hashed by Astro, served from /_astro with a
@@ -32,15 +32,20 @@ import sgrotesk600Url from "@fontsource/space-grotesk/files/space-grotesk-latin-
 import sgrotesk500Url from "@fontsource/space-grotesk/files/space-grotesk-latin-500-normal.woff2?url"
 import inter400Url from "@fontsource/inter/files/inter-latin-400-normal.woff2?url"
 
-// SEO defaults ported 1:1 from the old Gatsby src/components/seo.js
+// SEO defaults. The <title> leads with what people search for ("senior
+// frontend developer") rather than the brand — "Rahul Tailor" already wins its
+// own name, so spending the first 30 characters on it targets nothing.
 const SITE_URL = "https://rahultailor.com"
-const DEFAULT_TITLE = "Rahul Tailor — Senior Frontend Developer"
+const DEFAULT_TITLE = "Senior Frontend Developer — React & Webflow | Rahul Tailor"
 const DEFAULT_DESC =
   "Rahul Tailor is a Senior Frontend Developer with 6+ years of experience crafting fast, accessible, and delightful digital products."
 const DEFAULT_IMAGE = `${SITE_URL}/images/og-default.jpg`
 
 const {
   title,
+  // Full <title> when the `${title} — Rahul Tailor` pattern would read badly
+  // or blow past ~60 characters (case studies, keyword-led page titles).
+  titleOverride,
   description,
   image,
   pathname = "/",
@@ -48,37 +53,18 @@ const {
   structuredData,
 } = Astro.props
 
-const fullTitle = title ? `${title} — Rahul Tailor` : DEFAULT_TITLE
+const fullTitle = titleOverride || (title ? `${title} — Rahul Tailor` : DEFAULT_TITLE)
 const desc = description || DEFAULT_DESC
 const ogImage = image ? `${SITE_URL}${image}` : DEFAULT_IMAGE
 const ogImageWidth = image ? "1600" : "1200"
 const ogImageHeight = image ? "1000" : "630"
 const canonical = `${SITE_URL}${pathname}`
 
-// `areaServed` + `workLocation` are the honest way to signal reach for a
-// remote freelancer: based in Ahmedabad, taking work from North America and
-// Europe. No hreflang here on purpose — there is one English version of every
-// page, and hreflang without genuinely localised alternates is noise.
-const personSchema = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Rahul Tailor",
-  jobTitle: "Senior Frontend Developer",
-  url: SITE_URL,
-  image: DEFAULT_IMAGE,
-  email: "rahultailor722@gmail.com",
-  telephone: "+91-6352340795",
-  knowsLanguage: ["en"],
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Ahmedabad",
-    addressRegion: "Gujarat",
-    addressCountry: "IN",
-  },
-  areaServed: AREA_SERVED,
-  workLocation: { "@type": "Place", name: "Remote" },
-  sameAs: ["https://www.linkedin.com/in/rahul-tailor-0a7940283/"],
-}
+// The Person entity (with `areaServed` + `workLocation`) now lives in
+// utils/schema.js so /about can reuse the identical object as its ProfilePage
+// mainEntity. Still no hreflang on purpose — there is one English version of
+// every page, and hreflang without genuinely localised alternates is noise.
+const personSchema = PERSON
 
 const websiteSchema = {
   "@context": "https://schema.org",
@@ -114,6 +100,13 @@ const extraSchemas = structuredData
     <meta property="og:image:width" content={ogImageWidth} />
     <meta property="og:image:height" content={ogImageHeight} />
     <meta property="og:site_name" content="Rahul Tailor" />
+    <!-- One English page serving several English-speaking markets. Too weak to
+         justify hreflang, but `og:locale:alternate` costs nothing and states
+         the intent for the crawlers and social scrapers that do read it. -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="en_CA" />
+    <meta property="og:locale:alternate" content="en_GB" />
+    <meta property="og:locale:alternate" content="en_IE" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
@@ -140,13 +133,28 @@ const extraSchemas = structuredData
     <ClientRouter />
   </head>
   <body>
-    <Cursor client:load />
+    <!-- First focusable thing on the page, before every island, so a keyboard
+         user reaches it on the very first Tab. Styled in global.css. -->
+    <a class="skip-link" href="#main">Skip to content</a>
+    <!-- Hydration strategy, by what each island actually needs:
+         - Cursor / ScrollToTop: neither is interactive before the user moves a
+           pointer or scrolls, so `idle` keeps them off the first-paint path.
+         - Footer: `visible`. Its server HTML is complete and its links are
+           real anchors that ClientRouter intercepts globally, so an
+           un-hydrated footer is fully functional — it only needs JS when the
+           user has scrolled to it, which is exactly the trigger.
+         - PreloaderGate / Navbar: `load`, they own first paint and the menu.
+         - SmoothScroll / GsapAnimations: `load`, they must be listening before
+           the user's first scroll.
+         GsapAnimations' hydration gate only counts islands that actually
+         contain animated elements, so deferring these three cannot stall it. -->
+    <Cursor client:idle />
     <SmoothScroll client:load />
     <GsapAnimations client:load pathname={pathname} />
     <PreloaderGate client:load />
     <Navbar client:load />
-    <main><slot /></main>
-    <Footer client:load />
-    <ScrollToTop client:load />
+    <main id="main"><slot /></main>
+    <Footer client:visible year={new Date().getFullYear()} />
+    <ScrollToTop client:idle />
   </body>
 </html>

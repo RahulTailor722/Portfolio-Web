@@ -4,6 +4,7 @@ import Link from "../components/link"
 import CTA from "../components/sections/cta"
 import { skills, techStack, experience, stats } from "../data/site"
 import styles from "../styles/about.module.css"
+import { prefersReducedMotion } from "../utils/motion"
 
 /* Eased count-up that starts when the number scrolls into view. */
 const CountUp = ({ value }) => {
@@ -14,7 +15,9 @@ const CountUp = ({ value }) => {
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    if (typeof IntersectionObserver === "undefined") {
+    // Reduce-motion (or no IntersectionObserver): jump straight to the final
+    // number. Set from the effect so the SSR/first-render 0 still matches.
+    if (prefersReducedMotion() || typeof IntersectionObserver === "undefined") {
       setDisplay(value)
       return
     }
@@ -43,7 +46,7 @@ const CountUp = ({ value }) => {
 }
 
 /* Skill pill matching the homepage about-intro design: round icon on the
-   left, name + big count-up percentage on the right. */
+   left, name + big count-up years figure on the right. */
 const SkillItem = ({ skill, delay }) => (
   <div className={`${styles.skillWrap} tp_fade_anim`} data-delay={delay}>
     <span className={styles.skillIcon}>
@@ -52,8 +55,8 @@ const SkillItem = ({ skill, delay }) => (
     <div className={styles.skillContent}>
       <span className={styles.skillName}>{skill.name}</span>
       <h3 className={styles.skillPct}>
-        <CountUp value={skill.level} />
-        <span className={styles.pctSign}>%</span>
+        <CountUp value={skill.years} />
+        <span className={styles.pctSign}>{skill.years === 1 ? "yr" : "yrs"}</span>
       </h3>
     </div>
   </div>
@@ -221,8 +224,8 @@ const AboutPage = () => {
               </h2>
             </div>
             <p className={`${styles.sectionSub} tp_fade_anim`} data-fade-from="right">
-              The tools I reach for every day — and the proficiency I bring to
-              each of them.
+              The tools I reach for every day — and how long I&apos;ve been
+              shipping production work with each of them.
             </p>
           </div>
           <div className={styles.skillGrid}>

@@ -1,12 +1,20 @@
 ---
 import Layout from "../layouts/Layout.astro"
 import ContactView from "../views/contact.jsx"
+import { buildContactPageSchema, buildBreadcrumbSchema } from "../utils/schema"
 ---
 
 <Layout
-  title="Contact"
-  description="Get in touch with Rahul Tailor for new projects, freelance inquiries, or full-time opportunities."
+  titleOverride="Hire a Senior Frontend Developer — Contact Rahul Tailor"
+  description="Available for freelance and contract frontend work with teams in Canada, the US, and Europe. Get in touch about React, Next.js, or Webflow projects."
   pathname="/contact/"
+  structuredData={[
+    buildContactPageSchema(),
+    buildBreadcrumbSchema([
+      { name: "Home", path: "/" },
+      { name: "Contact", path: "/contact/" },
+    ]),
+  ]}
 >
   <ContactView client:load />
 </Layout>

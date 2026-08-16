@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import Link from "./link"
 import styles from "./navbar.module.css"
+
+const FOCUSABLE =
+  'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
 const links = [
   { label: "Home", to: "/" },
@@ -20,6 +23,12 @@ const Logo = () => (
 const Navbar = () => {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const overlayRef = useRef(null)
+  const burgerRef = useRef(null)
+  const closeBtnRef = useRef(null)
+  // Distinguishes "never opened" from "just closed", so focus is only yanked
+  // back to the burger after a real close — not on first mount.
+  const hasOpened = useRef(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -31,7 +40,82 @@ const Navbar = () => {
     document.body.style.overflow = open ? "hidden" : ""
   }, [open])
 
-  const close = () => setOpen(false)
+  const close = useCallback(() => setOpen(false), [])
+
+  /**
+   * Modal behaviour for the mobile overlay: Escape to dismiss, Tab cycling
+   * confined to the overlay, focus moved in on open and returned to the burger
+   * on close, and the rest of the page marked inert so neither the pointer nor
+   * assistive tech can reach the 32 focusable elements behind it.
+   */
+  useEffect(() => {
+    if (!open) {
+      // Returning focus is only correct if the menu was actually open; on the
+      // initial render this effect runs with open === false.
+      if (hasOpened.current) burgerRef.current?.focus()
+      return
+    }
+    hasOpened.current = true
+
+    const overlay = overlayRef.current
+    if (!overlay) return
+
+    // `inert` removes an entire subtree from the tab order, the a11y tree and
+    // hit-testing in one go. aria-hidden is the fallback for engines without
+    // it — it covers assistive tech, though not tabbing, which is what the
+    // Tab handler below is for.
+    const outside = [
+      document.getElementById("main"),
+      document.querySelector("body > footer, footer"),
+    ].filter(Boolean)
+    outside.forEach((el) => {
+      el.setAttribute("inert", "")
+      el.setAttribute("aria-hidden", "true")
+    })
+
+    const visibleFocusable = () =>
+      Array.from(overlay.querySelectorAll(FOCUSABLE)).filter(
+        (el) => el.getClientRects().length > 0
+      )
+
+    // Wait a frame: the overlay transitions in from visibility:hidden, and an
+    // element with no client rects can't take focus yet.
+    const raf = requestAnimationFrame(() => {
+      ;(closeBtnRef.current || visibleFocusable()[0])?.focus()
+    })
+
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault()
+        close()
+        return
+      }
+      if (e.key !== "Tab") return
+      const items = visibleFocusable()
+      if (!items.length) return
+      const first = items[0]
+      const last = items[items.length - 1]
+      // The header behind the overlay still holds a focusable burger and CTA,
+      // so the trap is what keeps Tab inside rather than inert alone.
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown)
+    return () => {
+      cancelAnimationFrame(raf)
+      document.removeEventListener("keydown", onKeyDown)
+      outside.forEach((el) => {
+        el.removeAttribute("inert")
+        el.removeAttribute("aria-hidden")
+      })
+    }
+  }, [open, close])
 
   return (
     <>
@@ -51,6 +135,7 @@ const Navbar = () => {
               Let&apos;s Talk
             </Link>
             <button
+              ref={burgerRef}
               className={`${styles.burger} ${open ? styles.burgerOpen : ""}`}
               onClick={() => setOpen((o) => !o)}
               aria-label={open ? "Close menu" : "Open menu"}
@@ -71,21 +156,27 @@ const Navbar = () => {
           so it never intercepts taps or shows up in the a11y tree when closed. */}
       <div
         id="mobile-menu"
+        ref={overlayRef}
         className={`${styles.overlay} ${open ? styles.open : ""}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site menu"
         aria-hidden={!open}
       >
         <div className={styles.overlayInner}>
           <div className={styles.overlayHeader}>
             <div className={styles.overlayLogo}>
-              <Link to="/" onClick={close}>
+              <Link to="/" onClick={close} tabIndex={open ? 0 : -1}>
                 <Logo />
                 <span className="sr-only">Rahul Tailor — home</span>
               </Link>
             </div>
             <button
+              ref={closeBtnRef}
               className={styles.closeBtn}
               onClick={close}
               aria-label="Close menu"
+              tabIndex={open ? 0 : -1}
             >
               <span>close</span>
               <span className={styles.closeIcon}>

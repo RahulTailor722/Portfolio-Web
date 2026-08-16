@@ -258,6 +258,24 @@ const ContactPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           >
+            {/* Live regions live OUTSIDE the showForm branch on purpose. A
+                region only announces changes that happen while it is already
+                in the accessibility tree — mounting a fresh <p role="alert">
+                alongside its text is frequently missed, and the success state
+                unmounts the whole form, so there was nothing left to announce
+                from. These two stay mounted for the life of the page and only
+                their text content changes. */}
+            <p className="sr-only" role="status" aria-live="polite">
+              {status === "sending"
+                ? "Sending your message."
+                : status === "success"
+                  ? "Message sent. Thank you for reaching out — I'll get back to you as soon as possible."
+                  : ""}
+            </p>
+            <p className="sr-only" role="alert">
+              {status === "error" ? errorMsg : ""}
+            </p>
+
             {!showForm ? (
               <div className={styles.success}>
                 <CheckCircle2
@@ -298,6 +316,7 @@ const ContactPage = () => {
                       id="name"
                       name="name"
                       required
+                      autoComplete="name"
                       value={formState.name}
                       onChange={handleChange}
                       placeholder="John Doe"
@@ -314,6 +333,7 @@ const ContactPage = () => {
                       id="email"
                       name="email"
                       required
+                      autoComplete="email"
                       value={formState.email}
                       onChange={handleChange}
                       placeholder="john@example.com"
@@ -372,10 +392,11 @@ const ContactPage = () => {
                     Usually replies within 24 hours
                   </p>
                 </div>
+                {/* Visible copy only — the persistent sr-only region above is
+                    what announces this, so no second role="alert" here or
+                    screen readers would read the error twice. */}
                 {status === "error" && (
-                  <p className={styles.formError} role="alert">
-                    {errorMsg}
-                  </p>
+                  <p className={styles.formError}>{errorMsg}</p>
                 )}
               </form>
             )}

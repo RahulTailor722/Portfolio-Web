@@ -3,8 +3,14 @@ import Link from "./link"
 import { ArrowUpRight, Mail, MapPin, Phone, Linkedin } from "lucide-react"
 import styles from "./footer.module.css"
 
-const Footer = () => {
-  const year = new Date().getFullYear()
+/**
+ * `year` is passed in from Layout.astro rather than computed here. This is a
+ * static build: the server value is baked into the HTML at build time, so a
+ * client-side `new Date().getFullYear()` would disagree with it for every
+ * visitor after the next New Year's Eve — a guaranteed hydration text
+ * mismatch. Taking it as a serialized prop makes both renders use one value.
+ */
+const Footer = ({ year }) => {
   return (
     <footer className={styles.footer}>
       <div className="container">

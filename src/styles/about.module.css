@@ -481,10 +481,15 @@
   margin: 0;
 }
 
+/* Was a full-size "%". "yrs" is a unit, not part of the figure, so it takes
+   the usual smaller/dimmer unit treatment — at 1em the three letters competed
+   with the number itself. --muted (#9a9a94) clears AA on --bg-card. */
 .pctSign {
-  font-size: 1em;
+  font-size: 0.5em;
   font-weight: 600;
-  color: inherit;
+  color: var(--muted);
+  letter-spacing: 0;
+  margin-left: 0.28em;
 }
 
 .alsoRow {

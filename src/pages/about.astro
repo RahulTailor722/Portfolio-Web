@@ -1,12 +1,20 @@
 ---
 import Layout from "../layouts/Layout.astro"
 import AboutView from "../views/about.jsx"
+import { buildProfilePageSchema, buildBreadcrumbSchema } from "../utils/schema"
 ---
 
 <Layout
-  title="About"
-  description="6+ years of experience as a Senior Frontend Developer merging design thinking, technical expertise, and custom motion to build premium digital products."
+  titleOverride="About Rahul Tailor — Senior Frontend Developer"
+  description="Senior Frontend Developer with 6+ years in React, Next.js and Webflow, working remotely with product teams across Canada, the US, and Europe."
   pathname="/about/"
+  structuredData={[
+    buildProfilePageSchema(),
+    buildBreadcrumbSchema([
+      { name: "Home", path: "/" },
+      { name: "About", path: "/about/" },
+    ]),
+  ]}
 >
   <AboutView client:load />
 </Layout>

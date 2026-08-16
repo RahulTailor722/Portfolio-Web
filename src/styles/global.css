@@ -1,6 +1,27 @@
 /* Fonts are loaded via preconnect + <link> tags injected in the <head> of src/layouts/Layout.astro,
    not @import here, since @import blocks CSS parsing behind an extra network round-trip. */
 
+/* -------------------------------- Breakpoints ------------------------------- */
+/* Canonical scale. CSS custom properties are not usable inside @media preludes
+   (and @custom-media needs a PostCSS step this build doesn't have), so these
+   cannot be enforced by tooling — treat the list as the convention any NEW
+   media query must pick from:
+
+     --bp-sm   640px    large phone / small tablet
+     --bp-md   768px    tablet portrait
+     --bp-lg   1024px   tablet landscape / small laptop
+     --bp-xl   1280px   desktop
+
+   Use the `max-width: N - 1px` / `min-width: N` pairing already used at
+   719/720 and 819/820 so ranges never overlap.
+
+   The existing stylesheets have NOT been migrated onto this scale. They carry
+   ~17 distinct boundaries (360, 460, 480, 560, 576, 600, 640, 700, 720, 800,
+   820, 860, 900, 980, 992, 1024, 1080) across 17 files, and remapping them
+   necessarily moves where each component reflows — which cannot be done as a
+   no-visual-change refactor. Migrate opportunistically, one component at a
+   time, checking that component at each width as you go. */
+
 /* ---------------------------------- Tokens --------------------------------- */
 :root {
   --bg: #0b0b0c;
@@ -21,6 +42,49 @@
   --font-display: "Space Grotesk", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --font-mono: "Space Mono", ui-monospace, monospace;
+}
+
+/* ------------------------------- Focus rings ------------------------------- */
+/* `:focus-visible` only — a plain `:focus` ring would also fire on mouse
+   clicks. Never paired with `outline: none` and no replacement. The 2px offset
+   keeps the ring clear of the element's own border on the dark surfaces, and
+   `outline` (not box-shadow) follows border-radius automatically in every
+   engine that supports :focus-visible. */
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: inherit;
+}
+
+/* Elements that sit flush against the viewport edge or a card edge can't
+   afford the outward offset, so tuck the ring inside instead. */
+.skip-link:focus-visible {
+  outline-offset: 3px;
+}
+
+/* -------------------------------- Skip link -------------------------------- */
+/* First focusable element in the body. Visually hidden until focused, then
+   pinned top-left above every fixed element (navbar is z-index 1000, the
+   preloader curtain higher still — this has to clear both). */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  transform: translateY(-120%);
+  padding: 12px 20px;
+  background: var(--accent);
+  color: #0b0b0c;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  border-bottom-right-radius: 10px;
+  transition: transform 0.18s var(--ease);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 /* Visually-hidden but screen-reader / audit accessible. Gives icon-only links
@@ -321,6 +385,33 @@ h4 {
 }
 
 @media (hover: none), (max-width: 900px) {
+  #magic-cursor {
+    display: none;
+  }
+}
+
+/* ------------------------------ Reduced motion ----------------------------- */
+/* The JS islands each check `prefers-reduced-motion` themselves (see
+   src/utils/motion.js) and skip GSAP, Lenis, the preloader and the count-ups.
+   This block is the CSS half: it neutralises purely declarative motion —
+   the marquee keyframe loop, hover transitions, the overlay slide — that no
+   island controls.
+
+   `animation-duration: 0.01ms` rather than `none` on purpose: it lets
+   animations run to their final frame and still fire `animationend`, so
+   anything waiting on that event isn't stranded. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* The custom cursor island returns early under reduce-motion, which would
+     otherwise leave its un-positioned dot parked at the top-left corner. */
   #magic-cursor {
     display: none;
   }

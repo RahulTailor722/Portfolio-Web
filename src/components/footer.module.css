@@ -114,7 +114,11 @@
 .linkCol {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  /* Was 14px. The 6px removed here is re-added as padding inside each link
+     below, so the spacing between two link *texts* is still 14px (3 + 8 + 3)
+     while the link's own hit box grows to clear the WCAG 2.2 AA 2.5.8
+     minimum of 24x24. Nothing moves visually. */
+  gap: 8px;
 }
 
 .linkCol a,
@@ -123,6 +127,23 @@
   font-size: 14px;
   transition: color 0.3s ease;
   width: fit-content;
+}
+
+/* 14px text renders a ~22px box — just under the 24px target minimum. The
+   column title is excluded: it is 11px uppercase and sits on its own spacing
+   rhythm, and padding it would misalign the two columns against each other. */
+.linkCol a:not(.colTitle),
+.linkCol span:not(.colTitle) {
+  display: flex;
+  align-items: center;
+  min-height: 24px;
+  padding-block: 3px;
+}
+
+/* Compensates for the 6px removed from the column gap, so the distance from
+   the title to the first link is unchanged (9 + 8 + 3 = the previous 6 + 14). */
+.linkCol .colTitle {
+  margin-bottom: 9px;
 }
 
 .linkCol a:hover {

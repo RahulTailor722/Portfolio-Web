@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { skills } from "../../data/site"
 import styles from "./about-intro.module.css"
 
-/* Big percentage counter that counts up when scrolled into view,
+/* Big years-of-experience counter that counts up when scrolled into view,
    like the purecounter numbers on the reference site. */
 const SkillItem = ({ skill, delay }) => {
   const ref = useRef(null)
@@ -21,7 +21,7 @@ const SkillItem = ({ skill, delay }) => {
           const tick = (now) => {
             const p = Math.min(1, (now - start) / duration)
             const eased = 1 - Math.pow(1 - p, 3)
-            setDisplay(Math.round(eased * skill.level))
+            setDisplay(Math.round(eased * skill.years))
             if (p < 1) requestAnimationFrame(tick)
           }
           requestAnimationFrame(tick)
@@ -31,7 +31,7 @@ const SkillItem = ({ skill, delay }) => {
     )
     observer.observe(el)
     return () => observer.disconnect()
-  }, [skill.level])
+  }, [skill.years])
 
   return (
     <div ref={ref} className={`${styles.skillWrap} tp_fade_anim`} data-delay={delay}>
@@ -42,7 +42,7 @@ const SkillItem = ({ skill, delay }) => {
         <span className={styles.skillName}>{skill.name}</span>
         <h3 className={styles.skillPct}>
           {display}
-          <span className={styles.pctSign}>%</span>
+          <span className={styles.pctSign}>{skill.years === 1 ? "yr" : "yrs"}</span>
         </h3>
       </div>
     </div>

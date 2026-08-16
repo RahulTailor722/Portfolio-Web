@@ -6,6 +6,31 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
+  # One year, subdomains included. `preload` is deliberately NOT set: getting
+  # onto the browser preload list is slow to undo and commits every future
+  # subdomain to HTTPS forever. Add it only as a separate, deliberate step.
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  # Report-Only first, as agreed — this ships the policy without any risk of
+  # breaking the page, so the browser console can be checked for violations
+  # before it is promoted to the enforcing `Content-Security-Policy` header.
+  #
+  # Why each non-obvious source is here:
+  #   'unsafe-inline' (script-src) — Astro inlines two <script> blocks per
+  #       page: the astro-island custom-element runtime and the per-island
+  #       props/hydration call. Their content differs page to page, so hashes
+  #       would need a build step to stay in sync. Nonces need a dynamic
+  #       server; this is a static Cloudflare Pages deploy.
+  #   'unsafe-inline' (style-src) — 18 style="" attributes in the homepage
+  #       alone (hero pill positions, scroll-to-top water level) plus Astro's
+  #       two inlined <style> blocks.
+  #   static.cloudflareinsights.com — the Web Analytics beacon Cloudflare
+  #       Pages injects into the response; without it the beacon is blocked.
+  #   api.web3forms.com — where the contact form POSTs (fetch, so connect-src).
+  #   challenges.cloudflare.com — Turnstile. Listed ahead of need: the widget
+  #       is wired up in contact.jsx but dormant until TURNSTILE_SITE_KEY is
+  #       filled in, and a CSP that blocks it the day it's switched on is a
+  #       trap worth avoiding.
+  Content-Security-Policy-Report-Only: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.web3forms.com https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; manifest-src 'self'; upgrade-insecure-requests
 
 # Hashed build assets — safe to cache forever.
 /_astro/*

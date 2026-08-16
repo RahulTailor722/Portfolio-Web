@@ -23,10 +23,12 @@ export default defineConfig({
       // 404 is dropped by the integration itself. The /sitemap.xml endpoint
       // must be excluded too — a sitemap listing itself as a page is invalid.
       filter: (page) => !page.includes("/404") && !page.includes("/sitemap"),
-      changefreq: "monthly",
-      // Static site: a rebuild is the only way content changes, so build time
-      // is an honest lastmod for every URL.
-      lastmod: new Date(),
+      // No `lastmod` and no `changefreq` on purpose. Build time is not an
+      // honest lastmod: a CSS tweak would tell Google all 17 URLs changed, and
+      // a lastmod that is always "now" gets detected and discounted — which
+      // costs us the signal on the pages that genuinely did change. Google has
+      // ignored `changefreq` outright for years. Omitting both is stronger
+      // than sending noise.
       serialize(item) {
         const path = item.url.replace(SITE, "")
         item.priority = PRIORITY[path] ?? 0.6

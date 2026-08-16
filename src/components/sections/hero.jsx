@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react"
 import Link from "../link"
 import { ArrowUpRight } from "lucide-react"
 import styles from "./hero.module.css"
+import { prefersReducedMotion } from "../../utils/motion"
 
 const Hero = () => {
   const rootRef = useRef(null)
@@ -11,6 +12,11 @@ const Hero = () => {
 
   useEffect(() => {
     if (typeof window === "undefined") return
+
+    // Reduce-motion: no entrance timeline, no perpetual idle loops (float,
+    // orbit, blink, beacon pulse) and no mouse parallax. The hero markup
+    // already renders in its final state, so skipping is the correct result.
+    if (prefersReducedMotion()) return
 
     let ctx
     let cancelled = false

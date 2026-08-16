@@ -1,15 +1,29 @@
+/**
+ * Years of hands-on use per technology, replacing the old self-graded
+ * `level` percentages. A "100%" claim reads as a junior signal to experienced
+ * hiring managers and tells a client nothing; years are checkable against the
+ * `experience` timeline below and against LinkedIn.
+ *
+ * !! THESE NUMBERS ARE INFERRED, NOT CONFIRMED !!
+ * They were derived from the career timeline in `experience` (professional
+ * start Jul 2020, so 6 years to Aug 2026) and the tools each role names:
+ * Figma from LogicRays (Oct 2021), Webflow + GSAP from Techuz (Jul 2023),
+ * HubSpot as the most recent addition. Correct any that are wrong before the
+ * next deploy — the whole point of this change is that the numbers are
+ * verifiable, which fails if they are guesses.
+ */
 export const skills = [
-  { name: "HTML5", level: 100, icon: "/images/tech/html5.svg" },
-  { name: "CSS3", level: 100, icon: "/images/tech/css3.svg" },
-  { name: "JavaScript", level: 90, icon: "/images/tech/javascript.svg" },
-  { name: "React JS", level: 85, icon: "/images/tech/react.svg" },
-  { name: "Tailwind CSS", level: 100, icon: "/images/tech/tailwindcss.svg" },
-  { name: "Figma", level: 100, icon: "/images/tech/figma.svg" },
-  { name: "Git", level: 85, icon: "/images/tech/git.svg" },
-  { name: "GSAP", level: 80, icon: "/images/tech/greensock.svg" },
-  { name: "Webflow", level: 90, icon: "/images/tech/webflow.svg" },
-  { name: "HubSpot", level: 85, icon: "/images/tech/hubspot.svg" },
-  { name: "WordPress", level: 80, icon: "/images/tech/wordpress.svg" },
+  { name: "HTML5", years: 6, icon: "/images/tech/html5.svg" },
+  { name: "CSS3", years: 6, icon: "/images/tech/css3.svg" },
+  { name: "JavaScript", years: 6, icon: "/images/tech/javascript.svg" },
+  { name: "React JS", years: 4, icon: "/images/tech/react.svg" },
+  { name: "Tailwind CSS", years: 4, icon: "/images/tech/tailwindcss.svg" },
+  { name: "Figma", years: 5, icon: "/images/tech/figma.svg" },
+  { name: "Git", years: 5, icon: "/images/tech/git.svg" },
+  { name: "GSAP", years: 3, icon: "/images/tech/greensock.svg" },
+  { name: "Webflow", years: 3, icon: "/images/tech/webflow.svg" },
+  { name: "HubSpot", years: 2, icon: "/images/tech/hubspot.svg" },
+  { name: "WordPress", years: 4, icon: "/images/tech/wordpress.svg" },
 ]
 
 export const techStack = [
@@ -29,11 +43,18 @@ export const techStack = [
   "Framer Motion",
 ]
 
+// `seoTitle` / `metaDesc` exist because the on-page copy and the search-result
+// copy have different jobs. `title` is a two-word nav label and `longDesc` runs
+// ~330 characters — Google truncates a description near 155, so meta text is
+// written separately and kept inside that budget.
 export const services = [
   {
     id: "01",
     slug: "user-research",
     title: "User Research",
+    seoTitle: "UX Research & Usability Testing Services",
+    metaDesc:
+      "User interviews, usability testing, personas, and journey maps that ground design decisions in evidence — for product teams in North America and Europe.",
     desc: "I analyze user behavior and needs to uncover insights that shape impactful experiences and guide design decisions.",
     longDesc:
       "Before a single pixel gets designed, I dig into who the product is actually for. That means talking to real users and stakeholders, mapping how people currently get the job done, and finding the friction points a redesign should remove — so every later decision traces back to evidence, not opinion.",
@@ -49,6 +70,9 @@ export const services = [
     id: "02",
     slug: "ui-ux-design",
     title: "UI/UX Design",
+    seoTitle: "UI/UX Design & Prototyping Services",
+    metaDesc:
+      "Wireframes, interactive Figma prototypes, and design systems built for clarity, accessibility, and real-world use across web and mobile.",
     desc: "I craft clean and intuitive interfaces that blend aesthetics with usability, ensuring seamless journeys across web and mobile.",
     longDesc:
       "I design interfaces that look premium and hold up under real use — clear hierarchy, accessible contrast, and interaction patterns people already understand. Wireframes and prototypes get tested early, so by the time development starts, the design has already been validated rather than guessed at.",
@@ -64,6 +88,9 @@ export const services = [
     id: "03",
     slug: "frontend-development",
     title: "Frontend Development",
+    seoTitle: "React & Next.js Frontend Development Services",
+    metaDesc:
+      "Component-driven React, Next.js, Webflow, and HubSpot builds with accessible markup and Core Web Vitals treated as a requirement, not an afterthought.",
     desc: "I transform designs into fast, responsive, and accessible digital products using modern frontend frameworks and best practices.",
     longDesc:
       "Design only matters if it ships fast and works everywhere. I build with componentized, semantic markup, keep bundles lean, and treat Core Web Vitals as a requirement rather than an afterthought — so the finished site feels as fast as it looks, on every device.",
@@ -81,6 +108,9 @@ export const services = [
     id: "04",
     slug: "deployment",
     title: "Deployment",
+    seoTitle: "Web Deployment & Hosting Setup Services",
+    metaDesc:
+      "Production hosting, domain and caching setup, pre-launch performance and SEO audits, plus a clean handover so the site stays easy to maintain.",
     desc: "I ensure smooth deployment of applications with optimized performance, scalability, and seamless integration across environments.",
     longDesc:
       "Launch day shouldn't be stressful. I set up the hosting, domains, caching, and monitoring ahead of time, so shipping is a routine push rather than a fire drill — with a clear handover so the site stays easy to maintain long after launch.",

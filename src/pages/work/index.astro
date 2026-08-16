@@ -1,12 +1,17 @@
 ---
 import Layout from "../../layouts/Layout.astro"
 import WorkView from "../../views/work.jsx"
+import { buildBreadcrumbSchema } from "../../utils/schema"
 ---
 
 <Layout
-  title="Selected Work"
-  description="E-commerce, corporate, and careers websites shipped for clients in the Netherlands, Australia, the United States, and India — built for performance, accessibility, and conversion."
+  title="Frontend Developer Portfolio"
+  description="E-commerce, corporate, and careers sites shipped for clients in the Netherlands, Australia, the US, and India — built for performance and conversion."
   pathname="/work/"
+  structuredData={buildBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Work", path: "/work/" },
+  ])}
 >
   <WorkView client:load />
 </Layout>

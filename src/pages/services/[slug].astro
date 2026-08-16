@@ -18,11 +18,15 @@ export function getStaticPaths() {
 }
 
 const { service, prevService, nextService } = Astro.props
+
+// `seoTitle` targets the phrase people actually search ("react frontend
+// development services"); `title` alone is a two-word nav label.
+const seoTitle = `${service.seoTitle ?? `${service.title} Services`} | Rahul Tailor`
 ---
 
 <Layout
-  title={`${service.title} Services`}
-  description={service.longDesc}
+  titleOverride={seoTitle}
+  description={service.metaDesc ?? service.desc}
   pathname={`/services/${service.slug}/`}
   structuredData={[
     buildServiceSchema(service),

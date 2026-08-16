@@ -18,10 +18,15 @@ export function getStaticPaths() {
 }
 
 const { project, prevProject, nextProject } = Astro.props
+
+// The <title> leads with the client and what kind of site it is — "Case Study"
+// is a label nobody searches for, and the old `${title} — Case Study — Rahul
+// Tailor` pattern also produced two em-dashes in one title.
+const seoTitle = `${project.title} — ${project.category} | Rahul Tailor`
 ---
 
 <Layout
-  title={`${project.title} — Case Study`}
+  titleOverride={seoTitle}
   description={project.desc}
   image={project.image}
   pathname={`/work/${project.slug}/`}

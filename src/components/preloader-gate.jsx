@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react"
 import Preloader from "./preloader"
+import { prefersReducedMotion } from "../utils/motion"
 
 /**
  * Decides which curtain plays. `window.__rtPreloaded` is an in-memory flag
@@ -15,14 +16,22 @@ const PreloaderGate = () => {
   const [active, setActive] = useState(true)
   const [showText, setShowText] = useState(true)
 
-  useEffect(() => {
-    if (window.__rtPreloaded) setShowText(false)
-  }, [])
-
   const handleDone = useCallback(() => {
     setActive(false)
     if (typeof window !== "undefined") window.__rtPreloaded = true
   }, [])
+
+  useEffect(() => {
+    // Reduce-motion: drop the curtain immediately rather than playing the
+    // 2.4s letter-stagger + SVG wipe. Dismissed from an effect, never from
+    // initial state — `active` must start `true` on the client so the first
+    // render still matches the server HTML.
+    if (prefersReducedMotion()) {
+      handleDone()
+      return
+    }
+    if (window.__rtPreloaded) setShowText(false)
+  }, [handleDone])
 
   // Lock scrolling while the curtain is up (was on the Gatsby layout).
   useEffect(() => {

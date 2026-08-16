@@ -15,7 +15,6 @@ export const GET = ({ site }) => {
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>${base}/sitemap-0.xml</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
   </sitemap>
 </sitemapindex>
 `;
