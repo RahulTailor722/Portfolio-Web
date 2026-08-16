@@ -1,5 +1,4 @@
 import { useEffect } from "react"
-import { prefersReducedMotion } from "../utils/motion"
 
 /**
  * Global scroll-animation engine modeled on the "Aleric" template that powers
@@ -14,44 +13,9 @@ import { prefersReducedMotion } from "../utils/motion"
  * - .moving-text / .wrapper-text — marquee row nudged horizontally by scroll
  * - .tp-btn-trigger / .tp-btn-bounce — button drops in with a bounce
  */
-/**
- * Failure fallback. The CSS default for every animated element is *visible* —
- * the hidden state only ever exists as inline styles GSAP writes — so a page
- * where GSAP never loads at all is already fine, and a `.no-js` class would be
- * a no-op. The dangerous case is a partial failure: GSAP loads, writes the
- * "from" state, then throws before ScrollTrigger can reveal anything, leaving
- * everything below the fold permanently blank. Clearing the inline styles GSAP
- * owns restores the CSS default.
- */
-const ANIMATED = ".tp_fade_anim, .anim-zoomin, .tp-btn-bounce"
-
-/** Everything this engine reads or restructures — used to decide which islands
- *  must be hydrated before it is safe to touch the DOM. */
-const ANIMATED_CONTENT =
-  ".tp_fade_anim, .tp_title_anim, .tp_text_invert, .anim-zoomin, .scale-up-img, .moving-text, .tp-btn-bounce"
-const revealAll = () => {
-  if (typeof document === "undefined") return
-  document.querySelectorAll(ANIMATED).forEach((el) => {
-    el.style.opacity = ""
-    el.style.visibility = ""
-    el.style.transform = ""
-  })
-}
-
 const GsapAnimations = ({ pathname }) => {
   useEffect(() => {
     if (typeof window === "undefined") return
-
-    // Reduce-motion: skip the engine entirely. Every animated element's CSS
-    // default is its final, visible state — the hidden/offset state only ever
-    // exists as inline styles GSAP writes — so not running is exactly "render
-    // content in its final state immediately". revealAll() clears anything a
-    // previous run left behind (e.g. the user flipped the OS setting, or a
-    // ClientRouter nav re-ran this effect).
-    if (prefersReducedMotion()) {
-      revealAll()
-      return
-    }
 
     let ctx
     let cancelled = false
@@ -77,21 +41,11 @@ const GsapAnimations = ({ pathname }) => {
             const delay = parseFloat(item.getAttribute("data-delay") || 0.15)
             const ease = item.getAttribute("data-ease") || "power2.out"
             const setting = {
-              // Bare `opacity`, NOT `autoAlpha`. autoAlpha also writes
-              // visibility:hidden, which pulls the element out of the
-              // accessibility tree and out of the browser's find-in-page
-              // index — so ~35 of 38 fade items on the homepage (project
-              // names, testimonials, service copy) were invisible to Ctrl+F
-              // and to a screen reader's heading list until scrolled into
-              // view. Opacity keeps the text findable and announceable while
-              // looking identical.
-              //
-              // The tradeoff this reverses: opacity:0 text still counts as
-              // "rendered" to WAVE/Lighthouse, which alpha-blend it against
-              // the background and may re-flag fade items as contrast
-              // failures. Those are false positives on transient states;
-              // real users losing Ctrl+F is not.
-              opacity: 0,
+              // autoAlpha (opacity + visibility:hidden), not bare opacity:
+              // hidden-until-scrolled text with opacity:0 is still "rendered"
+              // to WAVE/Lighthouse, which alpha-blend it into the background
+              // and flag every fade item as a contrast failure.
+              autoAlpha: 0,
               ease,
               duration,
               delay,
@@ -201,89 +155,30 @@ const GsapAnimations = ({ pathname }) => {
       // Astro renders the page body as a separate `client:load` island. Running
       // SplitText (which restructures headings into line divs) or the fades
       // (which inject inline styles) before React finishes hydrating that island
-      // corrupts hydration — React throws the server HTML away (errors
-      // #418/#423/#425) and every animation silently dies.
-      //
-      // The previous gate — `load` event plus two animation frames — was a
-      // guess. React 18 hydrates concurrently (Astro wraps island hydration in
-      // startTransition), so a large tree can still be mid-hydration two frames
-      // after `load`, which is exactly how 125+ hydration errors were reaching
-      // production.
-      //
-      // Astro's island runtime gives an exact signal instead. In
-      // astro-island.prebuilt.js the custom element does:
-      //     await this.hydrator(this)(...); this.removeAttribute("ssr")
-      // so an <astro-island> carrying `ssr` has NOT finished hydrating, and the
-      // attribute disappears on the commit. Waiting for zero `astro-island[ssr]`
-      // in the document is therefore a guarantee, not a heuristic.
-      const whenIslandsHydrated = () =>
-        new Promise((resolve) => {
-          // Only islands that actually contain something this engine animates.
-          // Counting *every* island would deadlock against the deferred
-          // hydration strategies in Layout.astro: a `client:visible` Footer
-          // keeps its `ssr` flag until it is scrolled into view, so a
-          // whole-document check would stall every animation until the
-          // watchdog fired. Cursor/ScrollToTop/SmoothScroll render no animated
-          // markup either, so none of them need to be waited on.
-          const pending = () =>
-            Array.from(document.querySelectorAll("astro-island[ssr]")).filter(
-              (island) => island.querySelector(ANIMATED_CONTENT)
-            ).length
-          if (pending() === 0) {
-            resolve()
-            return
-          }
-          let settle
-          const obs = new MutationObserver(() => {
-            if (pending() === 0) settle()
-          })
-          // A watchdog so a single island that never hydrates (chunk 404,
-          // component throw) can't strand every animation forever.
-          const timer = setTimeout(() => {
-            console.warn(
-              "[gsap-animations] islands still un-hydrated after 8s; animating anyway"
-            )
-            settle()
-          }, 8000)
-          settle = () => {
-            clearTimeout(timer)
-            obs.disconnect()
-            resolve()
-          }
-          obs.observe(document.body, {
-            subtree: true,
-            childList: true,
-            attributes: true,
-            attributeFilter: ["ssr"],
-          })
-          cleanupFns.push(() => settle())
-        })
-
+      // corrupts hydration — React throws the server HTML away and every
+      // animation silently dies. So wait until the page has finished
+      // loading/hydrating, and for fonts (so SplitText measures the final line
+      // breaks), before touching the DOM.
+      // React 18 hydrates concurrently (Astro wraps island hydration in
+      // startTransition), so both the `load` event *and* a client-nav can land
+      // before the HomeView island's hydration commit. In every case, defer two
+      // animation frames past the trigger so SplitText/fades never restructure
+      // un-hydrated DOM (which makes React throw away the server HTML — errors
+      // #418/#423/#425 — and silently kills every animation).
+      const afterCommit = (resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve))
       const whenLoaded = new Promise((resolve) => {
-        if (document.readyState === "complete") resolve()
-        else window.addEventListener("load", resolve, { once: true })
+        if (document.readyState === "complete") {
+          afterCommit(resolve)
+        } else {
+          window.addEventListener("load", () => afterCommit(resolve), { once: true })
+        }
       })
 
-      // fonts.ready matters so SplitText measures final line breaks.
-      Promise.all([document.fonts?.ready, whenLoaded, whenIslandsHydrated()])
-        .then(() => {
-          try {
-            run()
-          } catch (err) {
-            console.error("[gsap-animations] animation setup failed:", err)
-            revealAll()
-          }
-        })
-        .catch((err) => {
-          console.error("[gsap-animations] gate failed:", err)
-          revealAll()
-        })
+      Promise.all([document.fonts?.ready, whenLoaded]).then(run)
 
       cleanupFns.push(() => ctx?.revert())
-    }).catch((err) => {
-      console.error("[gsap-animations] failed to load GSAP:", err)
-      revealAll()
-    })
+    }).catch((err) => console.error("[gsap-animations] failed to load GSAP:", err))
 
     return () => {
       cancelled = true

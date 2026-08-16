@@ -136,25 +136,18 @@ const extraSchemas = structuredData
     <!-- First focusable thing on the page, before every island, so a keyboard
          user reaches it on the very first Tab. Styled in global.css. -->
     <a class="skip-link" href="#main">Skip to content</a>
-    <!-- Hydration strategy, by what each island actually needs:
-         - Cursor / ScrollToTop: neither is interactive before the user moves a
-           pointer or scrolls, so `idle` keeps them off the first-paint path.
-         - Footer: `visible`. Its server HTML is complete and its links are
-           real anchors that ClientRouter intercepts globally, so an
-           un-hydrated footer is fully functional — it only needs JS when the
-           user has scrolled to it, which is exactly the trigger.
-         - PreloaderGate / Navbar: `load`, they own first paint and the menu.
-         - SmoothScroll / GsapAnimations: `load`, they must be listening before
-           the user's first scroll.
-         GsapAnimations' hydration gate only counts islands that actually
-         contain animated elements, so deferring these three cannot stall it. -->
-    <Cursor client:idle />
+    <!-- All islands hydrate on load. Deferring Cursor/ScrollToTop to `idle`
+         and Footer to `visible` was tried as a first-paint optimisation and
+         reverted: it changes when islands finish hydrating, and the GSAP
+         engine's timing depends on that. Not worth risking the animations for
+         a few KB off the critical path. -->
+    <Cursor client:load />
     <SmoothScroll client:load />
     <GsapAnimations client:load pathname={pathname} />
     <PreloaderGate client:load />
     <Navbar client:load />
     <main id="main"><slot /></main>
-    <Footer client:visible year={new Date().getFullYear()} />
-    <ScrollToTop client:idle />
+    <Footer client:load year={new Date().getFullYear()} />
+    <ScrollToTop client:load />
   </body>
 </html>

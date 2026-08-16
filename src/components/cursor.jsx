@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react"
-import { prefersReducedMotion } from "../utils/motion"
 
 const Cursor = () => {
   const ballRef = useRef(null)
@@ -8,9 +7,6 @@ const Cursor = () => {
   useEffect(() => {
     if (typeof window === "undefined") return
     if (window.matchMedia("(hover: none)").matches) return
-    // Reduce-motion: the lagging, eased follow is itself the animation, so
-    // there is nothing to degrade to — skip it and leave the native cursor.
-    if (prefersReducedMotion()) return
 
     const ball = ballRef.current
     const view = viewRef.current

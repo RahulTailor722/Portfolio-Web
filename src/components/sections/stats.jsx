@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react"
 import Link from "../link"
 import { stats } from "../../data/site"
 import styles from "./stats.module.css"
-import { prefersReducedMotion } from "../../utils/motion"
 
 const Counter = ({ value }) => {
   const [display, setDisplay] = useState(0)
@@ -12,13 +11,6 @@ const Counter = ({ value }) => {
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    // Reduce-motion: show the final number straight away instead of ticking
-    // up to it. Set from the effect, so SSR and first client render still
-    // agree on the initial 0.
-    if (prefersReducedMotion()) {
-      setDisplay(value)
-      return
-    }
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {

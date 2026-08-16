@@ -1,5 +1,4 @@
 import { useEffect } from "react"
-import { prefersReducedMotion } from "../utils/motion"
 
 /**
  * Lenis smooth scroll, wired into the GSAP ticker so ScrollTrigger scrubs
@@ -9,11 +8,6 @@ import { prefersReducedMotion } from "../utils/motion"
 const SmoothScroll = () => {
   useEffect(() => {
     if (typeof window === "undefined") return
-
-    // Reduce-motion: hand scrolling back to the browser. Lenis's eased,
-    // momentum-based scroll is exactly the kind of vestibular trigger the
-    // preference exists to switch off.
-    if (prefersReducedMotion()) return
 
     let cancelled = false
     let lenis

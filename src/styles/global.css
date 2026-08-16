@@ -389,30 +389,3 @@ h4 {
     display: none;
   }
 }
-
-/* ------------------------------ Reduced motion ----------------------------- */
-/* The JS islands each check `prefers-reduced-motion` themselves (see
-   src/utils/motion.js) and skip GSAP, Lenis, the preloader and the count-ups.
-   This block is the CSS half: it neutralises purely declarative motion —
-   the marquee keyframe loop, hover transitions, the overlay slide — that no
-   island controls.
-
-   `animation-duration: 0.01ms` rather than `none` on purpose: it lets
-   animations run to their final frame and still fire `animationend`, so
-   anything waiting on that event isn't stranded. */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  /* The custom cursor island returns early under reduce-motion, which would
-     otherwise leave its un-positioned dot parked at the top-left corner. */
-  #magic-cursor {
-    display: none;
-  }
-}

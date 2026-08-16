@@ -45,12 +45,6 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .cursor {
-    animation: none;
-  }
-}
-
 .titleWrap {
   display: flex;
   flex-direction: column;

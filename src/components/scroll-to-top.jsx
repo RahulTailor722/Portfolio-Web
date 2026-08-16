@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { ArrowUp } from "lucide-react"
 import styles from "./scroll-to-top.module.css"
-import { scrollBehavior } from "../utils/motion"
 
 /**
  * Floating back-to-top button. The circle fills like a water tank — two
@@ -40,7 +39,7 @@ const ScrollToTop = () => {
   return (
     <button
       className={`${styles.btn} ${visible ? styles.show : ""}`}
-      onClick={() => window.scrollTo({ top: 0, behavior: scrollBehavior() })}
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Back to top"
       data-cursor="hover"
     >

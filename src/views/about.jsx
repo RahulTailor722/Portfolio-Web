@@ -4,7 +4,6 @@ import Link from "../components/link"
 import CTA from "../components/sections/cta"
 import { skills, techStack, experience, stats } from "../data/site"
 import styles from "../styles/about.module.css"
-import { prefersReducedMotion } from "../utils/motion"
 
 /* Eased count-up that starts when the number scrolls into view. */
 const CountUp = ({ value }) => {
@@ -15,9 +14,7 @@ const CountUp = ({ value }) => {
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    // Reduce-motion (or no IntersectionObserver): jump straight to the final
-    // number. Set from the effect so the SSR/first-render 0 still matches.
-    if (prefersReducedMotion() || typeof IntersectionObserver === "undefined") {
+    if (typeof IntersectionObserver === "undefined") {
       setDisplay(value)
       return
     }
