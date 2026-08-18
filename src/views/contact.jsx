@@ -171,6 +171,10 @@ const ContactPage = () => {
   return (
     <div className={styles.contactPage}>
       <PageHeader
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Contact", path: "/contact/" },
+        ]}
         eyebrow="Get in touch"
         title="Let's build something"
         subtitle="Feel free to reach out for new projects, inquiries, or just to say hello."

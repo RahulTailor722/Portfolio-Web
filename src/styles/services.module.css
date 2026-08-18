@@ -1,5 +1,10 @@
 .servicesPage {
-  padding-bottom: 120px;
+  /* No bottom padding: the page now ends on the full-bleed Proof band, which
+     is --bg-elevated, and so is the footer directly below it. Page padding
+     here painted a 120px strip of --bg between two identical surfaces, which
+     read as a dead black gap. The Proof section's own 160px bottom padding is
+     what closes the page; the footer's border-top draws the seam. */
+  padding-bottom: 0;
 }
 
 /* ---------------------------------- Hero ----------------------------------
@@ -233,4 +238,211 @@
     opacity: 1;
     transform: none;
   }
+}
+
+/* ---------------------------------- Proof ----------------------------------
+   Service → case-study links, the counterpart to the process line on the Work
+   index. */
+.proof {
+  margin-top: clamp(48px, 8vw, 88px);
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--line);
+}
+
+.proofHead {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: end;
+  margin-bottom: clamp(40px, 6vw, 56px);
+}
+
+.proofSub {
+  color: var(--muted);
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 1.6;
+  max-width: 44ch;
+  justify-self: end;
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+  .proofHead {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .proofSub {
+    justify-self: start;
+    text-align: left;
+  }
+}
+
+.proofList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.proofRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 0.9fr) minmax(0, 2fr);
+  align-items: center;
+  gap: clamp(16px, 3vw, 40px);
+  padding: clamp(20px, 2.6vw, 28px) 4px;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.35s ease, padding-left 0.35s var(--ease);
+}
+
+/* Left rule wipes down on hover — the same accent gesture the case-study
+   index on the service detail pages uses, so the two Proof blocks read as one
+   idea seen at two depths. */
+.proofRow::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.4s var(--ease);
+}
+
+.proofRow:hover {
+  background: rgba(198, 241, 53, 0.03);
+  padding-left: 18px;
+}
+
+.proofRow:hover::before {
+  transform: scaleY(1);
+}
+
+.proofNum {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+  font-weight: 700;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--muted-dark);
+  transition: -webkit-text-stroke-color 0.4s ease;
+}
+
+.proofRow:hover .proofNum {
+  -webkit-text-stroke: 1px var(--accent);
+}
+
+.proofService {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+  font-weight: 600;
+  color: var(--fg);
+  transition: color 0.3s ease, transform 0.4s var(--ease);
+}
+
+.proofService svg {
+  color: var(--muted-dark);
+  transition: color 0.3s ease, transform 0.4s var(--ease);
+}
+
+.proofRow:hover .proofService {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+.proofRow:hover .proofService svg {
+  color: var(--accent);
+  transform: translate(3px, -3px);
+}
+
+.proofProjects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Case studies as pills rather than a run-on sentence of links: the same chip
+   geometry as the hero tags, so each project reads as a discrete piece of
+   evidence you can click. */
+.proofChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  background: rgba(244, 244, 239, 0.02);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease,
+    transform 0.35s var(--ease);
+}
+
+.proofChip::after {
+  content: "↗";
+  font-size: 0.8em;
+  color: var(--muted-dark);
+  transition: color 0.3s ease;
+}
+
+.proofChip:hover {
+  color: var(--fg);
+  border-color: rgba(198, 241, 53, 0.35);
+  background: rgba(198, 241, 53, 0.07);
+  transform: translateY(-2px);
+}
+
+.proofChip:hover::after {
+  color: var(--accent);
+}
+
+@media (max-width: 700px) {
+  .proofRow {
+    grid-template-columns: 40px minmax(0, 1fr);
+    grid-template-areas:
+      "num service"
+      "chips chips";
+    row-gap: 14px;
+    align-items: start;
+  }
+  .proofNum {
+    grid-area: num;
+  }
+  .proofService {
+    grid-area: service;
+  }
+  .proofProjects {
+    grid-area: chips;
+  }
+  .proofRow:hover {
+    padding-left: 8px;
+  }
+}
+
+.proofMore {
+  margin-top: clamp(28px, 4vw, 40px);
+  color: var(--muted);
+  font-size: clamp(1rem, 1.5vw, 1.08rem);
+  line-height: 1.7;
+  max-width: 70ch;
+}
+
+.proofMore a {
+  color: var(--fg);
+  border-bottom: 1px solid rgba(198, 241, 53, 0.45);
+  padding-bottom: 1px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.proofMore a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }

@@ -37,24 +37,6 @@
   pointer-events: none;
 }
 
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin-bottom: 2rem;
-}
-
-.breadcrumb a:hover {
-  color: var(--accent);
-}
-
-.breadcrumbCurrent {
-  color: var(--fg);
-}
-
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -221,6 +203,282 @@
   .deliverGrid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ---------------------------- Proof: case index ----------------------------
+   Rows, not cards. The card grid this replaced was the fourth appearance of
+   the same component in one session (work index, featured work, related work),
+   and it flattened three very different projects into three identical
+   rectangles. The row form carries an index numeral, the market, and the first
+   shipped outcome, and the cover art moves to a cursor-tracked preview so the
+   list stays typographic while the imagery becomes the reward for exploring.
+   --------------------------------------------------------------------------- */
+.proofSection {
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--line);
+}
+
+/* Sits inside the global .eyebrow, which is an inline-flex row with its own
+   10px gap — no extra margin, or the chip drifts away from the label. */
+.proofCount {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  background: rgba(244, 244, 239, 0.03);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--muted-dark);
+}
+
+.proofIndex {
+  position: relative;
+  border-top: 1px solid var(--line);
+}
+
+.proofRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(20px, 3vw, 48px);
+  padding: clamp(24px, 3.4vw, 38px) 12px;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.4s ease, padding-left 0.4s var(--ease);
+}
+
+/* Accent rule that wipes down the left edge — the same gradient pairing
+   (lime → teal) the separators and CTA use. */
+.proofRow::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.45s var(--ease);
+}
+
+.proofRow:hover,
+.proofRow:focus-visible {
+  background: rgba(198, 241, 53, 0.03);
+  padding-left: 28px;
+}
+
+.proofRow:hover::before,
+.proofRow:focus-visible::before {
+  transform: scaleY(1);
+}
+
+.proofNum {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--muted-dark);
+  transition: -webkit-text-stroke-color 0.4s ease;
+}
+
+.proofRow:hover .proofNum {
+  -webkit-text-stroke: 1px var(--accent);
+}
+
+.proofMain {
+  min-width: 0;
+}
+
+.proofTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--fg);
+  transition: transform 0.4s var(--ease), color 0.3s ease;
+}
+
+.proofRow:hover .proofTitle {
+  transform: translateX(6px);
+  color: var(--accent);
+}
+
+.proofArrow {
+  flex: none;
+  color: var(--muted-dark);
+  transition: transform 0.4s var(--ease), color 0.3s ease;
+}
+
+.proofRow:hover .proofArrow {
+  color: var(--accent);
+  transform: translate(3px, -3px);
+}
+
+.proofMeta {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted-dark);
+}
+
+.proofResult {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  /* Outcome lines run to ~130 characters; two lines keeps every row the same
+     height without truncating mid-thought on the short ones. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Inline cover, shown only where hover doesn't exist. */
+.proofThumb {
+  display: none;
+}
+
+.proofThumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+@media (max-width: 900px) {
+  .proofRow {
+    grid-template-columns: 48px minmax(0, 1fr);
+    grid-template-areas:
+      "num main"
+      "thumb thumb"
+      "res res";
+    row-gap: 14px;
+    align-items: start;
+  }
+  .proofNum {
+    grid-area: num;
+    margin-top: 2px;
+  }
+  .proofMain {
+    grid-area: main;
+  }
+  .proofThumb {
+    grid-area: thumb;
+    display: block;
+  }
+  .proofResult {
+    grid-area: res;
+  }
+  .proofRow:hover {
+    padding-left: 12px;
+  }
+}
+
+/* ------------------------- Cursor-tracked preview -------------------------
+   Positioned entirely from JS (translate3d written per frame); everything
+   below only owns the enter/exit and crossfade, so the two never fight over
+   the same property. */
+.preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: clamp(230px, 21vw, 320px);
+  z-index: 60;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.previewInner {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid rgba(198, 241, 53, 0.28);
+  border-radius: 14px;
+  background: var(--bg-card);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.4s ease, transform 0.5s var(--ease);
+}
+
+.previewOn .previewInner {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.previewImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 0.45s ease, transform 0.8s var(--ease);
+}
+
+.previewImgOn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.previewChip {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 99px;
+  background: var(--accent);
+  color: #0b0b0c;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* No pointer, no preview — the row's inline thumb covers those devices. */
+@media (max-width: 900px), (hover: none) {
+  .preview {
+    display: none;
+  }
+}
+
+.proofMore {
+  margin-top: clamp(28px, 4vw, 40px);
+  color: var(--muted);
+  font-size: clamp(1rem, 1.5vw, 1.08rem);
+  line-height: 1.7;
+  max-width: 70ch;
+}
+
+.proofMore a {
+  color: var(--fg);
+  border-bottom: 1px solid rgba(198, 241, 53, 0.45);
+  padding-bottom: 1px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.proofMore a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* Prev/Next nav */

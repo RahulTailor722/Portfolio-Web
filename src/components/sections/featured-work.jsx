@@ -29,7 +29,10 @@ const ProjectCard = ({ project, index }) => {
           <h3 className={styles.cardTitle}>{project.title}</h3>
           <span className={styles.cardCat}>{project.category}</span>
         </div>
-        <span className={styles.year}>{project.year}</span>
+        {/* Market, not year — same reasoning as the Work index cards. */}
+        {project.market && (
+          <span className={styles.market}>{project.market}</span>
+        )}
       </div>
     </Link>
   )

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
-import { skills } from "../../data/site"
+import Link from "../link"
+import { skills, projects } from "../../data/site"
 import styles from "./about-intro.module.css"
 
 /* Big years-of-experience counter that counts up when scrolled into view,
@@ -110,6 +111,14 @@ const AboutIntro = () => {
             />
           ))}
         </div>
+
+        {/* The homepage body had no path to /about/ — only the nav and footer
+            linked to it, which is the weakest kind of internal link. */}
+        <p className={`${styles.introLinks} tp_fade_anim`}>
+          Six years of this across {projects.length} client builds —{" "}
+          <Link to="/about/">more on how I work</Link> or{" "}
+          <Link to="/contact/">start a project</Link>.
+        </p>
       </div>
     </section>
   )

@@ -25,24 +25,6 @@
   pointer-events: none;
 }
 
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin-bottom: 2rem;
-}
-
-.breadcrumb a:hover {
-  color: var(--accent);
-}
-
-.breadcrumbCurrent {
-  color: var(--fg);
-}
-
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -113,7 +95,10 @@
 
 .metaGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* auto-fit rather than a fixed 4 columns: the cell count varies with the
+     project (market and scope are both conditional), so a fixed track count
+     leaves a ragged orphan row on some case studies. */
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 24px;
   margin-bottom: 2rem;
 }
@@ -142,6 +127,16 @@
   font-family: var(--font-display);
   font-size: 1.1rem;
   color: var(--fg);
+}
+
+/* Scope lists each delivered stage on its own line — a single run-on string
+   of service names is unreadable in a column this narrow. */
+.metaScope {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 1rem;
+  line-height: 1.45;
 }
 
 .metaLink {
@@ -217,6 +212,26 @@
 
 .overviewText p {
   white-space: pre-line;
+}
+
+/* Closing line of the overview column — carries the links out to the service
+   pages, so it sits slightly apart from the narrative paragraphs above it. */
+.serviceLine {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.serviceLine a {
+  color: var(--fg);
+  border-bottom: 1px solid rgba(198, 241, 53, 0.45);
+  padding-bottom: 1px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.serviceLine a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* Shared split section header (same pattern as the About page). */
@@ -412,6 +427,315 @@
   color: var(--accent);
   flex-shrink: 0;
   margin-top: 2px;
+}
+
+/* Related work */
+.relatedSection {
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--line);
+  overflow: hidden;
+}
+
+/* ---------------------- Related work: takeover index ------------------------
+   Not cards. Four card treatments were tried here and every one produced a
+   widget: names at ~1rem and images at ~400px, closing a page whose hero type
+   runs to 7rem. The names carry this section instead — outlined display type
+   filling solid on hover, in edge-to-edge hairline rows, which is the same
+   language as the watermark heroes and the prev/next nav directly below.
+
+   The screenshot is still shown honestly at 16:10 and uncropped; it is sized
+   off the row height rather than a column width, so it scales with the type.
+   --------------------------------------------------------------------------- */
+.takeover {
+  border-top: 1px solid var(--line);
+}
+
+.takeRow {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  /* Lime wash that sweeps in from the leading edge instead of a rule drawn
+     anywhere. Four line placements were tried here — left edge, bottom, top,
+     under the title — and every one of them read as a stray mark, because a
+     2-3px stroke is a hard object in a row built entirely from soft things:
+     outlined type, a blurred ghost, a shadowed frame. A gradient carries the
+     same left-to-right direction without introducing an edge. */
+  background-image: linear-gradient(
+    90deg,
+    rgba(198, 241, 53, 0.09),
+    rgba(198, 241, 53, 0.03) 35%,
+    transparent 70%
+  );
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: -100% 0;
+  transition: background-position 0.85s var(--ease);
+}
+
+.takeRow:hover,
+.takeRow:focus-visible {
+  background-position: 0 0;
+}
+
+/* Blurred wash of the cover across the whole row. Deliberately faint: it is
+   there to give the row a colour cast, not to be looked at. */
+.takeGhost {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  filter: blur(14px) saturate(1.2);
+  transform: scale(1.1);
+  transition: opacity 0.6s ease, transform 1.6s var(--ease);
+  pointer-events: none;
+}
+
+.takeRow:hover .takeGhost,
+.takeRow:focus-visible .takeGhost {
+  opacity: 0.16;
+  transform: scale(1.02);
+}
+
+.takeInner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: clamp(20px, 3vw, 48px);
+  max-width: var(--maxw);
+  min-height: clamp(150px, 17vw, 230px);
+  margin: 0 auto;
+  padding: clamp(18px, 2vw, 26px) 24px;
+  transition: padding-left 0.5s var(--ease);
+}
+
+.takeRow:hover .takeInner,
+.takeRow:focus-visible .takeInner {
+  padding-left: 44px;
+}
+
+.takeText {
+  min-width: 0;
+}.takeName {
+  display: block;
+  font-family: var(--font-display);
+  /* Capped at 3.4rem, not 4.2: measured against the real titles, "Werken bij
+     Hubo" wrapped to two lines in the 522px text column while its neighbours
+     stayed on one — which would make that row grow taller than the others the
+     moment the outcome line opens on hover. */
+  font-size: clamp(1.9rem, 4vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(244, 244, 239, 0.55);
+  transition: color 0.45s ease, -webkit-text-stroke-color 0.45s ease;
+}
+
+.takeRow:hover .takeName,
+.takeRow:focus-visible .takeName {
+  color: var(--fg);
+  -webkit-text-stroke: 1.5px transparent;
+}
+
+.takeMeta {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted-dark);
+  transition: color 0.4s ease;
+}
+
+.takeRow:hover .takeMeta,
+.takeRow:focus-visible .takeMeta {
+  color: var(--muted);
+}
+
+.takeResult {
+  display: block;
+  max-width: 46ch;
+  margin-top: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.45s ease, max-height 0.55s var(--ease),
+    margin-top 0.55s var(--ease);
+}
+
+.takeRow:hover .takeResult,
+.takeRow:focus-visible .takeResult {
+  opacity: 1;
+  max-height: 4rem;
+  margin-top: 12px;
+}
+
+/* Height-driven, not column-driven: the frame is as tall as the row allows and
+   its width follows from 16:10, so the shot grows with the type instead of
+   being pinned to a grid track. */
+.takeShot {
+  display: block;
+  width: clamp(210px, 24vw, 360px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-card);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.45s ease, box-shadow 0.45s ease;
+}
+
+.takeRow:hover .takeShot,
+.takeRow:focus-visible .takeShot {
+  border-color: rgba(198, 241, 53, 0.4);
+  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.55);
+}
+
+.takeShotInner {
+  display: block;
+  transition: transform 0.9s var(--ease);
+}
+
+.takeRow:hover .takeShotInner,
+.takeRow:focus-visible .takeShotInner {
+  transform: scale(1.05);
+}
+
+.takeShot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Native ratio of every cover — nothing cropped, nothing letterboxed. */
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  /* Pulled back at rest so the type leads and the art rewards the hover. */
+  filter: grayscale(0.25) brightness(0.88);
+  transition: filter 0.5s ease;
+}
+
+.takeRow:hover .takeShot img,
+.takeRow:focus-visible .takeShot img {
+  filter: none;
+}
+
+/* Scroll-driven drift: the cover eases through its frame as the row crosses
+   the viewport, so the section has life while scrolling, not only on hover.
+   Progressive enhancement — where `view()` timelines are unsupported the image
+   simply sits still, and the scale in the keyframes is what keeps the drift
+   from exposing an edge inside the frame. */
+@supports (animation-timeline: view()) {
+  .takeShot img {
+    animation: shotDrift linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+
+  @keyframes shotDrift {
+    from {
+      transform: translateY(-3.5%) scale(1.07);
+    }
+    to {
+      transform: translateY(3.5%) scale(1.07);
+    }
+  }
+}
+
+/* Labelled, not an icon on its own: this is the row's call to action and it
+   should say so — and the label doubles as descriptive link text. */
+.takeCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.takeCtaLabel {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  color: var(--muted-dark);
+  transition: color 0.4s ease;
+}
+
+.takeRow:hover .takeCtaLabel,
+.takeRow:focus-visible .takeCtaLabel {
+  color: var(--fg);
+}
+
+.takeDisc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--fg);
+  transition: background 0.45s ease, color 0.45s ease, border-color 0.45s ease;
+}
+
+.takeRow:hover .takeDisc,
+.takeRow:focus-visible .takeDisc {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0b0b0c;
+}
+
+@media (max-width: 1400px) {
+  .takeCtaLabel {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .takeInner {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "text"
+      "shot"
+      "disc";
+    align-items: start;
+    row-gap: 18px;
+    min-height: 0;
+    padding: 26px 20px 30px;
+  }
+  .takeText {
+    grid-area: text;
+  }
+  .takeShot {
+    grid-area: shot;
+    width: 100%;
+  }
+  .takeCta {
+    grid-area: disc;
+  }
+  .takeDisc {
+    width: 44px;
+    height: 44px;
+  }
+  /* No hover on touch, so the outcome line is always open here. */
+  .takeResult {
+    opacity: 1;
+    max-height: none;
+    margin-top: 12px;
+  }
+  .takeRow:hover .takeInner {
+    padding-left: 20px;
+  }
 }
 
 /* Prev/Next nav */

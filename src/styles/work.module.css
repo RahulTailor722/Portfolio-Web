@@ -103,6 +103,28 @@
   }
 }
 
+/* Contextual link line between the hero and the grid. */
+.processLine {
+  padding-bottom: clamp(28px, 4vw, 40px);
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: clamp(1rem, 1.5vw, 1.1rem);
+  line-height: 1.7;
+  max-width: 78ch;
+}
+
+.processLine a {
+  color: var(--fg);
+  border-bottom: 1px solid rgba(198, 241, 53, 0.45);
+  padding-bottom: 1px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.processLine a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 .projectGrid {
   display: grid;
   grid-template-columns: 1fr;
@@ -176,12 +198,13 @@
   font-weight: 500;
 }
 
-.year {
+.market {
   flex: none;
   font-family: var(--font-mono, monospace);
   font-size: 13px;
   color: var(--muted-dark);
   letter-spacing: 0.04em;
+  text-align: right;
 }
 
 @media (min-width: 860px) {

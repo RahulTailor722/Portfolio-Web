@@ -266,6 +266,23 @@
   transform: translateX(2px);
 }
 
+/* Secondary path out of the sticky column — the visitor who isn't ready to
+   contact yet should land on the work, not leave. */
+.storySecondary {
+  display: block;
+  width: fit-content;
+  margin-top: 18px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  transition: color 0.3s ease;
+}
+
+.storySecondary:hover {
+  color: var(--accent);
+}
+
 .storyBody {
   min-width: 0;
 }
@@ -283,6 +300,18 @@
   color: var(--muted);
   line-height: 1.75;
   margin-bottom: 1.6rem;
+}
+
+.storyLinks a {
+  color: var(--fg);
+  border-bottom: 1px solid rgba(198, 241, 53, 0.45);
+  padding-bottom: 1px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.storyLinks a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 .storyQuote {

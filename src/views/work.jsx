@@ -2,7 +2,8 @@ import React from "react"
 import Link from "../components/link"
 import { motion } from "framer-motion"
 
-import { projects } from "../data/site"
+import Breadcrumbs from "../components/breadcrumbs"
+import { projects, services } from "../data/site"
 import styles from "../styles/work.module.css"
 
 const MotionLink = motion(Link)
@@ -34,13 +35,15 @@ const ProjectCard = ({ project, idx }) => {
       <div className={styles.info}>
         <div className={styles.metaText}>
           <h3 className={styles.title}>{project.title}</h3>
-          <span className={styles.category}>
-            {project.market
-              ? `${project.category} · ${project.market}`
-              : project.category}
-          </span>
+          <span className={styles.category}>{project.category}</span>
         </div>
-        <span className={styles.year}>{project.year}</span>
+        {/* This slot used to hold the build year, which quietly dated the
+            older case studies. The market it shipped into is the more useful
+            fact and the one the site's geo targeting rests on, so it takes
+            the badge and comes out of the category line above. */}
+        {project.market && (
+          <span className={styles.market}>{project.market}</span>
+        )}
       </div>
     </MotionLink>
   )
@@ -56,6 +59,14 @@ const WorkPage = () => {
             WORK
           </span>
           <div className="container">
+            <Breadcrumbs
+              className="tp_fade_anim"
+              delay="0.05"
+              items={[
+                { name: "Home", path: "/" },
+                { name: "Work", path: "/work/" },
+              ]}
+            />
             <p className={`${styles.eyebrow} tp_fade_anim`} data-delay="0.1">
               <span className={styles.dot} />
               My Portfolio
@@ -80,6 +91,22 @@ const WorkPage = () => {
         </section>
 
         <div className="container">
+          {/* Hub → hub link. Without this line the Work index has no outbound
+              path except back to a project, which leaves the two content silos
+              connected only through the nav and footer. */}
+          <p className={styles.processLine}>
+            Every project below ran through the same four stages —{" "}
+            {services.map((service, i) => (
+              <React.Fragment key={service.slug}>
+                {i > 0 && (i === services.length - 1 ? ", and " : ", ")}
+                <Link to={`/services/${service.slug}/`}>
+                  {service.title.toLowerCase()}
+                </Link>
+              </React.Fragment>
+            ))}
+            . <Link to="/services/">See how each stage works</Link>.
+          </p>
+
           <div className={styles.projectGrid}>
             {projects.map((project, idx) => (
               <ProjectCard key={project.slug} project={project} idx={idx} />

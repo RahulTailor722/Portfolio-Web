@@ -1,13 +1,132 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Link from "./link"
 import { ArrowUpRight, ArrowLeft, ArrowRight, Check } from "lucide-react"
 
+import Breadcrumbs from "./breadcrumbs"
 import Reveal from "./reveal"
 import CTA from "./sections/cta"
+import { getServicesForProject, getRelatedProjects } from "../data/site"
 import styles from "./project-detail.module.css"
+
+/**
+ * Renders the services a project used as a readable sentence fragment
+ * ("UI/UX design, frontend development, and deployment") rather than a row of
+ * pills. In-body links inside prose are the ones that actually carry topical
+ * weight — a chip row reads as navigation furniture and gets discounted.
+ */
+const ServiceSentence = ({ items }) =>
+  items.map((service, i) => {
+    const isLast = i === items.length - 1
+    const separator = !i ? "" : items.length === 2 ? " and " : isLast ? ", and " : ", "
+    return (
+      <React.Fragment key={service.slug}>
+        {separator}
+        <Link to={`/services/${service.slug}/`}>
+          {service.title.toLowerCase()}
+        </Link>
+      </React.Fragment>
+    )
+  })
+
+/**
+ * Bare domain for the stage's address line ("us.armsofeve.com"). Falls back to
+ * null rather than throwing on a malformed URL — a missing address is
+ * survivable, a crashed island is not.
+ */
+const hostOf = (url) => {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "")
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Related work as a full-bleed takeover index.
+ *
+ * Four card treatments were tried here and all four failed the same way: they
+ * asked how to arrange three screenshots in boxes, and the answer was always a
+ * widget — project names at ~1rem, images at ~400px, a block that reads as
+ * footer furniture at the end of a page whose hero type runs to 7rem.
+ *
+ * This inverts it. The names ARE the artwork: outlined display type at up to
+ * 4.4rem, filling solid on hover, in edge-to-edge hairline rows — the site's
+ * own watermark/heroOutline/index-row language, at the scale the rest of the
+ * site uses. The screenshot stays uncropped at 16:10, sized off the row
+ * height, and a blurred ghost of it washes the row on hover for atmosphere.
+ */
+const RelatedIndex = ({ projects }) => (
+  <div className={styles.takeover}>
+    {projects.map((related, i) => (
+      <Link
+        key={related.slug}
+        to={`/work/${related.slug}/`}
+        className={`${styles.takeRow} tp_fade_anim`}
+        data-delay={`${0.08 + i * 0.08}`}
+        data-cursor="View<br/>Case Study"
+      >
+        {/* Atmosphere only — the legible copy of this shot is the framed one
+            on the right. Blurred and heavily dimmed so it never competes with
+            the type sitting on top of it. */}
+        <img
+          src={related.imageSm}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className={styles.takeGhost}
+        />
+
+        <span className={styles.takeInner}>
+          <span className={styles.takeText}>
+            <span className={styles.takeName}>{related.title}</span>
+            <span className={styles.takeMeta}>
+              {related.category}
+              {related.market && ` · ${related.market}`}
+            </span>
+            {/* One shipped outcome per row. A name and a category say what the
+                project was; this is the only line that says what it did. */}
+            {related.outcome?.[0] && (
+              <span className={styles.takeResult}>{related.outcome[0]}</span>
+            )}
+          </span>
+
+          <span className={styles.takeShot}>
+            {/* Inner wrapper owns the hover scale so it never collides with the
+                scroll-driven drift running on the image itself. */}
+            <span className={styles.takeShotInner}>
+              <img
+                src={related.imageSm}
+                srcSet={`${related.imageSm} 800w, ${related.image} 1600w`}
+                sizes="(max-width: 900px) 92vw, 400px"
+                alt={`${related.title} — ${related.category}`}
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="500"
+              />
+            </span>
+          </span>
+
+          <span className={styles.takeCta}>
+            <span className={styles.takeCtaLabel}>Read case study</span>
+            <span className={styles.takeDisc} aria-hidden="true">
+              <ArrowUpRight size={18} />
+            </span>
+          </span>
+        </span>
+      </Link>
+    ))}
+  </div>
+)
 
 const ProjectDetail = ({ project, prevProject, nextProject }) => {
   const coverRef = useRef(null)
+  // The work→service half of the cross-silo linking, plus relevance-scored
+  // sibling case studies. Prev/next below is index order, which says nothing
+  // about how alike two projects are.
+  const projectServices = getServicesForProject(project)
+  const relatedProjects = getRelatedProjects(project)
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -40,13 +159,13 @@ const ProjectDetail = ({ project, prevProject, nextProject }) => {
       <header className={styles.hero}>
         <div className={styles.blob} aria-hidden="true" />
         <div className="container">
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-            <Link to="/">Home</Link>
-            <span>/</span>
-            <Link to="/work/">Work</Link>
-            <span>/</span>
-            <span className={styles.breadcrumbCurrent}>{project.title}</span>
-          </nav>
+          <Breadcrumbs
+            items={[
+              { name: "Home", path: "/" },
+              { name: "Work", path: "/work/" },
+              { name: project.title, path: `/work/${project.slug}/` },
+            ]}
+          />
 
           <Reveal>
             <span className={styles.eyebrow}>
@@ -108,12 +227,27 @@ const ProjectDetail = ({ project, prevProject, nextProject }) => {
                 </div>
               </Reveal>
             )}
-            <Reveal y={20} delay={0.15}>
-              <div className={styles.metaItem}>
-                <span className={styles.metaLabel}>Year</span>
-                <span className={styles.metaValue}>{project.year}</span>
-              </div>
-            </Reveal>
+            {projectServices.length > 0 && (
+              <Reveal y={20} delay={0.15}>
+                <div className={styles.metaItem}>
+                  <span className={styles.metaLabel}>Scope</span>
+                  {/* Replaces the old "Year" cell. A date only tells a reader
+                      how old the work is — it ages every case study a little
+                      more each January while saying nothing about what was
+                      actually delivered. The scope is the fact a prospect is
+                      trying to establish, and it never goes stale.
+
+                      Plain text on purpose: these services are already linked
+                      as prose in the overview below, and that in-body link is
+                      the one that carries weight. */}
+                  <span className={`${styles.metaValue} ${styles.metaScope}`}>
+                    {projectServices.map((service) => (
+                      <span key={service.slug}>{service.title}</span>
+                    ))}
+                  </span>
+                </div>
+              </Reveal>
+            )}
             <Reveal y={20} delay={0.2}>
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>Live Site</span>
@@ -156,6 +290,17 @@ const ProjectDetail = ({ project, prevProject, nextProject }) => {
                   <p>{para}</p>
                 </Reveal>
               ))}
+              {projectServices.length > 0 && (
+                <Reveal delay={0.24}>
+                  <p className={styles.serviceLine}>
+                    Delivered as{" "}
+                    <ServiceSentence items={projectServices} /> — the same
+                    stages every{" "}
+                    <Link to="/services/">frontend engagement</Link> runs
+                    through.
+                  </p>
+                </Reveal>
+              )}
             </div>
           </div>
         </div>
@@ -235,6 +380,35 @@ const ProjectDetail = ({ project, prevProject, nextProject }) => {
           </div>
         </div>
       </section>
+
+      {/* Related work — scored by shared service, industry, and market. */}
+      {relatedProjects.length > 0 && (
+        <section className={`section ${styles.relatedSection}`}>
+          <div className="container">
+            <div className={styles.sectionHead}>
+              <div>
+                <span className="eyebrow tp_fade_anim">Related work</span>
+                <h2 className="section-title tp_title_anim">
+                  Similar <span className="text-accent">projects</span>
+                </h2>
+              </div>
+              <p
+                className={`${styles.sectionSub} tp_fade_anim`}
+                data-fade-from="right"
+              >
+                Other builds that share this project&apos;s process, industry,
+                or market.
+              </p>
+            </div>
+
+          </div>
+
+          {/* Outside the container on purpose: the rail runs to both viewport
+              edges, which is what sells it as something still in motion rather
+              than a widget parked in a column. */}
+          <RelatedIndex projects={relatedProjects} />
+        </section>
+      )}
 
       <nav className={styles.projectNav} aria-label="Other projects">
         <Link to={`/work/${prevProject.slug}/`} className={styles.navPrev}>

@@ -124,6 +124,24 @@ export const services = [
   },
 ]
 
+/**
+ * `year` is data-only — it is deliberately not rendered anywhere in the UI.
+ * A visible build year ages a case study a little more every January and tells
+ * a prospect nothing about what was delivered; the cards show the market and
+ * the case study shows the scope instead. It stays in the data because the
+ * array's descending-year order is what `getProjectsForService` leans on for
+ * "newest proof first", and because `dateCreated` in the CreativeWork schema
+ * is honest metadata a crawler can use without a reader seeing a date stamp.
+ *
+ * Each project carries a `services` array of service slugs — the spine of the
+ * site's internal linking. It is what lets a case study link out to the
+ * services it proves, and a service page link back to the work that proves it,
+ * instead of every silo only ever linking to itself.
+ *
+ * Only list a service the project's own `approach` steps actually back up.
+ * A mapping that isn't visible in the case-study copy is a link a reader will
+ * bounce off, which is worse than no link at all.
+ */
 export const projects = [
   {
     slug: "lavalime-studios",
@@ -138,6 +156,7 @@ export const projects = [
     imageSm: "/images/projects/lavalime-studios-cover-800.webp",
     desc: "The studio site for an independent mobile game developer, anchored by a playable canvas mini-game in the hero and a 28-title release portfolio.",
     tags: ["Astro", "GSAP", "Canvas", "Motion"],
+    services: ["ui-ux-design", "frontend-development", "deployment"],
     overview:
       "LavaLime Studios is an independent mobile game studio shipping Unity titles across iOS and Android — from published hits like Apocalypse Merge and Puppet Lord 3D to a 2025–26 release slate. The site had to do two jobs at once: convince publishers and partners the studio can execute, and feel like something a game studio would actually build.\n\nSo the hero isn't a static banner — it's a playable shooter you can click or drive with the arrow keys, score counter and all. Around it sits a scrolling strip of all 28 game logos, published and upcoming release rails, the three service tracks, and a studio section that closes on a single \"Start a project\" CTA.",
     approach: [
@@ -175,6 +194,7 @@ export const projects = [
     imageSm: "/images/projects/guided-lxp-cover-800.webp",
     desc: "The marketing site for an all-in-one, white-label Learning Experience Platform that helps growing teams onboard, upskill, and retain talent without building from scratch.",
     tags: ["SaaS", "UI/UX", "Landing Page", "Motion"],
+    services: ["ui-ux-design", "frontend-development"],
     overview:
       "Guided LXP is a white-label learning platform sold to growing teams that want a branded training experience without engineering one in-house. The marketing site had to make an abstract SaaS product feel tangible and trustworthy — leading with a product dashboard preview, clear outcomes, and social proof rather than feature jargon.\n\nThe build is a conversion-focused single page: a bold centered hero with playful floating cursor cues, a four-column benefits grid, a client-logo marquee, a testimonials carousel, three-tier pricing, and an FAQ accordion — all funnelling toward a single \"Book a Demo\" action.",
     approach: [
@@ -214,6 +234,7 @@ export const projects = [
     imageSm: "/images/projects/arms-of-eve-cover-800.webp",
     desc: "The US storefront for a tarnish-free, waterproof jewellery brand, built for fast product discovery and a premium unboxing-driven checkout journey.",
     tags: ["Shopify", "Liquid", "JavaScript", "E-commerce"],
+    services: ["user-research", "ui-ux-design", "frontend-development"],
     overview:
       "Arms of Eve sells tarnish-free, waterproof jewellery shipped worldwide in signature ribbon-wrapped packaging. The US storefront needed to carry that same premium, gift-ready feel online while handling a large, fast-moving catalogue across earrings, bracelets, necklaces, rings, and seasonal gifting collections.\n\nThe build focused on merchandising flexibility — collection and \"Shop By\" navigation that scales as new drops launch — paired with clear trust signals (free shipping thresholds, a 1-year guarantee, Afterpay) placed exactly where shoppers hesitate at checkout.",
     approach: [
@@ -251,6 +272,7 @@ export const projects = [
     imageSm: "/images/projects/aussie-chef-cover-800.webp",
     desc: "An e-commerce rebuild for Australia's leading supplier of professional chef uniforms, covering jackets, aprons, pants, and hospitality footwear.",
     tags: ["Shopify", "E-commerce", "UI/UX"],
+    services: ["ui-ux-design", "frontend-development", "deployment"],
     overview:
       "Aussie Chef has outfitted hospitality professionals for over 40 years, selling chef jackets, pants, aprons, shoes, hats, and accessories across a large catalogue of colours and styles. The storefront needed clean, product-first browsing for both individual shoppers and bulk hospitality buyers.\n\nThe work centred on a professional, catalogue-style layout: hero banners for seasonal ranges, category-led navigation for jackets/pants/aprons/shoes, and a \"Favourites\" merchandising rail to surface bestsellers like the ARLO, ALEX, and TOMY aprons.",
     approach: [
@@ -288,6 +310,7 @@ export const projects = [
     imageSm: "/images/projects/sardes-cover-800.webp",
     desc: "A corporate site for a 30-year-old Dutch education research and advisory organisation, built around six thematic focus areas and ongoing project showcases.",
     tags: ["WordPress", "Content Strategy", "Accessibility"],
+    services: ["user-research", "ui-ux-design", "frontend-development"],
     overview:
       "Sardes advises schools, childcare organisations, and government bodies on equal opportunities in education — spanning inclusive education, language development, and early-childhood quality. The site needed to present dense research and advisory content in a way that stays approachable for policymakers, schools, and parents alike.\n\nThe structure organises the organisation's work into six thematic pillars, with dedicated space for client project showcases, a training/event calendar, and ongoing publications — all on a clean, accessible, whitespace-driven layout.",
     approach: [
@@ -325,6 +348,7 @@ export const projects = [
     imageSm: "/images/projects/buro-koorts-cover-800.webp",
     desc: "A results-driven marketing site for a Dutch full-service agency, built to convert visiting SMBs into qualified leads through client proof and clear service tiers.",
     tags: ["WordPress", "SEO", "Lead Generation"],
+    services: ["ui-ux-design", "frontend-development", "deployment"],
     overview:
       "Buro Koorts positions itself as an outsourced marketing team for mid-market companies, covering strategy, lead generation, branding, SEO, and content. The site needed to sell that promise through credibility — real client references, a transparent process, and clear subscription tiers — rather than generic agency copy.\n\nThe build leans on a four-step process narrative (goal-setting, execution, reporting, continuous growth), a team-introduction section, and a detailed FAQ to pre-answer objections before a prospect ever reaches the contact form.",
     approach: [
@@ -362,6 +386,7 @@ export const projects = [
     imageSm: "/images/projects/werken-bij-hubo-cover-800.webp",
     desc: "A dedicated careers portal for Hubo's 160+ Dutch DIY stores, built around live vacancy search and franchise-opportunity discovery.",
     tags: ["WordPress", "Careers Portal", "Vacancy Search"],
+    services: ["user-research", "ui-ux-design", "frontend-development"],
     overview:
       "Hubo runs 160+ home-improvement stores across the Netherlands and needed a recruitment site separate from its main retail brand — one focused entirely on getting candidates from \"browsing roles\" to \"applying\" as quickly as possible.\n\nThe portal centres on a searchable vacancy listing (cashier, store assistant, and helper roles across locations), supported by a short company-story section and a clear path into franchise-opportunity enquiries.",
     approach: [
@@ -399,6 +424,7 @@ export const projects = [
     imageSm: "/images/projects/swati-procon-cover-800.webp",
     desc: "A project-showcase site for an Ahmedabad-based luxury real estate developer, spanning residential and commercial developments.",
     tags: ["Custom CMS", "React", "Project Showcase"],
+    services: ["ui-ux-design", "frontend-development"],
     overview:
       "Swati Procon develops residential apartments and commercial office/retail spaces across Ahmedabad, with a portfolio spanning ongoing landmark projects to completed developments. The site needed to present that scale — 50L+ sq. ft. constructed, 25+ landmarks — while making it easy to browse individual residential and commercial projects.\n\nNavigation splits cleanly between Residential and Offices & Retail, with dedicated project pages for flagship developments (Swati Signia, Swati 18, Swati Premier, Swati Trinity) alongside a completed-projects archive.",
     approach: [
@@ -424,6 +450,50 @@ export const projects = [
     ],
   },
 ]
+
+/* -------------------------------------------------------------------------
+   Internal-link helpers
+
+   All three read the `services` mapping above and are the only place link
+   relationships are decided, so the work→service and service→work directions
+   can never disagree with each other.
+   ------------------------------------------------------------------------- */
+
+/** Services a case study demonstrates, in the canonical 01→04 pipeline order. */
+export const getServicesForProject = (project) =>
+  services.filter((service) => project?.services?.includes(service.slug))
+
+/**
+ * Case studies that prove a service. Newest first — `projects` is already in
+ * descending year order, so the freshest proof leads.
+ */
+export const getProjectsForService = (slug, limit = 3) =>
+  projects.filter((project) => project.services?.includes(slug)).slice(0, limit)
+
+/**
+ * Case studies most like this one, scored rather than sorted by date: a shared
+ * service is the strongest signal (it's the pipeline the reader is currently
+ * reading about), then same industry, then same market. Anything scoring zero
+ * is dropped rather than padded out — a "related" link to an unrelated project
+ * teaches a crawler nothing and wastes a reader's click.
+ */
+export const getRelatedProjects = (project, limit = 3) =>
+  projects
+    .filter((candidate) => candidate.slug !== project.slug)
+    .map((candidate) => {
+      const sharedServices = (candidate.services ?? []).filter((slug) =>
+        project.services?.includes(slug)
+      ).length
+      const score =
+        sharedServices * 3 +
+        (candidate.industry === project.industry ? 2 : 0) +
+        (candidate.market === project.market ? 1 : 0)
+      return { candidate, score }
+    })
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(({ candidate }) => candidate)
 
 export const experience = [
   {

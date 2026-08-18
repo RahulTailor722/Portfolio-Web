@@ -1,0 +1,140 @@
+/* Breadcrumb capsule.
+
+   Geometry is borrowed from the tag/skill pills (99px radius, hairline
+   --line border, mono uppercase micro-type) so the trail belongs to the same
+   family as everything else on the page. The capsule is inline-flex and
+   shrink-wrapped — it must never stretch to the container width, or it stops
+   reading as a chip and starts reading as a toolbar. */
+.breadcrumb {
+  /* `flex` + fit-content, never `inline-flex`: the capsule has to shrink-wrap
+     its contents AND still take a line of its own. As an inline-level box it
+     shares the line with whatever follows, and the eyebrow that sits under it
+     on the service hero is itself an inline-flex <span> — the two ran together
+     on one line. */
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+  padding: 6px 14px 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  /* Faint diagonal sheen rather than a flat fill, so the capsule still reads
+     against both --bg heroes and the --bg-elevated sections. */
+  background: linear-gradient(
+    120deg,
+    rgba(244, 244, 239, 0.05),
+    rgba(244, 244, 239, 0.012) 60%
+  );
+  backdrop-filter: blur(10px);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: border-color 0.45s ease, box-shadow 0.45s ease;
+}
+
+.breadcrumb:hover {
+  border-color: rgba(198, 241, 53, 0.32);
+  box-shadow: 0 0 0 4px rgba(198, 241, 53, 0.05),
+    0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Live dot — the same signal the eyebrow uses at the top of every hero. */
+.pulse {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: crumbPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes crumbPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(198, 241, 53, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(198, 241, 53, 0);
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+/* Underline wipes in from the left on hover instead of appearing all at once —
+   a background-size transition, so it costs no layout and no extra element. */
+.crumb {
+  color: var(--muted);
+  padding-bottom: 2px;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  transition: color 0.3s ease, background-size 0.5s var(--ease);
+}
+
+.crumb:hover {
+  color: var(--fg);
+  background-size: 100% 1px;
+}
+
+.sep {
+  margin: 0 9px;
+  color: rgba(56, 225, 200, 0.45);
+}
+
+/* Current page: an inset chip inside the capsule. The nested fill is what
+   makes the trail scannable at a glance — without it every segment carries the
+   same weight and the reader has to parse the order to find where they are. */
+.current {
+  padding: 3px 11px;
+  border-radius: 99px;
+  background: rgba(198, 241, 53, 0.11);
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+/* Case-study and service titles are long enough to wrap the capsule onto two
+   lines on a phone, which looks broken. Truncate instead — the H1 immediately
+   below always spells the page name out in full. */
+@media (max-width: 560px) {
+  .breadcrumb {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+  }
+  .list {
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  /* Only the trailing page title gives up space — the ancestors stay whole. */
+  .item:not(:last-child) {
+    flex: none;
+  }
+  .item:last-child {
+    min-width: 0;
+  }
+  .sep {
+    margin: 0 7px;
+  }
+  .current {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

@@ -103,13 +103,14 @@
   color: var(--fg);
 }
 
-.year {
+.market {
   flex: none;
   margin-top: 6px;
   font-family: var(--font-mono, monospace);
   font-size: 13px;
   color: var(--muted-dark);
   letter-spacing: 0.04em;
+  text-align: right;
 }
 
 @media (min-width: 720px) {

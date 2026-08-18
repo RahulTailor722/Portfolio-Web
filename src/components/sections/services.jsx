@@ -20,6 +20,11 @@ const Services = () => {
               <span className={styles.count}>
                 {String(services.length).padStart(2, "0")} Services
               </span>
+              {/* The rows below go straight to a detail page, so without this
+                  the services hub is unreachable from the homepage body. */}
+              <Link to="/services/" className={styles.allLink} data-cursor="hover">
+                All services <ArrowUpRight size={16} />
+              </Link>
             </div>
           </aside>
 

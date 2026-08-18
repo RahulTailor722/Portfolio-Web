@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react"
 
+import Breadcrumbs from "../components/breadcrumbs"
 import Link from "../components/link"
 import CTA from "../components/sections/cta"
-import { skills, techStack, experience, stats } from "../data/site"
+import { skills, techStack, experience, stats, services, projects } from "../data/site"
 import styles from "../styles/about.module.css"
 
 /* Eased count-up that starts when the number scrolls into view. */
@@ -92,6 +93,14 @@ const AboutPage = () => {
           ABOUT
         </span>
         <div className="container">
+          <Breadcrumbs
+            className="tp_fade_anim"
+            delay="0.05"
+            items={[
+              { name: "Home", path: "/" },
+              { name: "About", path: "/about/" },
+            ]}
+          />
           <p className={`${styles.eyebrow} tp_fade_anim`} data-delay="0.1">
             <span className={styles.dot} />
             Who I Am
@@ -161,6 +170,9 @@ const AboutPage = () => {
                 &#8594;
               </span>
             </Link>
+            <Link to="/work/" className={styles.storySecondary} data-cursor="hover">
+              Or see the work first
+            </Link>
           </div>
           <div className={styles.storyBody}>
             <p className={`${styles.storyLede} tp_text_invert`}>
@@ -182,6 +194,26 @@ const AboutPage = () => {
               semantic markup, lean bundles, and motion that respects the
               content instead of competing with it.
             </p>
+            {/* The About page used to link only to /contact/. This paragraph
+                is what connects the person to the two content silos that
+                actually rank — written as prose, not a nav strip. */}
+            <p className={`${styles.storyPara} ${styles.storyLinks} tp_fade_anim`}>
+              Day to day that work splits into four services —{" "}
+              {services.map((service, i) => (
+                <React.Fragment key={service.slug}>
+                  {i > 0 && (i === services.length - 1 ? ", and " : ", ")}
+                  <Link to={`/services/${service.slug}/`}>
+                    {service.title.toLowerCase()}
+                  </Link>
+                </React.Fragment>
+              ))}
+              . You can see all four applied end to end across{" "}
+              <Link to="/work/">
+                {projects.length} client case studies
+              </Link>
+              , from Shopify storefronts to Dutch public-sector platforms.
+            </p>
+
             <blockquote className={`${styles.storyQuote} tp_fade_anim`}>
               <p>
                 &ldquo;Every line of code is written for durability and
