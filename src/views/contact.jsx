@@ -195,7 +195,7 @@ const ContactPage = () => {
             >
               <span className={styles.status}>
                 <span className={styles.statusDot} aria-hidden="true" />
-                Available for new projects
+                Straight to my inbox
               </span>
               <span className={styles.emailValue}>
                 rahultailor722@gmail.com

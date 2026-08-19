@@ -25,7 +25,7 @@ const Footer = ({ year }) => {
             </p>
             <span className={styles.status}>
               <span className={styles.statusDot} aria-hidden="true" />
-              Available for new projects
+              Canada · US · Europe
             </span>
             <div className={styles.social}>
               <a href="https://www.linkedin.com/in/rahul-tailor-0a7940283/" target="_blank" rel="noreferrer">

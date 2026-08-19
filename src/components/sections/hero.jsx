@@ -149,7 +149,7 @@ const Hero = () => {
             <div className="tp_fade_anim" data-delay="0.3">
               <div className={styles.tagline}>
                 <span className={styles.taglineDot} />
-                Available for freelance &amp; full-time
+                6+ years shipping production frontends
               </div>
             </div>
 

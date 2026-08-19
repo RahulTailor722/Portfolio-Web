@@ -125,11 +125,8 @@ const AboutPage = () => {
                 <span className={styles.metaValue}>UI Engineering · Motion · CMS</span>
               </li>
               <li className="tp_fade_anim" data-fade-from="right" data-delay="0.6">
-                <span className={styles.metaLabel}>Status</span>
-                <span className={styles.available}>
-                  <span className={styles.pulse} />
-                  Open to new projects
-                </span>
+                <span className={styles.metaLabel}>Based in</span>
+                <span className={styles.metaValue}>Ahmedabad, India · Remote</span>
               </li>
             </ul>
           </div>

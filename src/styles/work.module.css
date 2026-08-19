@@ -164,12 +164,6 @@
   gap: 16px;
   margin-top: 24px;
   padding-bottom: 22px;
-  border-bottom: 1px solid var(--line);
-  transition: border-color 0.4s var(--ease);
-}
-
-.projectCard:hover .info {
-  border-color: var(--muted-dark);
 }
 
 .metaText {

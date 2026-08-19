@@ -3,7 +3,7 @@ const SITE_URL = "https://rahultailor.com"
 /**
  * Target markets, declared once so the Person, Service and ItemList schemas
  * can't drift apart. This is the honest way to signal geographic reach for a
- * remote freelancer: one English site that states who it serves, rather than
+ * remote developer: one English site that states who it serves, rather than
  * faked country subfolders or hreflang pointing at identical pages.
  *
  * Netherlands is named alongside "Europe" because there is shipped, linkable
