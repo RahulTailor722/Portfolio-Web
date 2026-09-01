@@ -1,0 +1,12 @@
+---
+// Second layer of the catch-all. If the public/_redirects rule is ever
+// dropped or the host stops honouring it, Cloudflare Pages falls back to
+// serving this file for any unmatched path — so an unknown URL still lands on
+// the maintenance screen rather than a bare host error page.
+import Maintenance from "../layouts/Maintenance.astro"
+import Screen from "../components/maintenance.astro"
+---
+
+<Maintenance>
+  <Screen />
+</Maintenance>

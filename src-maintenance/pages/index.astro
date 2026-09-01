@@ -1,0 +1,10 @@
+---
+// Serves "/" and, via the /* catch-all in public/_redirects, every other URL
+// on the site while maintenance is on.
+import Maintenance from "../layouts/Maintenance.astro"
+import Screen from "../components/maintenance.astro"
+---
+
+<Maintenance>
+  <Screen />
+</Maintenance>

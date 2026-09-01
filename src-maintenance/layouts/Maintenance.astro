@@ -1,0 +1,100 @@
+---
+/**
+ * The entire document for every maintenance-mode route.
+ *
+ * Self-contained on purpose. It does NOT import src/styles/global.css, any
+ * view, any island, or src/data/site.js — nothing that carries site copy may
+ * enter this module graph, because everything reachable from here is what
+ * ends up in dist/. The design tokens below are copied verbatim from the
+ * `:root` block in src/styles/global.css so the screen is the same brand;
+ * if those ever change, these are a copy and will not follow.
+ */
+import { MAINTENANCE_META } from "../../maintenance.config.mjs"
+
+// Fonts come from node_modules, not from src/, so they are safe to reuse and
+// keep the screen typographically identical to the live site.
+import "@fontsource/space-grotesk/latin-700.css"
+import "@fontsource/inter/latin-400.css"
+import "@fontsource/space-mono/latin-700.css"
+
+import sgrotesk700Url from "@fontsource/space-grotesk/files/space-grotesk-latin-700-normal.woff2?url"
+import inter400Url from "@fontsource/inter/files/inter-latin-400-normal.woff2?url"
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0b0c" />
+
+    <title>{MAINTENANCE_META.title}</title>
+    <meta name="description" content={MAINTENANCE_META.description} />
+
+    {
+      /* Every URL answers with this one screen right now. Letting that get
+         indexed would replace the real listings with "Under Maintenance" in
+         the SERPs, which outlives the maintenance window by weeks. Paired
+         with the blanket Disallow written by astro.config.mjs.
+         Written as an expression comment, not an HTML one, so internal notes
+         are stripped at build instead of shipping in view-source. */
+    }
+    <meta name="robots" content="noindex, nofollow" />
+
+    <meta property="og:title" content={MAINTENANCE_META.title} />
+    <meta property="og:description" content={MAINTENANCE_META.description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Rahul Tailor" />
+
+    <link rel="preload" href={sgrotesk700Url} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={inter400Url} as="font" type="font/woff2" crossorigin />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" sizes="48x48 32x32 16x16" href="/favicon.ico" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* Tokens copied from the `:root` block of src/styles/global.css. */
+  :root {
+    --bg: #0b0b0c;
+    --line: #26262b;
+    --fg: #f4f4ef;
+    --muted: #9a9a94;
+    /* Dim label/meta text. Kept just above the 4.5:1 WCAG AA threshold on the
+       darkest surfaces — do not darken past ~#828280. */
+    --muted-dark: #878783;
+    --accent: #c6f135;
+    --accent-dim: #a7cf27;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --font-display: "Space Grotesk", system-ui, sans-serif;
+    --font-body: "Inter", system-ui, sans-serif;
+    --font-mono: "Space Mono", ui-monospace, monospace;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+</style>
